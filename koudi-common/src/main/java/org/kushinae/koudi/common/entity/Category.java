@@ -1,12 +1,12 @@
 package org.kushinae.koudi.common.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serial;
 import java.util.Date;
-import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -78,5 +78,8 @@ public class Category implements Serializable {
     @ApiModelProperty(value = "是否逻辑删除 0否 1是 默认否")
     private Boolean deleted;
 
+    @ApiModelProperty("当前分类的子分类")
+    @TableField(exist = false)
+    private List<Category> children;
 
 }

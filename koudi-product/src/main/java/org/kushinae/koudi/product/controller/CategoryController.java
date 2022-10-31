@@ -32,9 +32,9 @@ public class CategoryController {
     CategoryService service;
 
     @GetMapping("/tree")
-    @ApiOperation("")
+    @ApiOperation("获取树装分类列表")
     public R<List<Category>> tree() {
-
+        return R.OK(service.tree());
     }
 
 }

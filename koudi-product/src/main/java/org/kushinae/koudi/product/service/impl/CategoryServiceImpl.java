@@ -1,10 +1,15 @@
 package org.kushinae.koudi.product.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import org.kushinae.koudi.common.constant.ProductConstant;
 import org.kushinae.koudi.common.entity.Category;
 import org.kushinae.koudi.product.mapper.CategoryMapper;
 import org.kushinae.koudi.product.service.CategoryService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -17,4 +22,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService {
 
+    @Override
+    public List<Category> tree() {
+        List<Category> categories = list(Wrappers.lambdaQuery(Category.class).eq(Category::getDeleted, false));
+        return categories.stream()
+                .filter(e -> e.getParentId().equals(ProductConstant.ROOT_CATEGORY_ID))
+                .peek(e -> e.setChildren(getChildNode(e, categories)))
+                .collect(Collectors.toList());
+    }
+
+    private List<Category> getChildNode(Category parentNode, List<Category> categories) {
+        return categories.stream()
+                .filter(e -> e.getParentId().equals(parentNode.getId()))
+                .peek(e -> e.setChildren(getChildNode(e, categories)))
+                .collect(Collectors.toList());
+    }
 }

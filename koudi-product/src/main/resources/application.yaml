@@ -1,10 +1,13 @@
 server:
   port: 5186
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   application:
     name: KOUDI-PRODUCT
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: 5c2891d9-45fb-4240-9f0e-50222099d9bd
-    url: jdbc:mysql://121.40.209.124:6033/koudi_product?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    password: 123456
+    url: jdbc:mysql://127.0.0.1:3306/koudi_product?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
