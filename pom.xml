@@ -33,6 +33,13 @@
     <dependencyManagement>
 
         <dependencies>
+
+            <dependency>
+                <groupId>org.kushinae</groupId>
+                <artifactId>koudi-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
