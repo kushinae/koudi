@@ -43,6 +43,7 @@ public class Category implements Serializable {
     private Integer level;
 
     @ApiModelProperty(value = "是否显示[0-不显示，1显示]")
+    @TableField("`show`")
     private Boolean show;
 
     @ApiModelProperty(value = "排序")
