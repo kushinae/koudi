@@ -1,0 +1,10 @@
+server:
+  port: 5186
+spring:
+  application:
+    name: KOUDI-PRODUCT
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://121.40.209.124:6033/koudi_product?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
