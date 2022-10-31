@@ -1,5 +1,7 @@
 server:
   port: 5186
+  servlet:
+    context-path: /product
 spring:
   mvc:
     pathmatch:

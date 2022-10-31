@@ -20,6 +20,22 @@
     component: './Welcome',
   },
   {
+    path: '/productmanage',
+    name: '商品管理',
+    icon: 'ShoppingCartOutlined',
+    routes: [
+      {
+        path: '/productmanage/category',
+        name: '分类管理',
+        icon: 'AppstoreOutlined',
+        component: './category',
+      },
+      {
+        component: './404',
+      },
+    ],
+  },
+  {
     path: '/admin',
     name: 'admin',
     icon: 'crown',
