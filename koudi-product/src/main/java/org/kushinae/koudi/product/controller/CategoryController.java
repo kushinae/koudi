@@ -7,10 +7,7 @@ import org.kushinae.koudi.common.entity.Category;
 import org.kushinae.koudi.common.lang.web.R;
 import org.kushinae.koudi.product.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -35,6 +32,12 @@ public class CategoryController {
     @ApiOperation("获取树装分类列表")
     public R<List<Category>> tree() {
         return R.OK(service.tree());
+    }
+
+    @PostMapping("/editor")
+    @ApiOperation("编辑三级分类")
+    public R<Long> editor(@RequestBody Category category) {
+        return R.OK(service.editor(category));
     }
 
 }

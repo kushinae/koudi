@@ -13,3 +13,9 @@ spring:
     username: root
     password: 5c2891d9-45fb-4240-9f0e-50222099d9bd
     url: jdbc:mysql://121.40.209.124:6033/koudi_product?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0

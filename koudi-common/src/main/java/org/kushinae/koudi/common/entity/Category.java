@@ -77,6 +77,7 @@ public class Category implements Serializable {
     private String modifiedAdminId;
 
     @ApiModelProperty(value = "是否逻辑删除 0否 1是 默认否")
+    @TableLogic
     private Boolean deleted;
 
     @ApiModelProperty("当前分类的子分类")

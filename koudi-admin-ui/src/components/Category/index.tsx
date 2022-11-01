@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tree, Menu, Dropdown } from 'antd';
+import EditorForm from '@/components/Category/EditorForm';
 
 interface CategoryPops {
   treeData: APIResponse.Category[] | undefined;
@@ -18,6 +19,18 @@ const Category: React.FC<CategoryPops> = ({
   fieldNames
 }) => {
 
+  const [rightClickNode, setRightClickNode] = useState<APIResponse.Category>();
+  const [openEditorForm, setOpenEditorForm] = useState<boolean>(false);
+
+
+  const handlerTreeRightClick = (event: any) => {
+    setRightClickNode(event.node);
+  }
+
+  const handlerEditorSuccess = (values: APIResponse.Category) => {
+    console.log(values, "values");
+  }
+
   /**
    * 钩子函数
    */
@@ -26,7 +39,7 @@ const Category: React.FC<CategoryPops> = ({
     return () => {
       // return出来的函数本来就是更新前，销毁前执行的函数，现在不监听任何状态，所以只在销毁前执行
     };
-  }, []);
+  }, [rightClickNode]);
   return (
     <>
       <Dropdown
@@ -35,16 +48,23 @@ const Category: React.FC<CategoryPops> = ({
           (<Menu
             items={[
               {
-                label: '1st menu item',
-                key: '1',
+                label: '编辑',
+                key: 'editor',
+                onClick: (() => {
+                  setOpenEditorForm(true);
+                })
               },
               {
-                label: '2nd menu item',
-                key: '2',
+                label: '删除',
+                key: 'deleted',
               },
               {
-                label: '3rd menu item',
-                key: '3',
+                label: '新增子节点',
+                key: 'added_sub_node',
+                onClick: (() => {
+                  setRightClickNode(undefined);
+                  setOpenEditorForm(true);
+                })
               },
             ]}
           />)
@@ -56,9 +76,20 @@ const Category: React.FC<CategoryPops> = ({
           blockNode
           treeData={treeData}
           fieldNames={fieldNames}
+          onRightClick={handlerTreeRightClick}
         />
       </Dropdown>
 
+      {/* 编辑分类列表 */}
+      <EditorForm
+        open={openEditorForm}
+        data={rightClickNode}
+        onSuccess={handlerEditorSuccess}
+        onCancel={() => {
+          setOpenEditorForm(false);
+          setRightClickNode(undefined);
+          console.log(rightClickNode);
+        }} />
     </>
   )
 }
