@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
-import { Form, Input, Modal } from 'antd';
+import { Form, Input, Modal, Cascader } from 'antd';
 
 interface EditorFormProps {
   open: boolean;
   onSuccess: (values: APIResponse.Category) => void;
   onCancel: () => void;
   data: APIResponse.Category | undefined;
+  tree: APIResponse.Category[] | undefined;
+  selectorParent: number[] | undefined;
 }
 
 /**
@@ -14,7 +16,7 @@ interface EditorFormProps {
  * @since 1.0.0
  */
 const EditorForm: React.FC<EditorFormProps> = ({
-  open, onSuccess, onCancel, data
+  open, onSuccess, onCancel, data, tree, selectorParent
 }) => {
 
   const [form] = Form.useForm<APIResponse.Category>();
@@ -37,9 +39,9 @@ const EditorForm: React.FC<EditorFormProps> = ({
     <>
       <Modal
         open={open}
-        title="Create a new collection"
-        okText="Create"
-        cancelText="Cancel"
+        title="编辑分类"
+        okText="完成"
+        cancelText="取消"
         onCancel={onCancel}
         onOk={() => {
           form
@@ -67,6 +69,18 @@ const EditorForm: React.FC<EditorFormProps> = ({
             rules={[{ required: true, message: '请输入分类名称' }]}
           >
             <Input />
+          </Form.Item>
+          <Form.Item
+            name="parentId"
+            label="上级分类"
+            rules={[{ required: true, message: '请输入分类名称' }]}
+          >
+            <Cascader
+              defaultValue={selectorParent}
+              fieldNames={
+                { label: "name", value: "parentId", children: "children" }
+              }
+              options={tree} />
           </Form.Item>
         </Form>
       </Modal>

@@ -10,7 +10,6 @@ declare namespace APIResponse {
   type Category = {
     id: number;
     name: string;
-    title: string;
     parentId: number;
     level: number;
     show: boolean;

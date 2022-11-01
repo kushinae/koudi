@@ -21,14 +21,26 @@ const Category: React.FC<CategoryPops> = ({
 
   const [rightClickNode, setRightClickNode] = useState<APIResponse.Category>();
   const [openEditorForm, setOpenEditorForm] = useState<boolean>(false);
+  const [selectParents, setSelectParents] = useState<number[] | undefined>([]);
 
-
-  const handlerTreeRightClick = (event: any) => {
-    setRightClickNode(event.node);
-  }
 
   const handlerEditorSuccess = (values: APIResponse.Category) => {
     console.log(values, "values");
+  }
+
+  // 
+  const handlerTreeExpand = (event: any) => {
+    console.log('展开的节点', event);
+  }
+
+  const getSelectParents = (node: any): number[] => {
+    console.log(node);
+    return [];
+  }
+
+  const handlerTreeRightClick = (event: any) => {
+    setRightClickNode(event.node);
+    setSelectParents(getSelectParents(event.node));
   }
 
   /**
@@ -71,9 +83,12 @@ const Category: React.FC<CategoryPops> = ({
         }
       >
         <Tree
-          className="draggable-tree"
           draggable={draggable}
+          // onTreeExpand={handlerTreeExpand}
           blockNode
+          showLine
+          onExpand={
+            (expandedKeys, expanded) => { console.log('expandedKeys', expandedKeys, 'expanded', expanded) }}
           treeData={treeData}
           fieldNames={fieldNames}
           onRightClick={handlerTreeRightClick}
@@ -82,8 +97,10 @@ const Category: React.FC<CategoryPops> = ({
 
       {/* 编辑分类列表 */}
       <EditorForm
+        selectorParent={selectParents}
         open={openEditorForm}
         data={rightClickNode}
+        tree={treeData}
         onSuccess={handlerEditorSuccess}
         onCancel={() => {
           setOpenEditorForm(false);
