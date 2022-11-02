@@ -1,7 +1,9 @@
 package org.kushinae.koudi.product.service;
 
-import org.kushinae.koudi.common.entity.Brand;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.kushinae.koudi.common.entity.Brand;
+import org.kushinae.koudi.common.param.search.product.brand.BrandSearch;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IBrandService extends IService<Brand> {
 
+    Page<Brand> listWithPage(BrandSearch search);
 }

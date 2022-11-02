@@ -24,17 +24,17 @@ public class MyBatisPlusHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         log.info("current insert data intercept operation in mybatis-plus");
-        this.strictInsertFill(metaObject, "createTime", Date.class, new Date());
+        this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now());
         this.strictInsertFill(metaObject, "createAdminId", String.class, currentAdmin.id());
         this.strictInsertFill(metaObject, "createAdminName", String.class, currentAdmin.name());
-        this.strictInsertFill(metaObject, "modifiedTime", Date.class, new Date());
+        this.strictInsertFill(metaObject, "modifiedTime", LocalDateTime.class, LocalDateTime.now());
         this.strictInsertFill(metaObject, "modifiedAdminId", String.class, currentAdmin.id());
         this.strictInsertFill(metaObject, "modifiedAdminName", String.class, currentAdmin.name());
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        this.strictUpdateFill(metaObject, "modifiedTime", Date.class, new Date());
+        this.strictUpdateFill(metaObject, "modifiedTime", LocalDateTime.class, LocalDateTime.now());
         this.strictInsertFill(metaObject, "modifiedAdminId", String.class, currentAdmin.id());
         this.strictInsertFill(metaObject, "modifiedAdminName", String.class, currentAdmin.name());
     }

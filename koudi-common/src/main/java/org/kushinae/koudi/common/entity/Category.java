@@ -3,6 +3,7 @@ package org.kushinae.koudi.common.entity;
 import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serial;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.io.Serializable;
 import java.util.List;
@@ -60,11 +61,11 @@ public class Category implements Serializable {
 
     @ApiModelProperty(value = "数据创建时间")
     @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
+    private LocalDateTime createTime;
 
     @ApiModelProperty(value = "数据更新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date modifiedTime;
+    private LocalDateTime modifiedTime;
 
     @ApiModelProperty(value = "数据创建用户")
     @TableField(fill = FieldFill.INSERT)

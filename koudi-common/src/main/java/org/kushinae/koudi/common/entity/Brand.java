@@ -1,8 +1,7 @@
 package org.kushinae.koudi.common.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
@@ -45,24 +44,31 @@ public class Brand implements Serializable {
     private Integer sort;
 
     @ApiModelProperty("数据创建时间")
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     @ApiModelProperty("数据更新时间")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime modifiedTime;
 
     @ApiModelProperty("数据创建用户")
+    @TableField(fill = FieldFill.INSERT)
     private String createAdminId;
 
     @ApiModelProperty("数据创建用户名称")
+    @TableField(fill = FieldFill.INSERT)
     private String createAdminName;
 
     @ApiModelProperty("数据更新用户名称")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private String modifiedAdminName;
 
     @ApiModelProperty("数据更新用户")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private String modifiedAdminId;
 
     @ApiModelProperty("是否逻辑删除 0否 1是 默认否")
+    @TableLogic
     private Boolean deleted;
 
     public Long getId() {
