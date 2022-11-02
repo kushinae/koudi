@@ -70,4 +70,11 @@ public class R<T> implements Serializable {
         r.success = false;
         return r;
     }
+
+    public static R<Void> ERROR(Status status, String msg) {
+        R<Void> r = new R<>();
+        r.code = status.getCode();
+        r.message = msg;
+        return r;
+    }
 }

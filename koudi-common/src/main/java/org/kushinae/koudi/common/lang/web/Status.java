@@ -17,8 +17,7 @@ public enum Status implements Serializable {
         400000 - 499999 客户端相关异常
      */
     PAYLOAD_ASSERT_ERROR(400000, "%s"),
-    ARTICLE_TITLE_EXIST(400001, "文章标题已经存在"),
-
+    PARAMETER_CHECK_EXCEPTION(400001, "%s"),
     /*
         500000 - 599999 系统业务异常
      */

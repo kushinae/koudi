@@ -59,21 +59,27 @@ public class Category implements Serializable {
     private Integer productCount;
 
     @ApiModelProperty(value = "数据创建时间")
+    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
     @ApiModelProperty(value = "数据更新时间")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date modifiedTime;
 
     @ApiModelProperty(value = "数据创建用户")
+    @TableField(fill = FieldFill.INSERT)
     private String createAdminId;
 
     @ApiModelProperty(value = "数据创建用户名称")
+    @TableField(fill = FieldFill.INSERT)
     private String createAdminName;
 
     @ApiModelProperty(value = "数据更新用户名称")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private String modifiedAdminName;
 
     @ApiModelProperty(value = "数据更新用户")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private String modifiedAdminId;
 
     @ApiModelProperty(value = "是否逻辑删除 0否 1是 默认否")
@@ -83,5 +89,9 @@ public class Category implements Serializable {
     @ApiModelProperty("当前分类的子分类")
     @TableField(exist = false)
     private List<Category> children;
+
+    @ApiModelProperty("是否禁用")
+    @TableField(exist = false)
+    private Boolean disabled;
 
 }

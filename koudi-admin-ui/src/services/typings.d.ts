@@ -14,15 +14,16 @@ declare namespace APIResponse {
     level: number;
     show: boolean;
     sort: number;
-    icon: string;
-    productUnit: string;
-    productCount: number;
-    createTime: string;
-    modifiedTime: string;
-    createAdminName: string;
-    modifiedAdminName: string;
-    deleted: boolean;
-    children: APIResponse.Category[];
+    icon: string | undefined;
+    productUnit: string | undefined;
+    productCount: number | undefined;
+    createTime: string | undefined;
+    modifiedTime: string | undefined;
+    createAdminName: string | undefined;
+    modifiedAdminName: string | undefined;
+    deleted: boolean | undefined;
+    children: APIResponse.Category[] | undefined;
+    disabled: boolean | false | undefined;
   }
 
 

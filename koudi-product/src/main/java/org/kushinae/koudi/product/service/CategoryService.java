@@ -15,7 +15,13 @@ import java.util.List;
  */
 public interface CategoryService extends IService<Category> {
 
-    List<Category> tree();
+    List<Category> tree(Boolean disable);
 
     Long editor(Category category);
+
+    List<Category> levelHierarchy(Long nodeId);
+
+    void removeNode(Long nodeId);
+
+    List<Category> getChildren(Long nodeId);
 }

@@ -30,8 +30,8 @@ public class CategoryController {
 
     @GetMapping("/tree")
     @ApiOperation("获取树装分类列表")
-    public R<List<Category>> tree() {
-        return R.OK(service.tree());
+    public R<List<Category>> tree(@RequestParam(value = "disabled", defaultValue = "false", required = false) Boolean disable) {
+        return R.OK(service.tree(disable));
     }
 
     @PostMapping("/editor")
@@ -39,6 +39,20 @@ public class CategoryController {
     public R<Long> editor(@RequestBody Category category) {
         return R.OK(service.editor(category));
     }
+
+    @ApiOperation("获取当前分类等级层级")
+    @GetMapping("/level/hierarchy")
+    public R<List<Category>> levelHierarchy(@RequestParam("node_id") Long id) {
+        return R.OK(service.levelHierarchy(id));
+    }
+
+    @ApiOperation("删除分类")
+    @DeleteMapping("/remove")
+    public R<Void> removeNode(@RequestParam("node_id") Long nodeId) {
+        service.removeNode(nodeId);
+        return R.EMPTY();
+    }
+
 
 }
 
