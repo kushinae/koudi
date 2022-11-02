@@ -5,11 +5,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.kushinae.koudi.common.entity.Category;
 import org.kushinae.koudi.common.lang.web.R;
-import org.kushinae.koudi.product.service.CategoryService;
+import org.kushinae.koudi.product.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -26,7 +25,7 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
-    CategoryService service;
+    ICategoryService service;
 
     @GetMapping("/tree")
     @ApiOperation("获取树装分类列表")

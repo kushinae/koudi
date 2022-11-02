@@ -13,7 +13,7 @@ import java.util.List;
  * @author bnyte
  * @since 2022-10-31
  */
-public interface CategoryService extends IService<Category> {
+public interface ICategoryService extends IService<Category> {
 
     List<Category> tree(Boolean disable);
 

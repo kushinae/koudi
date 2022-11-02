@@ -7,13 +7,12 @@ import org.kushinae.koudi.common.entity.Category;
 import org.kushinae.koudi.common.exception.ParameterCheckException;
 import org.kushinae.koudi.common.util.CollectionUtils;
 import org.kushinae.koudi.product.mapper.CategoryMapper;
-import org.kushinae.koudi.product.service.CategoryService;
+import org.kushinae.koudi.product.service.ICategoryService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +26,7 @@ import java.util.stream.Collectors;
  * @since 2022-10-31
  */
 @Service
-public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService {
+public class ICategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements ICategoryService {
 
     @Autowired
     CurrentAdmin currentAdmin;

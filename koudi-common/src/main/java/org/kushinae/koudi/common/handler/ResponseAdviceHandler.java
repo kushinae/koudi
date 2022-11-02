@@ -1,5 +1,6 @@
 package org.kushinae.koudi.common.handler;
 
+import org.kushinae.koudi.common.exception.GlobalException;
 import org.kushinae.koudi.common.exception.ParameterCheckException;
 import org.kushinae.koudi.common.lang.web.R;
 import org.kushinae.koudi.common.lang.web.Status;
@@ -29,9 +30,26 @@ import java.util.StringJoiner;
 })
 public class ResponseAdviceHandler<T> implements ResponseBodyAdvice<R<T>> {
 
+    /**
+     * 系统业务请求参数校验异常 HTTP响应code为 400
+     * @param e 请求异常对象继承自  {@see org.kushinae.koudi.common.exception.GlobalException}
+     *          可通过其父类status属性获取其具体失败原因
+     * @return 统一响应结果集
+     */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ParameterCheckException.class)
     R<Void> handleParameterCheckException(ParameterCheckException e) {
+        return R.ERROR(e.getStatus(), e.getMessage());
+    }
+
+    /**
+     * 系统异常 HTTP响应code为 500
+     * @param e 请求异常对象 可通过其父类status属性获取其具体失败原因
+     * @return 统一响应结果集
+     */
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(GlobalException.class)
+    R<Void> handleParameterCheckException(GlobalException e) {
         return R.ERROR(e.getStatus(), e.getMessage());
     }
 
