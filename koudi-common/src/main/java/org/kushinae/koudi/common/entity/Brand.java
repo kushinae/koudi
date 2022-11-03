@@ -35,6 +35,7 @@ public class Brand implements Serializable {
     private String description;
 
     @ApiModelProperty("显示状态[0-不显示；1-显示]")
+    @TableField("`show`")
     private Boolean show;
 
     @ApiModelProperty("检索首字母")

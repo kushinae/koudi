@@ -31,6 +31,12 @@
         component: './category',
       },
       {
+        path: '/productmanage/brand',
+        name: '品牌管理',
+        icon: 'GlobalOutlined',
+        component: './Brand',
+      },
+      {
         component: './404',
       },
     ],

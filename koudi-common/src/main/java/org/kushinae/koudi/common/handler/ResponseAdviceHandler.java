@@ -1,5 +1,6 @@
 package org.kushinae.koudi.common.handler;
 
+import org.jetbrains.annotations.NotNull;
 import org.kushinae.koudi.common.exception.GlobalException;
 import org.kushinae.koudi.common.exception.ParameterCheckException;
 import org.kushinae.koudi.common.lang.web.R;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
@@ -28,7 +30,7 @@ import java.util.StringJoiner;
 @RestControllerAdvice(basePackages = {
         "org.kushinae.koudi.product.controller",
 })
-public class ResponseAdviceHandler<T> implements ResponseBodyAdvice<R<T>> {
+public class ResponseAdviceHandler implements ResponseBodyAdvice<Object> {
 
     /**
      * 系统业务请求参数校验异常 HTTP响应code为 400
@@ -70,12 +72,12 @@ public class ResponseAdviceHandler<T> implements ResponseBodyAdvice<R<T>> {
 
 
     @Override
-    public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
+    public boolean supports(@NotNull MethodParameter returnType, @NotNull Class<? extends HttpMessageConverter<?>> converterType) {
         return true;
     }
 
     @Override
-    public R<T> beforeBodyWrite(R<T> body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+    public Object beforeBodyWrite(Object body, @NotNull MethodParameter returnType, @NotNull MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
         return body;
     }
 }
