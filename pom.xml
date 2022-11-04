@@ -29,9 +29,12 @@
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
         <mybatis-plus-generator.version>3.5.3</mybatis-plus-generator.version>
         <mysql-connector.version>8.0.30</mysql-connector.version>
-        <slf4j-api.version>2.0.3</slf4j-api.version>
         <slf4j-reload4j.version>2.0.3</slf4j-reload4j.version>
+        <slf4j-api.version>2.0.3</slf4j-api.version>
+        <logback.version>1.4.4</logback.version>
         <freemarker.version>2.3.31</freemarker.version>
+        <forest.version>1.5.26</forest.version>
+        <jnanoid.version>2.0.0</jnanoid.version>
     </properties>
 
     <dependencyManagement>
@@ -48,6 +51,13 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter</artifactId>
+                <version>${spring-boot-component.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-aop -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-aop</artifactId>
                 <version>${spring-boot-component.version}</version>
             </dependency>
 
@@ -105,13 +115,6 @@
                 <version>${mybatis-plus-generator.version}</version>
             </dependency>
 
-            <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-reload4j -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-reload4j</artifactId>
-                <version>${slf4j-reload4j.version}</version>
-            </dependency>
-
 
             <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis -->
             <dependency>
@@ -120,18 +123,29 @@
                 <version>${spring-boot-component.version}</version>
             </dependency>
 
-            <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j-api.version}</version>
-            </dependency>
-
             <!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
             <dependency>
                 <groupId>org.freemarker</groupId>
                 <artifactId>freemarker</artifactId>
-                <version>2.3.31</version>
+                <version>${freemarker.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dtflys.forest</groupId>
+                <artifactId>forest-spring-boot-starter</artifactId>
+                <version>${forest.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dtflys.forest</groupId>
+                <artifactId>forest-core</artifactId>
+                <version>${forest.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.aventrix.jnanoid</groupId>
+                <artifactId>jnanoid</artifactId>
+                <version>${jnanoid.version}</version>
             </dependency>
 
         </dependencies>

@@ -16,4 +16,7 @@ public class Search {
     @ApiModelProperty("查询记录数")
     private Long queryCount = 20L;
 
+    @ApiModelProperty("全局通用搜索关键词")
+    private String key;
+
 }

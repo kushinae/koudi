@@ -19,3 +19,12 @@ mybatis-plus:
       logic-delete-field: deleted
       logic-delete-value: 1
       logic-not-delete-value: 0
+upyun:
+  authorization:
+    header: Authorization
+  operator:
+    name: liugxion
+    password: BnUsduD3ZU3JS5TKcD8OWOXdVza9KhiO
+  http_path: https://blogimg.bytestroll.com
+  service_name: imagephoto
+  dir_path: koudi

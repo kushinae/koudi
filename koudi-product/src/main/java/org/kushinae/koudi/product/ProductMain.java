@@ -1,5 +1,6 @@
 package org.kushinae.koudi.product;
 
+import com.dtflys.forest.springboot.annotation.ForestScan;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.ComponentScans;
         @ComponentScan("org.kushinae.koudi.common.handler"),
 })
 @MapperScan("org.kushinae.koudi.product.mapper")
+@ForestScan("org.kushinae.koudi.sso.forest")
 public class ProductMain {
     public static void main(String[] args) {
         SpringApplication.run(ProductMain.class, args);

@@ -11,6 +11,12 @@ public class GlobalException extends RuntimeException {
     protected Status status;
 
     public GlobalException() {
+        super();
+    }
+
+    public GlobalException(Status status) {
+        super(status.getMessage());
+        setStatus(status);
     }
 
     public GlobalException(String message) {
