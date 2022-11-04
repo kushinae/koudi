@@ -1,4 +1,4 @@
-package org.kushinae.koudi.common.config;
+package org.kushinae.koudi.product.config;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +20,7 @@ public class SwaggerConfiguration {
                 .apiInfo(apiInfo()).enable(true)
                 .select()
                 //apis： 添加swagger接口提取范围
-                .apis(RequestHandlerSelectors.basePackage("com.bnyte.liumiao.service.controller"))
+                .apis(RequestHandlerSelectors.basePackage("org.kushinae.koudi.product.controller"))
                 // 指定带有注释的方法才会被解析
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .paths(PathSelectors.any())
@@ -29,8 +29,8 @@ public class SwaggerConfiguration {
 
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
-                .title("留秒项目接口文档")
-                .description("留秒项目")
+                .title("商品服务接口文档")
+                .description("商品服务")
                 .contact(new Contact("bnyte", "https://blog.bnyte.com", "bnytezz@gmail.com"))
                 .version("1.0.0")
                 .build();

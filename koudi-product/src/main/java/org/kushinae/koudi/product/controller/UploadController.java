@@ -1,5 +1,6 @@
 package org.kushinae.koudi.product.controller;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.kushinae.koudi.common.annotation.UploadData;
 import org.kushinae.koudi.common.annotation.UploadHandler;
@@ -17,11 +18,12 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequestMapping("/upload")
+@Api(tags = "上传 前端控制器")
 public class UploadController {
 
     @UploadHandler
     @ApiOperation("上传资源")
-    @PostMapping("/resource")
+    @PostMapping("/sso")
     R<UploadVO> resource(@RequestParam("file") MultipartFile file, @UploadData String filepath) {
         return R.OK(UploadVO.builder().filepath(filepath).build());
     }
