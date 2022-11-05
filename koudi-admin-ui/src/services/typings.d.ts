@@ -59,11 +59,11 @@ declare namespace APIResponse {
 
   type Brand = {
     // id
-    id: number;
+    id?: number;
     // 品牌名
     name: string;
     // 品牌logo地址
-    logo: string;
+    logo?: string;
     // 介绍
     description: string;
     // 显示状态
@@ -72,6 +72,35 @@ declare namespace APIResponse {
     firstLetter: string;
     // 排序数字越大排序越高
     sort: number;
+    // 数据创建时间
+    createTime: string | undefined;
+    // 数据修改时间
+    modifiedTime: string | undefined;
+    // 数据创建用户名
+    createAdminName: string | undefined;
+    // 数据更新用户名
+    modifiedAdminName: string | undefined;
+    // 是否删除
+    deleted: boolean | undefined;
+  }
+
+  type AttrGroup = {
+    // id
+    id?: number;
+    // 分组类名
+    name: string;
+    // 品牌icon地址
+    icon?: string;
+    // 介绍
+    description: string;
+    // 显示状态
+    show: boolean;
+    // 排序数字越大排序越高
+    sort: number;
+    // 分类名称
+    categoryName: string;
+    // 分类id
+    categoryId: number;
     // 数据创建时间
     createTime: string | undefined;
     // 数据修改时间

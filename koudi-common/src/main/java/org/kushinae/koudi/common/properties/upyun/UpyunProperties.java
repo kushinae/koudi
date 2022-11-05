@@ -66,5 +66,9 @@ public class UpyunProperties {
     public String getUploadPath(String filename) {
         return this.getHttpPath() + "/" + getDirPath() + "/" + filename;
     }
+
+    public String getUploadPath(String folder, String filename) {
+        return this.getHttpPath() + "/" + getDirPath() + "/" + folder + "/" + filename;
+    }
 }
 

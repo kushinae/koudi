@@ -23,4 +23,6 @@ public interface IBrandService extends IService<Brand> {
     Brand queryName(@NonNull String name);
 
     Brand detailById(Long id);
+
+    Boolean deleteById(Long id);
 }

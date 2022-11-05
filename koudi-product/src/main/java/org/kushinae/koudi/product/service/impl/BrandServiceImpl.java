@@ -5,11 +5,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.jetbrains.annotations.NotNull;
 import org.kushinae.koudi.common.entity.Brand;
 import org.kushinae.koudi.common.exception.ParameterCheckException;
+import org.kushinae.koudi.common.forest.UpyunClient;
+import org.kushinae.koudi.common.lang.web.Status;
 import org.kushinae.koudi.common.param.search.product.brand.BrandSearch;
 import org.kushinae.koudi.common.util.ObjectUtils;
 import org.kushinae.koudi.product.mapper.BrandMapper;
 import org.kushinae.koudi.product.service.IBrandService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,7 +24,10 @@ import org.springframework.stereotype.Service;
  * @since 2022-11-03
  */
 @Service
-public class IBrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements IBrandService {
+public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements IBrandService {
+
+    @Autowired
+    UpyunClient upyunClient;
 
     @Override
     public Page<Brand> listWithPage(BrandSearch search) {
@@ -46,5 +52,15 @@ public class IBrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implement
     @Override
     public Brand detailById(Long id) {
         return getById(id);
+    }
+
+    @Override
+    public Boolean deleteById(Long id) {
+        Brand brand = getById(id);
+        if (ObjectUtils.isNull(brand))
+            throw new ParameterCheckException(Status.DATA_DOES_NOT_EXIST);
+        upyunClient.deleteFile(brand.getLogo());
+
+        return removeById(brand.getId());
     }
 }

@@ -1,9 +1,11 @@
 package org.kushinae.koudi.product.controller;
 
+import com.bnyte.forge.annotation.APIHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.kushinae.koudi.common.annotation.UploadData;
 import org.kushinae.koudi.common.annotation.UploadHandler;
+import org.kushinae.koudi.common.enums.EUploadType;
 import org.kushinae.koudi.common.lang.web.R;
 import org.kushinae.koudi.common.vo.upload.UploadVO;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Api(tags = "上传 前端控制器")
 public class UploadController {
 
-    @UploadHandler
+    @APIHelper
+    @UploadHandler(EUploadType.BRAND)
     @ApiOperation("上传资源")
     @PostMapping("/sso")
     R<UploadVO> resource(@RequestParam("file") MultipartFile file, @UploadData String filepath) {

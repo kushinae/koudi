@@ -1,14 +1,16 @@
 package org.kushinae.koudi.product.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.kushinae.koudi.common.config.CurrentAdmin;
 import org.kushinae.koudi.common.constant.ProductConstant;
 import org.kushinae.koudi.common.entity.Category;
 import org.kushinae.koudi.common.exception.ParameterCheckException;
+import org.kushinae.koudi.common.lang.web.Status;
 import org.kushinae.koudi.common.util.CollectionUtils;
+import org.kushinae.koudi.common.util.ObjectUtils;
 import org.kushinae.koudi.product.mapper.CategoryMapper;
 import org.kushinae.koudi.product.service.ICategoryService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +28,7 @@ import java.util.stream.Collectors;
  * @since 2022-10-31
  */
 @Service
-public class ICategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements ICategoryService {
+public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements ICategoryService {
 
     @Autowired
     CurrentAdmin currentAdmin;
@@ -45,6 +47,8 @@ public class ICategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> 
 
     @Override
     public Long editor(Category category) {
+        if (!category.getParentId().equals(ProductConstant.ROOT_CATEGORY_ID) || ObjectUtils.isNull(getById(category.getParentId())))
+            throw new ParameterCheckException(Status.DATA_DOES_NOT_EXIST);
         category.setLevel(1);
         // editor
         saveOrUpdate(category);

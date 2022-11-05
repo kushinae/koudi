@@ -6,6 +6,7 @@ import { editor, remove, tree } from '@/services/product/category/api';
 interface CategoryPops {
   draggable: boolean;
   fieldNames: { title: string, key: string, children: string };
+  overlay: boolean;
 }
 
 const defaultParentCategory: APIResponse.Category = {
@@ -34,7 +35,8 @@ const defaultParentCategory: APIResponse.Category = {
  */
 const Category: React.FC<CategoryPops> = ({
   draggable,
-  fieldNames
+  fieldNames,
+  overlay
 }) => {
 
   const [rightClickNode, setRightClickNode] = useState<APIResponse.Category | undefined>(defaultParentCategory);
@@ -56,7 +58,9 @@ const Category: React.FC<CategoryPops> = ({
   }
 
   const handlerTreeRightClick = (event: any) => {
-    setRightClickNode(event.node);
+    if (overlay) {
+      setRightClickNode(event.node);
+    }
   }
 
   /**
@@ -75,7 +79,7 @@ const Category: React.FC<CategoryPops> = ({
     <>
       <Dropdown
         trigger={['contextMenu']}
-        overlay={
+        overlay={overlay ?
           (<Menu
             items={[
               {
@@ -117,7 +121,7 @@ const Category: React.FC<CategoryPops> = ({
                 })
               },
             ]}
-          />)
+          />) : <></>
         }
       >
         <Tree

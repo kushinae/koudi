@@ -16,9 +16,12 @@ import org.springframework.context.annotation.ComponentScans;
 @ComponentScans({
         @ComponentScan("org.kushinae.koudi.common.config"),
         @ComponentScan("org.kushinae.koudi.common.handler"),
+        @ComponentScan("org.kushinae.koudi.common.aop"),
+        @ComponentScan("org.kushinae.koudi.common.properties"),
+        @ComponentScan("org.kushinae.koudi.common.forest"),
 })
 @MapperScan("org.kushinae.koudi.product.mapper")
-@ForestScan("org.kushinae.koudi.sso.forest")
+@ForestScan("org.kushinae.koudi.common.forest")
 public class ProductMain {
     public static void main(String[] args) {
         SpringApplication.run(ProductMain.class, args);

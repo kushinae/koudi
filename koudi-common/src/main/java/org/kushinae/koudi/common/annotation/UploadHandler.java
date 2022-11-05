@@ -1,5 +1,7 @@
 package org.kushinae.koudi.common.annotation;
 
+import org.kushinae.koudi.common.enums.EUploadType;
+
 import java.lang.annotation.*;
 
 /**
@@ -10,4 +12,11 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD})
 public @interface UploadHandler {
+
+    /**
+     *
+     * @return
+     */
+    EUploadType value() default EUploadType.DEFAULT;
+
 }

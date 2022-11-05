@@ -29,3 +29,10 @@ export async function detail(id: number) {
     method: 'GET',
   });
 }
+
+/** 删除分类 DELETE /category/remove */
+export async function remove(id: number) {
+  return request<APIResponse.R<number>>(`${API}/api/product/brand/remove?id=${id}`, {
+    method: 'DELETE',
+  });
+}

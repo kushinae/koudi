@@ -22,6 +22,9 @@ public interface UpyunClient {
     @Put("/{filename}")
     String uploadFile(@Body byte[] file, @Var("filename") String filename);
 
+    @Put("/{folder}/{filename}")
+    String uploadFile(@Body byte[] file, @Var("folder") String folder, @Var("filename") String filename);
+
     /**
      * 删除文件
      */

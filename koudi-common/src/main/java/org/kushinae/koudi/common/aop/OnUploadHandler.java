@@ -7,6 +7,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.kushinae.koudi.common.annotation.UploadData;
+import org.kushinae.koudi.common.annotation.UploadHandler;
 import org.kushinae.koudi.common.exception.ForestClientNotFount;
 import org.kushinae.koudi.common.forest.UpyunClient;
 import org.kushinae.koudi.common.properties.upyun.UpyunProperties;
@@ -52,6 +53,7 @@ public class OnUploadHandler {
 
         MethodSignature methodSignature = (MethodSignature) point.getSignature();
         Method method = methodSignature.getMethod();
+        UploadHandler uploadHandler = method.getAnnotation(UploadHandler.class);
         int writeBackIndex = 0;
         int fileIndex = 0;
         Parameter[] parameters = method.getParameters();
@@ -73,11 +75,21 @@ public class OnUploadHandler {
 
         String filename = NanoIdUtils.randomNanoId() + "." + filetype;
 
-        upyunClient.uploadFile(file.getBytes(), filename);
+        String folder = resetStartPaths(uploadHandler.value().getPath());
 
-        args[writeBackIndex] = upyunProperties.getUploadPath(filename);
+        upyunClient.uploadFile(file.getBytes(), folder, filename);
 
-        return point.proceed();
+        args[writeBackIndex] = upyunProperties.getUploadPath(folder, filename);
+
+        return point.proceed(args);
+    }
+
+    public String resetStartPaths(String path) {
+        if (path.startsWith("/")) {
+            path = path.substring(path.indexOf("/") + 1);
+            resetStartPaths(path);
+        }
+        return path;
     }
 
 }

@@ -14,6 +14,11 @@ public class ParameterCheckException extends GlobalException {
         setStatus(Status.PARAMETER_CHECK_EXCEPTION);
     }
 
+    public ParameterCheckException(Status status) {
+        super(status.getMessage());
+        setStatus(status);
+    }
+
 
     @Override
     public Status getStatus() {

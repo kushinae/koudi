@@ -18,3 +18,39 @@ CREATE TABLE `t_product_category`
     `deleted`             tinyint(1) DEFAULT '0' COMMENT '是否逻辑删除 0否 1是 默认否',
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='商品三级分类';
+
+create table t_product_brand
+(
+    id                    bigint not null primary key auto_increment comment '品牌id',
+    name                  char(50) comment '品牌名',
+    logo                  varchar(2000) comment '品牌logo地址',
+    description           longtext comment '介绍',
+    `show`                tinyint(1) comment '显示状态[0-不显示；1-显示]',
+    first_letter          char(1) comment '检索首字母',
+    sort                  int comment '排序数字越大排序越高',
+    `create_time`         datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '数据创建时间',
+    `modified_time`       datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '数据更新时间',
+    `create_admin_id`     varchar(255) DEFAULT NULL COMMENT '数据创建用户',
+    `create_admin_name`   varchar(255) DEFAULT NULL COMMENT '数据创建用户名称',
+    `modified_admin_name` varchar(255) DEFAULT NULL COMMENT '数据更新用户名称',
+    `modified_admin_id`   varchar(255) DEFAULT NULL COMMENT '数据更新用户',
+    `deleted`             tinyint(1)   DEFAULT '0' COMMENT '是否逻辑删除 0否 1是 默认否'
+) comment '品牌表';
+
+
+create table t_product_attr_group
+(
+    id                    bigint primary key not null auto_increment comment '分组id',
+    attr_group_name       char(20) comment '组名',
+    sort                  int comment '排序 数值越高排序优先级越高',
+    description           varchar(255) comment '描述',
+    icon                  varchar(255) comment '组图标',
+    category_id           bigint comment '所属分类id',
+    `create_time`         datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '数据创建时间',
+    `modified_time`       datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '数据更新时间',
+    `create_admin_id`     varchar(255) DEFAULT NULL COMMENT '数据创建用户',
+    `create_admin_name`   varchar(255) DEFAULT NULL COMMENT '数据创建用户名称',
+    `modified_admin_name` varchar(255) DEFAULT NULL COMMENT '数据更新用户名称',
+    `modified_admin_id`   varchar(255) DEFAULT NULL COMMENT '数据更新用户',
+    `deleted`             tinyint(1)   DEFAULT '0' COMMENT '是否逻辑删除 0否 1是 默认否'
+) comment '属性分组表';

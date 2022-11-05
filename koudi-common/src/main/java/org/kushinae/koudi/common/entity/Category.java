@@ -1,17 +1,18 @@
 package org.kushinae.koudi.common.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-
-import java.io.Serial;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.io.Serializable;
-import java.util.List;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.io.Serial;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -35,9 +36,12 @@ public class Category implements Serializable {
     private Long id;
 
     @ApiModelProperty(value = "分类名称")
+    @NotBlank(message = "分类名称不能为空")
     private String name;
 
     @ApiModelProperty(value = "父分类id")
+    @NotNull
+    @Min(value = -1, message = "父分类id最小为-1")
     private Long parentId;
 
     @ApiModelProperty(value = "层级")

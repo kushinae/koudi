@@ -37,6 +37,12 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.bnyte/forge-spring-boot-starter -->
+        <dependency>
+            <groupId>com.bnyte</groupId>
+            <artifactId>forge-spring-boot-starter</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.dtflys.forest</groupId>
             <artifactId>forest-spring-boot-starter</artifactId>

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import List from '@/components/Brand/List';
+import { PageContainer } from '@ant-design/pro-layout';
 
 /**
  * Brand品牌管理
@@ -18,7 +19,9 @@ const Brand: React.FC = () => {
   }, []);
   return (
     <>
-      <List />
+      <PageContainer>
+        <List />
+      </PageContainer>
     </>
   )
 }

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Category from '@/components/Category';
-import { PageHeaderWrapper } from '@ant-design/pro-components';
+import { PageContainer } from '@ant-design/pro-layout';
 
 /**
  * 分类页面
@@ -21,9 +21,9 @@ const CategoryPage: React.FC = () => {
   }, []);
   return (
     <>
-      <PageHeaderWrapper>
-        <Category draggable={false} fieldNames={{ title: "name", key: "id", children: "children" }} />
-      </PageHeaderWrapper>
+      <PageContainer>
+        <Category overlay={true} draggable={false} fieldNames={{ title: "name", key: "id", children: "children" }} />
+      </PageContainer>
     </>
   )
 }

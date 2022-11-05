@@ -1,36 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import type { ColumnsType } from 'antd/lib/table';
-import { Space, Table, Button, Switch } from 'antd';
-import { detail, editor, listWithPage } from '@/services/product/brand/api';
+import { Space, Table, Button, Switch, Image, Popconfirm } from 'antd';
+import { detail, editor, listWithPage, remove } from '@/services/product/brand/api';
 import type { BrandSearch } from '@/interface/param/Search';
 import Editor from '@/components/Brand/Editor';
-
-interface DataType {
-  // id
-  id: number;
-  // 品牌名
-  name: string;
-  // 品牌logo地址
-  logo: string;
-  // 介绍
-  description: string;
-  // 显示状态
-  show: boolean;
-  // 检索首字母
-  firstLetter: string;
-  // 排序数字越大排序越高
-  sort: number;
-  // 数据创建时间
-  createTime: string | undefined;
-  // 数据修改时间
-  modifiedTime: string | undefined;
-  // 数据创建用户名
-  createAdminName: string | undefined;
-  // 数据更新用户名
-  modifiedAdminName: string | undefined;
-  // 是否删除
-  deleted: boolean | undefined;
-}
 
 /**
  * 品牌列表
@@ -51,7 +24,29 @@ const List: React.FC = () => {
   const [tableTotal, setTableTotal] = useState<number>(0);
   const [editorData, setEditorData] = useState<APIResponse.Brand>();
 
-  const columns: ColumnsType<DataType> = [
+  /**
+   * 刷新当前页面数据
+   */
+  const rerfrshBrands = useCallback(() => {
+    listWithPage(search).then(response => {
+      setBrands(response.records);
+      setTableLoading(response.status);
+      setSearch({
+        current: response.current,
+        queryCount: response.count
+      });
+      setTableTotal(response.total);
+    });
+  }, [search]);
+
+  const deleteBrand = (id: number) => {
+    const index = brands?.findIndex((item: APIResponse.Brand) => id === item.id);
+    if (index) {
+      rerfrshBrands();
+    }
+  }
+
+  const columns: ColumnsType<APIResponse.Brand> = [
     {
       title: '名称',
       dataIndex: 'name',
@@ -59,8 +54,13 @@ const List: React.FC = () => {
     },
     {
       title: 'Logo',
+      key: 'logo',
       dataIndex: 'logo',
-      key: 'logo1',
+      render: (_, item) => {
+        return <Image
+          width={30}
+          src={item.logo} />
+      },
     },
     {
       title: '是否显示',
@@ -95,12 +95,28 @@ const List: React.FC = () => {
       render: (_, item) => (
         <Space size="middle">
           <Button type='primary' onClick={() => {
-            detail(item.id).then(response => {
+            detail(item?.id ? item.id : -1).then(response => {
               setOpenEditor(true);
               setEditorData(response.data);
             });
           }} >编辑</Button>
-          <Button danger type='primary'>删除</Button>
+          <Popconfirm
+            title="你是否确定删除此品牌?"
+            onConfirm={() => {
+              const id = item.id;
+              if (id) {
+                remove(id).then(() => {
+                  deleteBrand(id);
+                });
+              }
+              return true;
+            }}
+            // onCancel={cancel}
+            okText="确定"
+            cancelText="取消"
+          >
+            <Button danger type='primary'>删除</Button>
+          </Popconfirm>
         </Space>
       ),
     },
@@ -113,21 +129,6 @@ const List: React.FC = () => {
     setEditorData(undefined);
     setOpenEditor(false);
   }
-
-  /**
-   * 刷新当前页面数据
-   */
-  const rerfrshBrands = useCallback(() => {
-    listWithPage(search).then(response => {
-      setBrands(response.records);
-      setTableLoading(response.status);
-      setSearch({
-        current: response.current,
-        queryCount: response.count
-      });
-      setTableTotal(response.total);
-    });
-  }, [search]);
 
 
   /**
@@ -175,6 +176,7 @@ const List: React.FC = () => {
         添加
       </Button>
       <Table
+        rowKey={(item) => item.id + ''}
         columns={columns}
         loading={tableLoading}
         pagination={{

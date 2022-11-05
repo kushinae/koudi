@@ -1,11 +1,13 @@
 package org.kushinae.koudi.common.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -26,9 +28,11 @@ public class Brand implements Serializable {
     private Long id;
 
     @ApiModelProperty("品牌名")
+    @NotBlank(message = "品牌名称不能为空")
     private String name;
 
     @ApiModelProperty("品牌logo地址")
+    @NotBlank(message = "品牌logo地址不能为空")
     private String logo;
 
     @ApiModelProperty("介绍")
@@ -36,6 +40,7 @@ public class Brand implements Serializable {
 
     @ApiModelProperty("显示状态[0-不显示；1-显示]")
     @TableField("`show`")
+    @NotNull
     private Boolean show;
 
     @ApiModelProperty("检索首字母")

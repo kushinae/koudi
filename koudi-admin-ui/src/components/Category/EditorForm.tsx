@@ -9,6 +9,25 @@ interface EditorFormProps {
   tree: APIResponse.Category[] | undefined;
 }
 
+const formInit: APIResponse.Category = {
+  id: -1,
+  name: '',
+  parentId: -1,
+  level: 0,
+  show: true,
+  sort: 0,
+  icon: undefined,
+  productUnit: undefined,
+  productCount: undefined,
+  createTime: undefined,
+  modifiedTime: undefined,
+  createAdminName: undefined,
+  modifiedAdminName: undefined,
+  deleted: undefined,
+  children: undefined,
+  disabled: undefined
+}
+
 /**
  * Editor
  * @author bnyte
@@ -56,6 +75,7 @@ const EditorForm: React.FC<EditorFormProps> = ({
         }}
       >
         <Form
+          initialValues={formInit}
           form={form}
           layout="vertical"
           name="编辑分类"
@@ -104,7 +124,7 @@ const EditorForm: React.FC<EditorFormProps> = ({
             name="sort"
             label='排序'
           >
-            <InputNumber defaultValue={0} />
+            <InputNumber />
           </Form.Item>
         </Form>
       </Modal>
