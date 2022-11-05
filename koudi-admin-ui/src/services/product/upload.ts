@@ -1,0 +1,1 @@
+export const PRODUCT_UPLOAD_API = `${API}/api/product/upload/sso`;
