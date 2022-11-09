@@ -11,7 +11,6 @@ import org.kushinae.koudi.product.service.IAttrGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Controller;
 
 /**
  * <p>
@@ -21,7 +20,7 @@ import org.springframework.stereotype.Controller;
  * @author bnyte
  * @since 2022-11-05
  */
-@Controller
+@RestController
 @Api(tags = "属性分组 前端控制器")
 @RequestMapping("/attr/group")
 public class AttrGroupController {

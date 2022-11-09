@@ -7,6 +7,7 @@ interface CategoryPops {
   draggable: boolean;
   fieldNames: { title: string, key: string, children: string };
   overlay: boolean;
+  onSelect?: (data: APIResponse.Category) => void;
 }
 
 const defaultParentCategory: APIResponse.Category = {
@@ -36,13 +37,20 @@ const defaultParentCategory: APIResponse.Category = {
 const Category: React.FC<CategoryPops> = ({
   draggable,
   fieldNames,
-  overlay
+  overlay,
+  onSelect
 }) => {
 
   const [rightClickNode, setRightClickNode] = useState<APIResponse.Category | undefined>(defaultParentCategory);
   const [openEditorForm, setOpenEditorForm] = useState<boolean>(false);
   const [disableTreeData, setDisableTreeData] = useState<APIResponse.Category[]>([]);
   const [trees, setTrees] = useState<APIResponse.Category[] | undefined>();
+
+  const onSelectNode = (_selectedKeys: any, e: { selected: boolean, selectedNodes: any, node: APIResponse.Category, event: any }) => {
+    if (onSelect) {
+      onSelect(e.node);
+    }
+  }
 
   /**
    * 处理编辑分类成功
@@ -132,6 +140,7 @@ const Category: React.FC<CategoryPops> = ({
           treeData={trees}
           fieldNames={fieldNames}
           onRightClick={handlerTreeRightClick}
+          onSelect={onSelectNode}
         />
       </Dropdown>
 

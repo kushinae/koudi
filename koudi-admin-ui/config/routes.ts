@@ -15,7 +15,7 @@ export default [
     routes: [
       { path: '/productmanage/category', name:'分类管理', icon: 'AppstoreOutlined', component: './category' },
       { path: '/productmanage/brand', name:'品牌管理', icon: 'GlobalOutlined', component: './Brand' },
-      { path: '/productmanage/attrgroup', name:'属性分组管理', icon: 'GlobalOutlined', component: './AttrGroup', },
+      { path: '/productmanage/attrgroup', name:'属性分组管理', icon: 'GroupOutlined', component: './AttrGroup', },
       { component: './404' },
     ],
   },

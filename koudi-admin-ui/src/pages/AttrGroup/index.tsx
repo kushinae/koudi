@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Category from '@/components/Category';
 import { Row, Col } from 'antd';
 import List from '@/components/AttrGroup/List';
@@ -10,6 +10,7 @@ import { PageContainer } from '@ant-design/pro-layout';
  * @since 1.0.0
  */
 const AttrGroup: React.FC = () => {
+  const [selectNode, setSelectNode] = useState<APIResponse.Category>();
   /**
    * 钩子函数
    */
@@ -24,10 +25,12 @@ const AttrGroup: React.FC = () => {
       <PageContainer>
         <Row gutter={16}>
           <Col span={4}>
-            <Category overlay={false} draggable={false} fieldNames={{ title: "name", key: "id", children: "children" }} />
+            <Category onSelect={(value: APIResponse.Category) => {
+              setSelectNode(value);
+            }} overlay={false} draggable={false} fieldNames={{ title: "name", key: "id", children: "children" }} />
           </Col>
           <Col span={20}>
-            <List />
+            <List selectCategory={selectNode} />
           </Col>
         </Row>
       </PageContainer>

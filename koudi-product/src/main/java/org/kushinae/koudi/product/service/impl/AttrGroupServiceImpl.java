@@ -32,7 +32,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupMapper, AttrGroup
     @Override
     public Page<AttrGroup> listWithPage(AttrGroupSearch search) {
         Page<AttrGroup> page = new Page<>(search.getCurrent(), search.getQueryCount());
-        return page(page, Wrappers.lambdaQuery(AttrGroup.class).eq(StringUtils.hasText(search.getKey()), AttrGroup::getName, search.getKey()));
+        return page(page, Wrappers.lambdaQuery(AttrGroup.class).eq(ObjectUtils.nonNull(search.getCategoryId()), AttrGroup::getCategoryId, search.getCategoryId()).eq(StringUtils.hasText(search.getKey()), AttrGroup::getName, search.getKey()));
     }
 
     @Override

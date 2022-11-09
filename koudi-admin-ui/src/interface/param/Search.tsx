@@ -3,9 +3,13 @@ export interface Search {
   current: number;
   // 查询总数
   queryCount: number;
+  // 查询关键词
+  key?: string;
 }
 
 export interface BrandSearch extends Search {
-  // 名称
-  name?: string;
+}
+
+export interface AttrGroupSearch extends Search {
+  categoryId?: number;
 }

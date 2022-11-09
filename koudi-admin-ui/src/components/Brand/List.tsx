@@ -18,7 +18,7 @@ const List: React.FC = () => {
   const [search, setSearch] = useState<BrandSearch>({
     current: 1,
     queryCount: 20,
-    name: undefined,
+    key: undefined,
   });
 
   const [tableTotal, setTableTotal] = useState<number>(0);
@@ -29,7 +29,7 @@ const List: React.FC = () => {
    */
   const rerfrshBrands = useCallback(() => {
     listWithPage(search).then(response => {
-      setBrands(response.records);
+      // setBrands(response.records);
       setTableLoading(response.status);
       setSearch({
         current: response.current,

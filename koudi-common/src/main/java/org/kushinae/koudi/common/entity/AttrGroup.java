@@ -8,7 +8,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -48,11 +48,11 @@ public class AttrGroup implements Serializable {
 
     @ApiModelProperty("数据创建时间")
     @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
+    private Date createTime;
 
     @ApiModelProperty("数据更新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime modifiedTime;
+    private Date modifiedTime;
 
     @ApiModelProperty("数据创建用户")
     @TableField(fill = FieldFill.INSERT)
@@ -122,19 +122,19 @@ public class AttrGroup implements Serializable {
         this.categoryId = categoryId;
     }
 
-    public LocalDateTime getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
-    public LocalDateTime getModifiedTime() {
+    public Date getModifiedTime() {
         return modifiedTime;
     }
 
-    public void setModifiedTime(LocalDateTime modifiedTime) {
+    public void setModifiedTime(Date modifiedTime) {
         this.modifiedTime = modifiedTime;
     }
 

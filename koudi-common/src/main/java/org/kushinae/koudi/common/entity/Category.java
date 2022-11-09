@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -65,11 +66,11 @@ public class Category implements Serializable {
 
     @ApiModelProperty(value = "数据创建时间")
     @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
+    private Date createTime;
 
     @ApiModelProperty(value = "数据更新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime modifiedTime;
+    private Date modifiedTime;
 
     @ApiModelProperty(value = "数据创建用户")
     @TableField(fill = FieldFill.INSERT)

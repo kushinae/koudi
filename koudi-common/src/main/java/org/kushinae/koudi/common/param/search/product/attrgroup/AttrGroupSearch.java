@@ -11,4 +11,7 @@ import org.kushinae.koudi.common.param.search.Search;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class AttrGroupSearch extends Search {
+
+    private Long categoryId;
+
 }
