@@ -3,11 +3,12 @@ import { PlusOutlined } from '@ant-design/icons';
 import { ProTable } from '@ant-design/pro-table';
 import { Button } from 'antd';
 import React, { useEffect, useState } from 'react';
-import type { AttrGroupSearch } from '../../interface/param/Search';
 import Editor from '@/components/AttrGroup/Editor';
+import type { AttrGroupSearch } from '@/interface/param/Search';
 
 interface AttrGroupListProps {
   selectCategory?: APIResponse.Category;
+  search: AttrGroupSearch;
 }
 
 /**
@@ -16,16 +17,11 @@ interface AttrGroupListProps {
  * @since 1.0.0
  */
 const List: React.FC<AttrGroupListProps> = ({
-  selectCategory
+  selectCategory, search
 }) => {
 
   const [dataSource, setDataSource] = useState<APIResponse.AttrGroup[]>();
-  const [search, setSearch] = useState<AttrGroupSearch>({
-    current: 1,
-    queryCount: 20,
-    key: undefined,
-    categoryId: selectCategory?.id,
-  });
+
   const [openEditor, setOpenEditor] = useState<boolean>(false);
 
   const onSuccessEditor = (payload: APIResponse.AttrGroup) => {
@@ -103,13 +99,12 @@ const List: React.FC<AttrGroupListProps> = ({
           // sort,
           // filter,
         ) => {
-          setSearch({
+          const response = await listWithPage({
             current: params.current,
             queryCount: params.pageSize,
             key: params?.name,
             categoryId: selectCategory?.id
-          })
-          const response = await listWithPage(search);
+          });
           return {
             data: response.records,
             success: response.status,

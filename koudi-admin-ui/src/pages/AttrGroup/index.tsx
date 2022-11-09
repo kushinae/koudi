@@ -3,6 +3,7 @@ import Category from '@/components/Category';
 import { Row, Col } from 'antd';
 import List from '@/components/AttrGroup/List';
 import { PageContainer } from '@ant-design/pro-layout';
+import type { AttrGroupSearch } from '@/interface/param/Search';
 
 /**
  * AttrGroup属性组
@@ -11,6 +12,12 @@ import { PageContainer } from '@ant-design/pro-layout';
  */
 const AttrGroup: React.FC = () => {
   const [selectNode, setSelectNode] = useState<APIResponse.Category>();
+  const [search, setSearch] = useState<AttrGroupSearch>({
+    current: 1,
+    queryCount: 20,
+    key: undefined,
+    categoryId: selectNode?.id,
+  });
   /**
    * 钩子函数
    */
@@ -27,10 +34,14 @@ const AttrGroup: React.FC = () => {
           <Col span={4}>
             <Category onSelect={(value: APIResponse.Category) => {
               setSelectNode(value);
+              setSearch({
+                ...search,
+                categoryId: selectNode?.id
+              })
             }} overlay={false} draggable={false} fieldNames={{ title: "name", key: "id", children: "children" }} />
           </Col>
           <Col span={20}>
-            <List selectCategory={selectNode} />
+            <List search={search} selectCategory={selectNode} />
           </Col>
         </Row>
       </PageContainer>

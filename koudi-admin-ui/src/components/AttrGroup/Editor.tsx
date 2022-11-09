@@ -1,5 +1,5 @@
-import { ModalForm, ProFormText } from '@ant-design/pro-components';
-import { Button, message } from 'antd';
+import { ModalForm, ProFormDigit, ProFormText, ProFormTextArea } from '@ant-design/pro-components';
+import { Button, Form, message } from 'antd';
 import React, { useEffect } from 'react';
 
 interface EditorAttrGroupProps {
@@ -16,6 +16,7 @@ interface EditorAttrGroupProps {
 const Editor: React.FC<EditorAttrGroupProps> = ({
   open, onSuccess, onCancel
 }) => {
+  const [form] = Form.useForm();
   /**
    * 钩子函数
    */
@@ -28,6 +29,7 @@ const Editor: React.FC<EditorAttrGroupProps> = ({
   return (
     <>
       <ModalForm
+        form={form}
         // onOpenChange={onCancel}
         open={open}
         title="编辑属性分组"
@@ -58,15 +60,45 @@ const Editor: React.FC<EditorAttrGroupProps> = ({
           return true;
         }}
       >
+
+        <ProFormDigit width="md" name="id" hidden label="主键" placeholder="主键" />
         <ProFormText
           width="md"
           name="name"
-          label="签约客户名称"
+          required
+          label="名称"
           tooltip="最长为 24 位"
           placeholder="请输入名称"
         />
 
-        <ProFormText width="md" name="company" label="我方公司名称" placeholder="请输入名称" />
+        <ProFormDigit
+          label="排序"
+          name="sort"
+          required
+        />
+
+        <ProFormTextArea width="md" name="description" label="描述" placeholder="请输入描述" />
+
+        <ProFormText
+          width="md"
+          name="icon"
+          label="icon"
+          placeholder="icon地址"
+        />
+
+        <ProFormText
+          width="md"
+          name="categoryName"
+          label="所属分类"
+          required
+          disabled
+          placeholder="分类名称"
+        />
+        <ProFormDigit
+          label="所属分类ID"
+          name="categoryId"
+          hidden
+        />
       </ModalForm>
     </>
   )
