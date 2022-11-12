@@ -3,14 +3,14 @@ declare namespace APIResponse {
   type R<T> = {
     code: number;
     message: string;
-    status: boolean;
+    success: boolean;
     data: T;
   }
 
   type Page<T> = {
     code: number;
     message: string;
-    status: boolean;
+    success: boolean;
     records: T[];
     /** 当前页码 */
     current: number;

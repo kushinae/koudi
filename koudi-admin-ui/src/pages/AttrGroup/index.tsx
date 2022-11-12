@@ -14,10 +14,15 @@ const AttrGroup: React.FC = () => {
   const [selectNode, setSelectNode] = useState<APIResponse.Category>();
   const [search, setSearch] = useState<AttrGroupSearch>({
     current: 1,
-    queryCount: 20,
+    queryCount: 5,
     key: undefined,
     categoryId: selectNode?.id,
   });
+
+  const clearSelectNode = () => {
+    setSelectNode(undefined);
+  }
+
   /**
    * 钩子函数
    */
@@ -37,11 +42,11 @@ const AttrGroup: React.FC = () => {
               setSearch({
                 ...search,
                 categoryId: selectNode?.id
-              })
+              });
             }} overlay={false} draggable={false} fieldNames={{ title: "name", key: "id", children: "children" }} />
           </Col>
           <Col span={20}>
-            <List search={search} selectCategory={selectNode} />
+            <List onSearchChange={setSearch} clearSelectNode={clearSelectNode} search={search} selectCategory={selectNode} />
           </Col>
         </Row>
       </PageContainer>

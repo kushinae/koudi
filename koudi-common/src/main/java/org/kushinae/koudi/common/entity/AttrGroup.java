@@ -3,10 +3,12 @@ package org.kushinae.koudi.common.entity;
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,10 +20,12 @@ import java.util.Date;
  * @author bnyte
  * @since 2022-11-05
  */
+@Data
 @TableName("t_product_attr_group")
 @ApiModel(value = "AttrGroup对象", description = "品牌表")
 public class AttrGroup implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("分组id")
@@ -74,126 +78,8 @@ public class AttrGroup implements Serializable {
     @TableLogic
     private Boolean deleted;
 
-    public Long getId() {
-        return id;
-    }
+    @ApiModelProperty("分类名称")
+    @TableField(exist = false)
+    private String categoryName;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getSort() {
-        return sort;
-    }
-
-    public void setSort(Integer sort) {
-        this.sort = sort;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getModifiedTime() {
-        return modifiedTime;
-    }
-
-    public void setModifiedTime(Date modifiedTime) {
-        this.modifiedTime = modifiedTime;
-    }
-
-    public String getCreateAdminId() {
-        return createAdminId;
-    }
-
-    public void setCreateAdminId(String createAdminId) {
-        this.createAdminId = createAdminId;
-    }
-
-    public String getCreateAdminName() {
-        return createAdminName;
-    }
-
-    public void setCreateAdminName(String createAdminName) {
-        this.createAdminName = createAdminName;
-    }
-
-    public String getModifiedAdminName() {
-        return modifiedAdminName;
-    }
-
-    public void setModifiedAdminName(String modifiedAdminName) {
-        this.modifiedAdminName = modifiedAdminName;
-    }
-
-    public String getModifiedAdminId() {
-        return modifiedAdminId;
-    }
-
-    public void setModifiedAdminId(String modifiedAdminId) {
-        this.modifiedAdminId = modifiedAdminId;
-    }
-
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
-
-    @Override
-    public String toString() {
-        return "AttrGroup{" +
-            "id = " + id +
-            ", attrGroupName = " + name +
-            ", sort = " + sort +
-            ", description = " + description +
-            ", icon = " + icon +
-            ", categoryId = " + categoryId +
-            ", createTime = " + createTime +
-            ", modifiedTime = " + modifiedTime +
-            ", createAdminId = " + createAdminId +
-            ", createAdminName = " + createAdminName +
-            ", modifiedAdminName = " + modifiedAdminName +
-            ", modifiedAdminId = " + modifiedAdminId +
-            ", deleted = " + deleted +
-        "}";
-    }
 }

@@ -1,11 +1,14 @@
 import { ModalForm, ProFormDigit, ProFormText, ProFormTextArea } from '@ant-design/pro-components';
-import { Button, Form, message } from 'antd';
+import type { FormInstance } from 'antd';
+import { Button } from 'antd';
 import React, { useEffect } from 'react';
 
 interface EditorAttrGroupProps {
   open: boolean;
   onSuccess: (payload: APIResponse.AttrGroup) => void;
   onCancel: () => void;
+  currentCategory?: APIResponse.Category;
+  formInstance: FormInstance<APIResponse.AttrGroup>;
 }
 
 /**
@@ -14,9 +17,9 @@ interface EditorAttrGroupProps {
  * @since 1.0.0
  */
 const Editor: React.FC<EditorAttrGroupProps> = ({
-  open, onSuccess, onCancel
+  open, onSuccess, onCancel, currentCategory, formInstance
 }) => {
-  const [form] = Form.useForm();
+
   /**
    * 钩子函数
    */
@@ -29,7 +32,13 @@ const Editor: React.FC<EditorAttrGroupProps> = ({
   return (
     <>
       <ModalForm
-        form={form}
+        modalProps={{
+          maskClosable: true,
+          keyboard: true,
+          onCancel: () => onCancel()
+        }}
+        // getContainer={false}
+        form={formInstance}
         // onOpenChange={onCancel}
         open={open}
         title="编辑属性分组"
@@ -39,10 +48,12 @@ const Editor: React.FC<EditorAttrGroupProps> = ({
             resetText: '取消',
           },
           render: (props) => {
-            console.log(props);
             return [
               <Button key="rest" onClick={() => {
                 props.form?.resetFields();
+                formInstance.setFieldValue('categoryName', currentCategory?.name);
+                formInstance.setFieldValue('categoryId', currentCategory?.id);
+                formInstance.setFieldValue('sort', 0);
                 onCancel();
               }}>
                 取消
@@ -54,8 +65,6 @@ const Editor: React.FC<EditorAttrGroupProps> = ({
           },
         }}
         onFinish={async (values: APIResponse.AttrGroup) => {
-          console.log(values);
-          message.success('提交成功');
           onSuccess(values);
           return true;
         }}
@@ -69,11 +78,13 @@ const Editor: React.FC<EditorAttrGroupProps> = ({
           label="名称"
           tooltip="最长为 24 位"
           placeholder="请输入名称"
+          rules={[{ required: true, message: '请输入属性组名称' }]}
         />
 
         <ProFormDigit
           label="排序"
           name="sort"
+          width='md'
           required
         />
 

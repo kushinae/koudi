@@ -14,11 +14,14 @@ export default {
       // target: 'https://preview.pro.ant.design',
       // 家里
       // target: 'http://koudi:9080',
+      // 没有网关的环境
+      target: 'http://127.0.0.1:5186',
       // 公司
-      target: 'http://koudi:8181',
+      // target: 'http://koudi:8181',
       // 配置了这个可以从 http 代理到 https
       // 依赖 origin 的功能可能需要这个，比如 cookie
       changeOrigin: true,
+      pathRewrite: {'^/api': ''},
     },
   }
 };

@@ -17,7 +17,7 @@ const List: React.FC = () => {
   const [openEditor, setOpenEditor] = useState<boolean>(false);
   const [search, setSearch] = useState<BrandSearch>({
     current: 1,
-    queryCount: 20,
+    queryCount: 5,
     key: undefined,
   });
 
@@ -30,7 +30,7 @@ const List: React.FC = () => {
   const rerfrshBrands = useCallback(() => {
     listWithPage(search).then(response => {
       // setBrands(response.records);
-      setTableLoading(response.status);
+      setTableLoading(response.success);
       setSearch({
         current: response.current,
         queryCount: response.count
@@ -164,7 +164,7 @@ const List: React.FC = () => {
     // rerfrshBrands();
     listWithPage(search).then(response => {
       setBrands(response.records);
-      setTableLoading(response.status);
+      setTableLoading(!response.success);
     });
     return () => {
       // return出来的函数本来就是更新前，销毁前执行的函数，现在不监听任何状态，所以只在销毁前执行

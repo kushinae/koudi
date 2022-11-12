@@ -23,7 +23,7 @@ export async function editor(payload: APIResponse.Brand) {
   });
 }
 
-/** 编辑品牌 GET /brand/detail?id=${id} */
+/** 品牌详情 GET /brand/detail?id=${id} */
 export async function detail(id: number) {
   return request<APIResponse.R<APIResponse.Brand>>(`${API}/api/product/brand/detail?id=${id}`, {
     method: 'GET',
