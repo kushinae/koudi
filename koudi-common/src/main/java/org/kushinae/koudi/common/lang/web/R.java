@@ -1,7 +1,5 @@
 package org.kushinae.koudi.common.lang.web;
 
-import lombok.Data;
-
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -10,7 +8,6 @@ import java.io.Serializable;
  * @author bnyte
  * @since 1.0.0
  */
-@Data
 public class R<T> implements Serializable {
 
     @Serial
@@ -76,5 +73,21 @@ public class R<T> implements Serializable {
         r.code = status.getCode();
         r.message = msg;
         return r;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public Boolean getSuccess() {
+        return success;
     }
 }

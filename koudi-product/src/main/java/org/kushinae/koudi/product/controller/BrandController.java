@@ -6,7 +6,9 @@ import io.swagger.annotations.ApiOperation;
 import org.kushinae.koudi.common.entity.product.Brand;
 import org.kushinae.koudi.common.lang.web.R;
 import org.kushinae.koudi.common.lang.web.RPage;
+import org.kushinae.koudi.common.mapstruct.product.BrandTransfer;
 import org.kushinae.koudi.common.param.search.product.brand.BrandSearch;
+import org.kushinae.koudi.common.vo.product.brand.BrandVO;
 import org.kushinae.koudi.product.service.IBrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -31,8 +33,8 @@ public class BrandController {
     @APIHelper
     @PostMapping("/list")
     @ApiOperation("分页搜索获取品牌列表")
-    public RPage<Brand> listWithPage(@RequestBody BrandSearch search) {
-        return RPage.OK(service.listWithPage(search));
+    public RPage<BrandVO> listWithPage(@RequestBody BrandSearch search) {
+        return RPage.OK(service.listWithPage(search), BrandVO.class);
     }
 
     @APIHelper
@@ -45,8 +47,8 @@ public class BrandController {
     @APIHelper
     @GetMapping("/detail")
     @ApiOperation("获取品牌详情")
-    public R<Brand> detail(@RequestParam("id") Long id) {
-        return R.OK(service.detailById(id));
+    public R<BrandVO> detail(@RequestParam("id") Long id) {
+        return R.OK(BrandTransfer.INSTANCE.toVO(service.detailById(id)));
     }
 
     @APIHelper

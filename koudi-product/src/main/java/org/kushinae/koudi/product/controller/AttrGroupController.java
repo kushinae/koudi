@@ -6,7 +6,9 @@ import io.swagger.annotations.ApiOperation;
 import org.kushinae.koudi.common.entity.product.AttrGroup;
 import org.kushinae.koudi.common.lang.web.R;
 import org.kushinae.koudi.common.lang.web.RPage;
+import org.kushinae.koudi.common.mapstruct.product.AttrGroupTransfer;
 import org.kushinae.koudi.common.param.search.product.attrgroup.AttrGroupSearch;
+import org.kushinae.koudi.common.vo.product.attrgroup.AttrGroupVO;
 import org.kushinae.koudi.product.service.IAttrGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -31,8 +33,8 @@ public class AttrGroupController {
     @APIHelper
     @PostMapping("/list")
     @ApiOperation("分页搜索获取属性列表")
-    RPage<AttrGroup> listWithPage(@RequestBody(required = false) AttrGroupSearch search) {
-        return RPage.OK(service.listWithPage(search));
+    RPage<AttrGroupVO> listWithPage(@RequestBody(required = false) AttrGroupSearch search) {
+        return RPage.OK(service.listWithPage(search), AttrGroupVO.class);
     }
 
     @APIHelper
@@ -45,8 +47,8 @@ public class AttrGroupController {
     @APIHelper
     @GetMapping("/detail")
     @ApiOperation("属性组详情")
-    R<AttrGroup> editor(@RequestParam("id") Long id) {
-        return R.OK(service.detail(id));
+    R<AttrGroupVO> editor(@RequestParam("id") Long id) {
+        return R.OK(AttrGroupTransfer.INSTANCE.toVO(service.detail(id)));
     }
 
     @APIHelper

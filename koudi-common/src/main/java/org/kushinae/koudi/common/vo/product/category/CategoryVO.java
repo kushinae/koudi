@@ -1,8 +1,9 @@
-package org.kushinae.koudi.common.entity.product;
+package org.kushinae.koudi.common.vo.product.category;
 
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.kushinae.koudi.common.entity.product.Category;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -10,75 +11,81 @@ import javax.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
- * <p>
- * 属性组表
- * </p>
- *
  * @author bnyte
- * @since 2022-11-05
+ * @since 1.0.0
  */
-@TableName("t_product_attr_group")
-@ApiModel(value = "AttrGroup对象", description = "规格组")
-public class AttrGroup implements Serializable {
+@ApiModel(value="Category对象", description="商品三级分类")
+public class CategoryVO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("分组id")
+    @ApiModelProperty(value = "分类id")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @NotBlank(message = "属性组名不能为空")
-    @ApiModelProperty("组名")
+    @ApiModelProperty(value = "分类名称")
+    @NotBlank(message = "分类名称不能为空")
     private String name;
 
-    @ApiModelProperty("排序 数值越高排序优先级越高")
+    @ApiModelProperty(value = "父分类id")
+    @NotNull
+    @Min(value = -1, message = "父分类id最小为-1")
+    private Long parentId;
+
+    @ApiModelProperty(value = "层级")
+    private Integer level;
+
+    @ApiModelProperty(value = "是否显示[0-不显示，1显示]")
+    @TableField("`show`")
+    private Boolean show;
+
+    @ApiModelProperty(value = "排序")
     private Integer sort;
 
-    @ApiModelProperty("描述")
-    private String description;
-
-    @ApiModelProperty("组图标")
+    @ApiModelProperty(value = "图标地址")
     private String icon;
 
-    @ApiModelProperty("所属分类id")
-    @NotNull(message = "所属分类不能为空")
-    @Min(value = 1, message = "所属分类不存在")
-    private Long categoryId;
+    @ApiModelProperty(value = "计量单位")
+    private String productUnit;
 
-    @ApiModelProperty("数据创建时间")
+    @ApiModelProperty(value = "商品数量")
+    private Integer productCount;
+
+    @ApiModelProperty(value = "数据创建时间")
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
-    @ApiModelProperty("数据更新时间")
+    @ApiModelProperty(value = "数据更新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date modifiedTime;
 
-    @ApiModelProperty("数据创建用户")
+    @ApiModelProperty(value = "数据创建用户")
     @TableField(fill = FieldFill.INSERT)
     private String createAdminId;
 
-    @ApiModelProperty("数据创建用户名称")
+    @ApiModelProperty(value = "数据创建用户名称")
     @TableField(fill = FieldFill.INSERT)
     private String createAdminName;
 
-    @ApiModelProperty("数据更新用户名称")
+    @ApiModelProperty(value = "数据更新用户名称")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private String modifiedAdminName;
 
-    @ApiModelProperty("数据更新用户")
+    @ApiModelProperty(value = "数据更新用户")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private String modifiedAdminId;
 
-    @ApiModelProperty("是否逻辑删除 0否 1是 默认否")
+    @ApiModelProperty(value = "是否逻辑删除 0否 1是 默认否")
     @TableLogic
     private Boolean deleted;
 
-    @ApiModelProperty("分类名称")
+    @ApiModelProperty("当前分类的子分类")
     @TableField(exist = false)
-    private String categoryName;
+    private List<Category> children;
 
     public Long getId() {
         return id;
@@ -96,20 +103,36 @@ public class AttrGroup implements Serializable {
         this.name = name;
     }
 
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public Boolean getShow() {
+        return show;
+    }
+
+    public void setShow(Boolean show) {
+        this.show = show;
+    }
+
     public Integer getSort() {
         return sort;
     }
 
     public void setSort(Integer sort) {
         this.sort = sort;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getIcon() {
@@ -120,12 +143,20 @@ public class AttrGroup implements Serializable {
         this.icon = icon;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
+    public String getProductUnit() {
+        return productUnit;
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setProductUnit(String productUnit) {
+        this.productUnit = productUnit;
+    }
+
+    public Integer getProductCount() {
+        return productCount;
+    }
+
+    public void setProductCount(Integer productCount) {
+        this.productCount = productCount;
     }
 
     public Date getCreateTime() {
@@ -184,11 +215,11 @@ public class AttrGroup implements Serializable {
         this.deleted = deleted;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public List<Category> getChildren() {
+        return children;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setChildren(List<Category> children) {
+        this.children = children;
     }
 }

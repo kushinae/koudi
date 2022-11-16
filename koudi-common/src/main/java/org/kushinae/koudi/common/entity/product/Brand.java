@@ -7,7 +7,6 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -188,25 +187,5 @@ public class Brand implements Serializable {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
-    }
-
-    @Override
-    public String toString() {
-        return "Brand{" +
-            "id = " + id +
-            ", name = " + name +
-            ", logo = " + logo +
-            ", description = " + description +
-            ", show = " + show +
-            ", firstLetter = " + firstLetter +
-            ", sort = " + sort +
-            ", createTime = " + createTime +
-            ", modifiedTime = " + modifiedTime +
-            ", createAdminId = " + createAdminId +
-            ", createAdminName = " + createAdminName +
-            ", modifiedAdminName = " + modifiedAdminName +
-            ", modifiedAdminId = " + modifiedAdminId +
-            ", deleted = " + deleted +
-        "}";
     }
 }

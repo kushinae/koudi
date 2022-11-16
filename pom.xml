@@ -25,7 +25,6 @@
         <swagger.version>3.0.0</swagger.version>
         <forge.version>1.0.8.4</forge.version>
         <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
-        <lombok.version>1.18.22</lombok.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
         <mybatis-plus-generator.version>3.5.3</mybatis-plus-generator.version>
         <mysql-connector.version>8.0.30</mysql-connector.version>
@@ -35,6 +34,7 @@
         <freemarker.version>2.3.31</freemarker.version>
         <forest.version>1.5.26</forest.version>
         <jnanoid.version>2.0.0</jnanoid.version>
+        <mapstruct.version>1.5.2.Final</mapstruct.version>
     </properties>
 
     <dependencyManagement>
@@ -104,12 +104,6 @@
             </dependency>
 
             <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-generator</artifactId>
                 <version>${mybatis-plus-generator.version}</version>
@@ -153,6 +147,13 @@
                 <artifactId>spring-boot-configuration-processor</artifactId>
                 <version>${spring-boot-component.version}</version>
                 <optional>true</optional>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct-processor -->
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
             </dependency>
 
         </dependencies>

@@ -7,7 +7,7 @@ import org.kushinae.koudi.common.annotation.UploadData;
 import org.kushinae.koudi.common.annotation.UploadHandler;
 import org.kushinae.koudi.common.enums.EUploadType;
 import org.kushinae.koudi.common.lang.web.R;
-import org.kushinae.koudi.common.vo.upload.UploadVO;
+import org.kushinae.koudi.common.vo.product.upload.UploadVO;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,7 +28,7 @@ public class UploadController {
     @ApiOperation("上传资源")
     @PostMapping("/sso")
     R<UploadVO> resource(@RequestParam("file") MultipartFile file, @UploadData String filepath) {
-        return R.OK(UploadVO.builder().filepath(filepath).build());
+        return R.OK(new UploadVO(filepath));
     }
 
 }

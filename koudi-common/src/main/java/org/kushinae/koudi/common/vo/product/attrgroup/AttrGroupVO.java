@@ -1,4 +1,4 @@
-package org.kushinae.koudi.common.entity.product;
+package org.kushinae.koudi.common.vo.product.attrgroup;
 
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
@@ -12,17 +12,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * <p>
- * 属性组表
- * </p>
- *
  * @author bnyte
- * @since 2022-11-05
+ * @since 1.0.0
  */
-@TableName("t_product_attr_group")
 @ApiModel(value = "AttrGroup对象", description = "规格组")
-public class AttrGroup implements Serializable {
-
+public class AttrGroupVO implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 

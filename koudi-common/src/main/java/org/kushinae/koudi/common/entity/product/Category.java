@@ -3,8 +3,6 @@ package org.kushinae.koudi.common.entity.product;
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -22,8 +20,6 @@ import java.util.List;
  * @author bnyte
  * @since 2022-10-31
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
 @TableName("t_product_category")
 @ApiModel(value="Category对象", description="商品三级分类")
 public class Category implements Serializable {
@@ -99,4 +95,147 @@ public class Category implements Serializable {
     @TableField(exist = false)
     private Boolean disabled;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public Boolean getShow() {
+        return show;
+    }
+
+    public void setShow(Boolean show) {
+        this.show = show;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getProductUnit() {
+        return productUnit;
+    }
+
+    public void setProductUnit(String productUnit) {
+        this.productUnit = productUnit;
+    }
+
+    public Integer getProductCount() {
+        return productCount;
+    }
+
+    public void setProductCount(Integer productCount) {
+        this.productCount = productCount;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getModifiedTime() {
+        return modifiedTime;
+    }
+
+    public void setModifiedTime(Date modifiedTime) {
+        this.modifiedTime = modifiedTime;
+    }
+
+    public String getCreateAdminId() {
+        return createAdminId;
+    }
+
+    public void setCreateAdminId(String createAdminId) {
+        this.createAdminId = createAdminId;
+    }
+
+    public String getCreateAdminName() {
+        return createAdminName;
+    }
+
+    public void setCreateAdminName(String createAdminName) {
+        this.createAdminName = createAdminName;
+    }
+
+    public String getModifiedAdminName() {
+        return modifiedAdminName;
+    }
+
+    public void setModifiedAdminName(String modifiedAdminName) {
+        this.modifiedAdminName = modifiedAdminName;
+    }
+
+    public String getModifiedAdminId() {
+        return modifiedAdminId;
+    }
+
+    public void setModifiedAdminId(String modifiedAdminId) {
+        this.modifiedAdminId = modifiedAdminId;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public List<Category> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Category> children) {
+        this.children = children;
+    }
+
+    public Boolean getDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
+    }
 }

@@ -1,9 +1,10 @@
 package org.kushinae.koudi.common.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 import org.kushinae.koudi.common.config.CurrentAdmin;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +15,10 @@ import java.util.Date;
  * @author bnyte
  * @since 1.0.0
  */
-@Slf4j
 @Component
 public class MyBatisPlusHandler implements MetaObjectHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(MyBatisPlusHandler.class);
 
     @Autowired
     CurrentAdmin currentAdmin;

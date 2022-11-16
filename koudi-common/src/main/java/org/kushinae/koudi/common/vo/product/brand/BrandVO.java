@@ -1,52 +1,47 @@
-package org.kushinae.koudi.common.entity.product;
+package org.kushinae.koudi.common.vo.product.brand;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Date;
 
 /**
- * <p>
- * 属性组表
- * </p>
- *
  * @author bnyte
- * @since 2022-11-05
+ * @since 1.0.0
  */
-@TableName("t_product_attr_group")
-@ApiModel(value = "AttrGroup对象", description = "规格组")
-public class AttrGroup implements Serializable {
-
-    @Serial
-    private static final long serialVersionUID = 1L;
-
-    @ApiModelProperty("分组id")
+@ApiModel(value="Brand对象", description="品牌分类")
+public class BrandVO {
+    @ApiModelProperty("品牌id")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @NotBlank(message = "属性组名不能为空")
-    @ApiModelProperty("组名")
+    @ApiModelProperty("品牌名")
+    @NotBlank(message = "品牌名称不能为空")
     private String name;
 
-    @ApiModelProperty("排序 数值越高排序优先级越高")
-    private Integer sort;
+    @ApiModelProperty("品牌logo地址")
+    @NotBlank(message = "品牌logo地址不能为空")
+    private String logo;
 
-    @ApiModelProperty("描述")
+    @ApiModelProperty("介绍")
     private String description;
 
-    @ApiModelProperty("组图标")
-    private String icon;
+    @ApiModelProperty("显示状态[0-不显示；1-显示]")
+    @TableField("`show`")
+    @NotNull
+    private Boolean show;
 
-    @ApiModelProperty("所属分类id")
-    @NotNull(message = "所属分类不能为空")
-    @Min(value = 1, message = "所属分类不存在")
-    private Long categoryId;
+    @ApiModelProperty("检索首字母")
+    private String firstLetter;
+
+    @ApiModelProperty("排序数字越大排序越高")
+    private Integer sort;
 
     @ApiModelProperty("数据创建时间")
     @TableField(fill = FieldFill.INSERT)
@@ -72,14 +67,6 @@ public class AttrGroup implements Serializable {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private String modifiedAdminId;
 
-    @ApiModelProperty("是否逻辑删除 0否 1是 默认否")
-    @TableLogic
-    private Boolean deleted;
-
-    @ApiModelProperty("分类名称")
-    @TableField(exist = false)
-    private String categoryName;
-
     public Long getId() {
         return id;
     }
@@ -96,12 +83,12 @@ public class AttrGroup implements Serializable {
         this.name = name;
     }
 
-    public Integer getSort() {
-        return sort;
+    public String getLogo() {
+        return logo;
     }
 
-    public void setSort(Integer sort) {
-        this.sort = sort;
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
     public String getDescription() {
@@ -112,20 +99,28 @@ public class AttrGroup implements Serializable {
         this.description = description;
     }
 
-    public String getIcon() {
-        return icon;
+    public Boolean getShow() {
+        return show;
     }
 
-    public void setIcon(String icon) {
-        this.icon = icon;
+    public void setShow(Boolean show) {
+        this.show = show;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
+    public String getFirstLetter() {
+        return firstLetter;
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setFirstLetter(String firstLetter) {
+        this.firstLetter = firstLetter;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 
     public Date getCreateTime() {
@@ -174,21 +169,5 @@ public class AttrGroup implements Serializable {
 
     public void setModifiedAdminId(String modifiedAdminId) {
         this.modifiedAdminId = modifiedAdminId;
-    }
-
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
     }
 }
