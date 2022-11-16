@@ -1,6 +1,6 @@
 package org.kushinae.koudi.product.mapper;
 
-import org.kushinae.koudi.common.entity.Brand;
+import org.kushinae.koudi.common.entity.product.Brand;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

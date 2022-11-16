@@ -3,7 +3,7 @@ package org.kushinae.koudi.product.controller;
 import com.bnyte.forge.annotation.APIHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.kushinae.koudi.common.entity.Category;
+import org.kushinae.koudi.common.entity.product.Category;
 import org.kushinae.koudi.common.lang.web.R;
 import org.kushinae.koudi.product.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;

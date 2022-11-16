@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.kushinae.koudi.common.config.CurrentAdmin;
 import org.kushinae.koudi.common.constant.ProductConstant;
-import org.kushinae.koudi.common.entity.Category;
+import org.kushinae.koudi.common.entity.product.Category;
 import org.kushinae.koudi.common.exception.ParameterCheckException;
 import org.kushinae.koudi.common.lang.web.Status;
 import org.kushinae.koudi.common.util.CollectionUtils;

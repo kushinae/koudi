@@ -3,7 +3,7 @@ package org.kushinae.koudi.product.controller;
 import com.bnyte.forge.annotation.APIHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.kushinae.koudi.common.entity.Brand;
+import org.kushinae.koudi.common.entity.product.Brand;
 import org.kushinae.koudi.common.lang.web.R;
 import org.kushinae.koudi.common.lang.web.RPage;
 import org.kushinae.koudi.common.param.search.product.brand.BrandSearch;

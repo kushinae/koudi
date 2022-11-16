@@ -1,4 +1,4 @@
-package org.kushinae.koudi.common.entity;
+package org.kushinae.koudi.common.entity.product;
 
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;

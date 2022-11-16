@@ -1,7 +1,7 @@
 package org.kushinae.koudi.product.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.kushinae.koudi.common.entity.AttrGroup;
+import org.kushinae.koudi.common.entity.product.AttrGroup;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.kushinae.koudi.common.param.search.product.attrgroup.AttrGroupSearch;
 

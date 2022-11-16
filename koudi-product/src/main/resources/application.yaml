@@ -30,6 +30,6 @@ upyun:
   operator:
     name: liugxion
     password: BnUsduD3ZU3JS5TKcD8OWOXdVza9KhiO
-  http_path: https://blogimg.bytestroll.com
-  service_name: imagephoto
-  dir_path: koudi
+  http-path: https://blogimg.bytestroll.com
+  service-name: imagephoto
+  dir-path: koudi

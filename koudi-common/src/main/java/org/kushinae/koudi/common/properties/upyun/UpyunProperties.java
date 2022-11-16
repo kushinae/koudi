@@ -9,14 +9,23 @@ import org.springframework.context.annotation.Configuration;
  * @author bnyte
  * @since 1.0.0
  */
-@ConfigurationProperties(prefix = "upyun")
 @Configuration
+@ConfigurationProperties(prefix = "upyun")
 public class UpyunProperties {
 
+    /**
+     * 又拍云请求地址
+     */
     private String httpPath;
 
+    /**
+     * 又拍云的服务名称
+     */
     private String serviceName;
 
+    /**
+     * 上传文件路径
+     */
     private String dirPath;
 
     private AuthorizationProperties authorization;

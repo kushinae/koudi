@@ -3,7 +3,7 @@ package org.kushinae.koudi.product.service.impl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.jetbrains.annotations.NotNull;
-import org.kushinae.koudi.common.entity.Brand;
+import org.kushinae.koudi.common.entity.product.Brand;
 import org.kushinae.koudi.common.exception.ParameterCheckException;
 import org.kushinae.koudi.common.forest.UpyunClient;
 import org.kushinae.koudi.common.lang.web.Status;

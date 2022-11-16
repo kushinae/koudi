@@ -1,14 +1,24 @@
 package org.kushinae.koudi.common.properties.upyun.operator;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+
 /**
  * @author bnyte
  * @since 1.0.0
  */
-//@AutoConfiguration
-//@ConfigurationProperties(prefix = "upyun.operator")
+@Configuration
+@ConfigurationProperties(prefix = "upyun.operator")
 public class OperatorProperties {
 
+    /**
+     * 操作员用户名
+     */
     private String name;
+
+    /**
+     * 操作员密码
+     */
     private String password;
 
     public String getName() {

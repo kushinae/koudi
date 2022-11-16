@@ -1,6 +1,6 @@
 package org.kushinae.koudi.product.service;
 
-import org.kushinae.koudi.common.entity.Category;
+import org.kushinae.koudi.common.entity.product.Category;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;

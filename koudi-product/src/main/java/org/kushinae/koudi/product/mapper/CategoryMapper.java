@@ -1,6 +1,6 @@
 package org.kushinae.koudi.product.mapper;
 
-import org.kushinae.koudi.common.entity.Category;
+import org.kushinae.koudi.common.entity.product.Category;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

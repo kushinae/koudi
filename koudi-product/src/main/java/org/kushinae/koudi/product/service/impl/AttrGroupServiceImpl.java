@@ -2,8 +2,8 @@ package org.kushinae.koudi.product.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.kushinae.koudi.common.entity.AttrGroup;
-import org.kushinae.koudi.common.entity.Category;
+import org.kushinae.koudi.common.entity.product.AttrGroup;
+import org.kushinae.koudi.common.entity.product.Category;
 import org.kushinae.koudi.common.exception.ParameterCheckException;
 import org.kushinae.koudi.common.lang.web.Status;
 import org.kushinae.koudi.common.param.search.product.attrgroup.AttrGroupSearch;
