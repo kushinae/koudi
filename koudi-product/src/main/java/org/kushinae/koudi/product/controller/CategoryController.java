@@ -33,7 +33,8 @@ public class CategoryController {
     @APIHelper
     @GetMapping("/tree")
     @ApiOperation("获取树装分类列表")
-    public R<List<CategoryVO>> tree(@RequestParam(value = "disabled", defaultValue = "false", required = false) Boolean disable) {
+    public R<List<CategoryVO>> tree(
+            @RequestParam(value = "disabled", defaultValue = "false", required = false) Boolean disable) {
         return R.OK(CategoryTransfer.INSTANCE.toVOList(service.tree(disable)));
     }
 
@@ -57,6 +58,13 @@ public class CategoryController {
     public R<Void> removeNode(@RequestParam("node_id") Long nodeId) {
         service.removeNode(nodeId);
         return R.EMPTY();
+    }
+
+    @APIHelper
+    @GetMapping("/tree_with_brand")
+    @ApiOperation("获取树装分类列表并且指定品牌id绑定信息")
+    public R<List<CategoryVO>> treeWithBrand(@RequestParam("brand_id") Long brandId) {
+        return R.OK(CategoryTransfer.INSTANCE.toVOList(service.treeWithBrand(brandId)));
     }
 
 

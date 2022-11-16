@@ -3,6 +3,7 @@ package org.kushinae.koudi.product.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.kushinae.koudi.common.entity.product.Brand;
+import org.kushinae.koudi.common.param.request.RelationCategoryParam;
 import org.kushinae.koudi.common.param.search.product.brand.BrandSearch;
 import org.springframework.lang.NonNull;
 
@@ -25,4 +26,6 @@ public interface IBrandService extends IService<Brand> {
     Brand detailById(Long id);
 
     Boolean deleteById(Long id);
+
+    Boolean relationCategory(RelationCategoryParam payload);
 }

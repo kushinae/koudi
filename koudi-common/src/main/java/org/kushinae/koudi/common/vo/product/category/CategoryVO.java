@@ -87,6 +87,10 @@ public class CategoryVO implements Serializable {
     @TableField(exist = false)
     private List<Category> children;
 
+    @ApiModelProperty("当前分类是否选中")
+    @TableField(exist = false)
+    private Boolean selector = false;
+
     public Long getId() {
         return id;
     }
@@ -221,5 +225,13 @@ public class CategoryVO implements Serializable {
 
     public void setChildren(List<Category> children) {
         this.children = children;
+    }
+
+    public Boolean getSelector() {
+        return selector;
+    }
+
+    public void setSelector(Boolean selector) {
+        this.selector = selector;
     }
 }

@@ -2,18 +2,26 @@ package org.kushinae.koudi.product.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jetbrains.annotations.NotNull;
 import org.kushinae.koudi.common.entity.product.Brand;
+import org.kushinae.koudi.common.entity.product.Category;
+import org.kushinae.koudi.common.entity.product.CategoryBrandRelation;
 import org.kushinae.koudi.common.exception.ParameterCheckException;
 import org.kushinae.koudi.common.forest.UpyunClient;
 import org.kushinae.koudi.common.lang.web.Status;
+import org.kushinae.koudi.common.param.request.RelationCategoryParam;
 import org.kushinae.koudi.common.param.search.product.brand.BrandSearch;
+import org.kushinae.koudi.common.util.CollectionUtils;
 import org.kushinae.koudi.common.util.ObjectUtils;
 import org.kushinae.koudi.product.mapper.BrandMapper;
 import org.kushinae.koudi.product.service.IBrandService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.kushinae.koudi.product.service.ICategoryBrandRelationService;
+import org.kushinae.koudi.product.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -28,6 +36,12 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
 
     @Autowired
     UpyunClient upyunClient;
+
+    @Autowired
+    ICategoryService categoryService;
+
+    @Autowired
+    ICategoryBrandRelationService categoryBrandRelationService;
 
     @Override
     public Page<Brand> listWithPage(BrandSearch search) {
@@ -51,7 +65,9 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
 
     @Override
     public Brand detailById(Long id) {
-        return getById(id);
+        Brand brand = getById(id);
+        brand.setCategory(categoryService.treeWithBrand(brand.getId()));
+        return brand;
     }
 
     @Override
@@ -62,5 +78,29 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
         upyunClient.deleteFile(brand.getLogo());
 
         return removeById(brand.getId());
+    }
+
+    @Override
+    public Boolean relationCategory(RelationCategoryParam payload) {
+        Brand brand = getById(payload.getId());
+        if (ObjectUtils.isNull(brand)) {
+            throw new ParameterCheckException(Status.DATA_DOES_NOT_EXIST);
+        }
+
+        List<Category> categories = categoryService.listByIds(payload.getCategories());
+        if (CollectionUtils.isEmpty(categories) || categories.size() != payload.getCategories().size()) {
+            throw new ParameterCheckException(Status.DATA_DOES_NOT_EXIST);
+        }
+
+        categoryBrandRelationService.saveOrUpdateBatch(categories.stream().map(e -> {
+            CategoryBrandRelation relation = new CategoryBrandRelation();
+            relation.setBrandId(payload.getId());
+            relation.setCategoryId(e.getId());
+            relation.setBrandName(brand.getName());
+            relation.setCategoryName(e.getName());
+            return relation;
+        }).toList());
+
+        return true;
     }
 }

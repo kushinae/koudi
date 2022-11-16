@@ -30,9 +30,19 @@ export async function detail(id: number) {
   });
 }
 
-/** 删除分类 DELETE /category/remove */
+/** 删除品牌 DELETE /brand/remove */
 export async function remove(id: number) {
   return request<APIResponse.R<number>>(`${API}/api/product/brand/remove?id=${id}`, {
     method: 'DELETE',
+  });
+}
+
+/** 绑定分类 PUT /brand/relation/category */
+export async function relationCategory(payload: {id: number, categories: number[]}) {
+  return request<APIResponse.R<number>>(`${API}/api/product/brand/relation/category`, {
+    method: 'PUT',
+    data: {
+      ...payload
+    }
   });
 }

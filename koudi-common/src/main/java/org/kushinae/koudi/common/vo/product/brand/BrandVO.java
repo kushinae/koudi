@@ -6,10 +6,12 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.kushinae.koudi.common.vo.product.category.CategoryVO;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author bnyte
@@ -66,6 +68,9 @@ public class BrandVO {
     @ApiModelProperty("数据更新用户")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private String modifiedAdminId;
+
+    @ApiModelProperty("品牌分类列表")
+    private List<CategoryVO> category;
 
     public Long getId() {
         return id;
@@ -169,5 +174,13 @@ public class BrandVO {
 
     public void setModifiedAdminId(String modifiedAdminId) {
         this.modifiedAdminId = modifiedAdminId;
+    }
+
+    public List<CategoryVO> getCategory() {
+        return category;
+    }
+
+    public void setCategory(List<CategoryVO> category) {
+        this.category = category;
     }
 }

@@ -24,4 +24,6 @@ public interface ICategoryService extends IService<Category> {
     void removeNode(Long nodeId);
 
     List<Category> getChildren(Long nodeId);
+
+    List<Category> treeWithBrand(Long brandId);
 }

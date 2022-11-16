@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author bnyte
  * @since 2022-11-16
  */
-public interface ITCategoryBrandRelationService extends IService<CategoryBrandRelation> {
+public interface ICategoryBrandRelationService extends IService<CategoryBrandRelation> {
 
 }

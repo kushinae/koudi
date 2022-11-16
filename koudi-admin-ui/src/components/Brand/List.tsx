@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import type { ColumnsType } from 'antd/lib/table';
 import { Space, Table, Button, Switch, Image, Popconfirm } from 'antd';
-import { detail, editor, listWithPage, remove } from '@/services/product/brand/api';
+import { detail, editor, listWithPage, relationCategory, remove } from '@/services/product/brand/api';
 import type { BrandSearch } from '@/interface/param/Search';
 import Editor from '@/components/Brand/Editor';
 import Relation from './Relation';
@@ -231,8 +231,18 @@ const List: React.FC = () => {
       />
 
       <Relation
-        onSuccess={() => { }}
+        onSuccess={(categoryIds: number[], brandId: number) => {
+          relationCategory({
+            id: brandId,
+            categories: categoryIds
+          }).then(response => {
+            if (response.data) {
+              setOpenRelation(false);
+            }
+          });
+        }}
         onCancel={() => { setOpenRelation(false) }}
+        currentBrand={editorData}
         open={openRelation} />
     </>
   )

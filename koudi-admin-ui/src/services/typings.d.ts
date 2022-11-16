@@ -55,6 +55,7 @@ declare namespace APIResponse {
     deleted: boolean | undefined;
     children: APIResponse.Category[] | undefined;
     disabled: boolean | false | undefined;
+    selector?: boolean | false;
   }
 
   type Brand = {

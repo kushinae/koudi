@@ -6,8 +6,10 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -21,6 +23,7 @@ import java.util.Date;
 @ApiModel(value = "Brand对象", description = "品牌表")
 public class Brand implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("品牌id")
@@ -76,6 +79,10 @@ public class Brand implements Serializable {
     @ApiModelProperty("是否逻辑删除 0否 1是 默认否")
     @TableLogic
     private Boolean deleted;
+
+    @TableField(exist = false)
+    @ApiModelProperty("品牌分类列表")
+    private List<Category> category;
 
     public Long getId() {
         return id;
@@ -187,5 +194,13 @@ public class Brand implements Serializable {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public List<Category> getCategory() {
+        return category;
+    }
+
+    public void setCategory(List<Category> category) {
+        this.category = category;
     }
 }

@@ -95,6 +95,10 @@ public class Category implements Serializable {
     @TableField(exist = false)
     private Boolean disabled;
 
+    @ApiModelProperty("当前分类是否选中")
+    @TableField(exist = false)
+    private Boolean selector = false;
+
     public Long getId() {
         return id;
     }
@@ -237,5 +241,13 @@ public class Category implements Serializable {
 
     public void setDisabled(Boolean disabled) {
         this.disabled = disabled;
+    }
+
+    public Boolean getSelector() {
+        return selector;
+    }
+
+    public void setSelector(Boolean selector) {
+        this.selector = selector;
     }
 }

@@ -1,12 +1,12 @@
 package org.kushinae.koudi.common.entity.product;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -20,6 +20,7 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value = "TCategoryBrandRelation对象", description = "品牌分类关联")
 public class CategoryBrandRelation implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
@@ -38,24 +39,31 @@ public class CategoryBrandRelation implements Serializable {
     private String categoryName;
 
     @ApiModelProperty("数据创建时间")
-    private LocalDateTime createTime;
+    @TableField(fill = FieldFill.INSERT)
+    private Date createTime;
 
     @ApiModelProperty("数据更新时间")
-    private LocalDateTime modifiedTime;
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date modifiedTime;
 
     @ApiModelProperty("数据创建用户")
+    @TableField(fill = FieldFill.INSERT)
     private String createAdminId;
 
     @ApiModelProperty("数据创建用户名称")
+    @TableField(fill = FieldFill.INSERT)
     private String createAdminName;
 
     @ApiModelProperty("数据更新用户名称")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private String modifiedAdminName;
 
     @ApiModelProperty("数据更新用户")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private String modifiedAdminId;
 
     @ApiModelProperty("是否逻辑删除 0否 1是 默认否")
+    @TableLogic
     private Boolean deleted;
 
     public Long getId() {
@@ -98,19 +106,19 @@ public class CategoryBrandRelation implements Serializable {
         this.categoryName = categoryName;
     }
 
-    public LocalDateTime getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
-    public LocalDateTime getModifiedTime() {
+    public Date getModifiedTime() {
         return modifiedTime;
     }
 
-    public void setModifiedTime(LocalDateTime modifiedTime) {
+    public void setModifiedTime(Date modifiedTime) {
         this.modifiedTime = modifiedTime;
     }
 

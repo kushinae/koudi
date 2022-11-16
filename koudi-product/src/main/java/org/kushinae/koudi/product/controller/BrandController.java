@@ -7,6 +7,7 @@ import org.kushinae.koudi.common.entity.product.Brand;
 import org.kushinae.koudi.common.lang.web.R;
 import org.kushinae.koudi.common.lang.web.RPage;
 import org.kushinae.koudi.common.mapstruct.product.BrandTransfer;
+import org.kushinae.koudi.common.param.request.RelationCategoryParam;
 import org.kushinae.koudi.common.param.search.product.brand.BrandSearch;
 import org.kushinae.koudi.common.vo.product.brand.BrandVO;
 import org.kushinae.koudi.product.service.IBrandService;
@@ -56,6 +57,13 @@ public class BrandController {
     @ApiOperation("通过id删除品牌")
     public R<Boolean> removeById(@RequestParam("id") Long id) {
         return R.OK(service.deleteById(id));
+    }
+
+    @APIHelper
+    @PutMapping("/relation/category")
+    @ApiOperation("关联分类")
+    public R<Boolean> relationCategory(@Validated @RequestBody RelationCategoryParam payload) {
+        return R.OK(service.relationCategory(payload));
     }
 
 }
