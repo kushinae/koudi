@@ -4,6 +4,7 @@ import { Space, Table, Button, Switch, Image, Popconfirm } from 'antd';
 import { detail, editor, listWithPage, remove } from '@/services/product/brand/api';
 import type { BrandSearch } from '@/interface/param/Search';
 import Editor from '@/components/Brand/Editor';
+import Relation from './Relation';
 
 /**
  * 品牌列表
@@ -12,17 +13,45 @@ import Editor from '@/components/Brand/Editor';
  */
 const List: React.FC = () => {
 
+  /**
+   * 表单加载状态
+   */
   const [tableLoading, setTableLoading] = useState<boolean>(true);
+
+  /**
+   * 品牌列表
+   */
   const [brands, setBrands] = useState<APIResponse.Brand[]>();
+
+  /**
+   * 编辑form表单打开与关闭状态
+   */
   const [openEditor, setOpenEditor] = useState<boolean>(false);
+
+  /**
+   * 搜索参数
+   */
   const [search, setSearch] = useState<BrandSearch>({
     current: 1,
     queryCount: 5,
     key: undefined,
   });
 
+  /**
+   * table数据总量
+   */
   const [tableTotal, setTableTotal] = useState<number>(0);
+
+
+  /**
+   * 编辑页面的数据回显
+   */
   const [editorData, setEditorData] = useState<APIResponse.Brand>();
+
+  /**
+   * 当前关联分类表单打开与关闭状态
+   */
+  const [openRelation, setOpenRelation] = useState<boolean>(false);
 
   /**
    * 刷新当前页面数据
@@ -100,6 +129,11 @@ const List: React.FC = () => {
               setEditorData(response.data);
             });
           }} >编辑</Button>
+          {/* 关联分类 */}
+          <Button onClick={() => {
+            setEditorData(item);
+            setOpenRelation(true);
+          }} >关联分类</Button>
           <Popconfirm
             title="你是否确定删除此品牌?"
             onConfirm={() => {
@@ -196,6 +230,10 @@ const List: React.FC = () => {
         data={editorData}
       />
 
+      <Relation
+        onSuccess={() => { }}
+        onCancel={() => { setOpenRelation(false) }}
+        open={openRelation} />
     </>
   )
 }
