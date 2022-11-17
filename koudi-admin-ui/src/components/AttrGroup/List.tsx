@@ -184,15 +184,19 @@ const List: React.FC<AttrGroupListProps> = ({
           // sort,
           // filter,
         ) => {
+          if (selectCategory?.level && selectCategory.level < 3) {
+            message.warning('仅三级分类包含属性分组');
+            throw Error('仅三级分类包含属性分组');
+          }
           const response = await listWithPage({
             current: params.current,
             queryCount: params.pageSize,
             key: params?.name,
             categoryId: selectCategory?.id
           });
-          setDataSource(response.records);
+          setDataSource(response.records ? response.records : []);
           return {
-            data: response.records,
+            data: response.records ? response.records : [],
             success: response.success,
             total: response.total,
           }
@@ -201,6 +205,10 @@ const List: React.FC<AttrGroupListProps> = ({
           <Button key="button" onClick={() => {
             if (!selectCategory) {
               message.warn('请在左侧选择分类');
+              return;
+            }
+            if (selectCategory.level < 3) {
+              message.warn('请选择三级分类');
               return;
             }
             editorForm.setFieldValue('categoryName', selectCategory?.name);

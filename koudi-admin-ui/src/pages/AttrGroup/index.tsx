@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Category from '@/components/Category';
-import { Row, Col } from 'antd';
+import { Row, Col, Alert } from 'antd';
 import List from '@/components/AttrGroup/List';
 import { PageContainer } from '@ant-design/pro-layout';
 import type { AttrGroupSearch } from '@/interface/param/Search';
@@ -35,6 +35,26 @@ const AttrGroup: React.FC = () => {
   return (
     <>
       <PageContainer>
+        <Alert
+          message={'所有操作请基于三级分类操作！！！'}
+          type="warning"
+          showIcon
+          banner
+          style={{
+            margin: -12,
+            marginBottom: 24,
+          }}
+        />
+        <Alert
+          message={'请在查询或添加操作时先选择对应三级分类之后再点击[操作]按钮'}
+          type="warning"
+          showIcon
+          banner
+          style={{
+            margin: -12,
+            marginBottom: 24,
+          }}
+        />
         <Row gutter={16}>
           <Col span={4}>
             <Category onSelect={(value: APIResponse.Category) => {

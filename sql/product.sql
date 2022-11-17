@@ -2,7 +2,7 @@ create database koudi_product;
 
 use koudi_product;
 
-create table if not exists t_product_category
+create table if not exists t_category
 (
     `id`                  bigint NOT NULL AUTO_INCREMENT comment '分类id',
     `name`                varchar(50)  default null comment '分类名称',
@@ -23,7 +23,7 @@ create table if not exists t_product_category
     PRIMARY KEY (`id`)
 ) comment='商品三级分类';
 
-create table if not exists  t_product_brand
+create table if not exists  t_brand
 (
     id                    bigint not null primary key auto_increment comment '品牌id',
     name                  char(50) comment '品牌名',
@@ -41,7 +41,7 @@ create table if not exists  t_product_brand
     `deleted`             tinyint(1) DEFAULT '0' comment '是否逻辑删除 0否 1是 默认否'
 ) comment '品牌表';
 
-create table if not exists  t_product_attr_group
+create table if not exists  t_attr_group
 (
     id                    bigint primary key not null auto_increment comment '分组id',
     attr_group_name       char(20) comment '组名',
@@ -73,3 +73,24 @@ create table if not exists  t_category_brand_relation
     modified_admin_id   varchar(255) comment '数据更新用户',
     deleted             tinyint(1) default 0 comment '是否逻辑删除 0否 1是 默认否'
 ) comment '品牌分类关联';
+
+create table t_attr
+(
+    id                  bigint not null auto_increment primary key,
+    `name`              char(30) comment '属性名',
+    enable_search       tinyint(1) default 0 comment '是否需要检索[0-false-不需要，1-true-需要]',
+    multiple            tinyint(1)   default 0 comment '值类型[0-false-为单个值，1-true-可以选择多个值]',
+    icon              varchar(255) default null comment '属性图标',
+    multiple_value      varchar(255)    default null comment  '可选值列表[用逗号分隔]',
+    type         int   default null comment  '属性类型[0-销售属性，1-基本属性，2-既是销售属性又是基本属性]',
+    sort        int default 0 comment '排序方式，数值越高优先级越高 默认为0',
+    category_id          bigint comment '所属分类',
+    quick_show           tinyint(1) comment '快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整',
+    create_time         datetime     default now() comment '数据创建时间',
+    modified_time       datetime     default now() comment '数据更新时间',
+    create_admin_id     varchar(255) comment '数据创建用户',
+    create_admin_name   varchar(255) comment '数据创建用户名称',
+    modified_admin_name varchar(255) comment '数据更新用户名称',
+    modified_admin_id   varchar(255) comment '数据更新用户',
+    deleted             tinyint(1)   default 0 comment '是否逻辑删除 0否 1是 默认否'
+) comment '商品、规格与包装的属性key及值,值可以多个 使用英文逗号分隔';

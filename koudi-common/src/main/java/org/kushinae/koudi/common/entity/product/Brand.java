@@ -19,7 +19,7 @@ import java.util.List;
  * @author bnyte
  * @since 2022-11-03
  */
-@TableName("t_product_brand")
+@TableName("t_brand")
 @ApiModel(value = "Brand对象", description = "品牌表")
 public class Brand implements Serializable {
 

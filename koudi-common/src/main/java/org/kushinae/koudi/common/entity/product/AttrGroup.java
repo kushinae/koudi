@@ -19,7 +19,7 @@ import java.util.Date;
  * @author bnyte
  * @since 2022-11-05
  */
-@TableName("t_product_attr_group")
+@TableName("t_attr_group")
 @ApiModel(value = "AttrGroup对象", description = "规格组")
 public class AttrGroup implements Serializable {
 

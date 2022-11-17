@@ -20,7 +20,7 @@ import java.util.List;
  * @author bnyte
  * @since 2022-10-31
  */
-@TableName("t_product_category")
+@TableName("t_category")
 @ApiModel(value="Category对象", description="商品三级分类")
 public class Category implements Serializable {
 
