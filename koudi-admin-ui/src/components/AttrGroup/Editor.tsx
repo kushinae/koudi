@@ -58,7 +58,10 @@ const Editor: React.FC<EditorAttrGroupProps> = ({
               }}>
                 取消
               </Button>,
-              <Button key="submit" type='primary' onClick={() => props.form?.submit?.()}>
+              <Button key="submit" type='primary' onClick={() => {
+                props.form?.submit?.();
+              }
+              }>
                 提交
               </Button>,
             ];

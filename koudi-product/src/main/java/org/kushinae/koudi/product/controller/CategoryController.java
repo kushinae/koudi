@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiOperation;
 import org.kushinae.koudi.common.entity.product.Category;
 import org.kushinae.koudi.common.lang.web.R;
 import org.kushinae.koudi.common.mapstruct.product.CategoryTransfer;
-import org.kushinae.koudi.common.util.CollectionUtils;
 import org.kushinae.koudi.common.vo.product.category.CategoryBrandRelationResultVO;
 import org.kushinae.koudi.common.vo.product.category.CategoryVO;
 import org.kushinae.koudi.product.service.ICategoryService;
@@ -32,7 +31,7 @@ public class CategoryController {
     @Autowired
     ICategoryService service;
 
-    @APIHelper
+    @APIHelper(enableResponse = false)
     @GetMapping("/tree")
     @ApiOperation("获取树装分类列表")
     public R<List<CategoryVO>> tree(
@@ -62,7 +61,7 @@ public class CategoryController {
         return R.EMPTY();
     }
 
-    @APIHelper
+    @APIHelper(enableResponse = false)
     @GetMapping("/tree_with_brand")
     @ApiOperation("获取树装分类列表并且指定品牌id绑定信息")
     public R<CategoryBrandRelationResultVO> treeWithBrand(@RequestParam("brand_id") Long brandId) {

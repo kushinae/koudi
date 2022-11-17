@@ -30,7 +30,7 @@ public class AttrGroupController {
     @Autowired
     IAttrGroupService service;
 
-    @APIHelper
+    @APIHelper(enableResponse = false)
     @PostMapping("/list")
     @ApiOperation("分页搜索获取属性列表")
     RPage<AttrGroupVO> listWithPage(@RequestBody(required = false) AttrGroupSearch search) {

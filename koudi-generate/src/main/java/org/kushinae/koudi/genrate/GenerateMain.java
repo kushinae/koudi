@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -24,6 +23,8 @@ public class GenerateMain {
         pathInfoWindows.putAll(
                 Stream.of(
                         Collections.singletonMap(OutputFile.xml, "D:\\workspace\\tome\\koudi\\koudi-product\\src\\main\\resources\\mapper"),
+                        Collections.singletonMap(OutputFile.xml, "D:\\workspace\\tome\\koudi\\koudi-product\\src\\main\\resources\\mapper"),
+                        Collections.singletonMap(OutputFile.xml, "D:\\workspace\\tome\\koudi\\koudi-product\\src\\main\\resources\\mapper"),
                         Collections.singletonMap(OutputFile.entity, "D:\\workspace\\tome\\koudi\\koudi-common\\src\\main\\java\\org\\kushinae\\koudi\\common\\entity")
                 ).flatMap(e -> e.entrySet().stream()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (key, value) -> value))
         );
@@ -31,17 +32,21 @@ public class GenerateMain {
         pathInfoWindows.putAll(
                 Stream.of(
                         Collections.singletonMap(OutputFile.xml, "D:\\workspace\\tome\\koudi\\koudi-product\\src\\main\\resources\\mapper"),
-                        Collections.singletonMap(OutputFile.entity, "D:\\workspace\\tome\\koudi\\koudi-common\\src\\main\\java\\org\\kushinae\\koudi\\common\\entity")
+                        Collections.singletonMap(OutputFile.mapper, "D:\\workspace\\tome\\koudi\\koudi-product\\src\\main\\java\\org\\kushinae\\koudi\\product\\mapper"),
+                        Collections.singletonMap(OutputFile.entity, "D:\\workspace\\tome\\koudi\\koudi-common\\src\\main\\java\\org\\kushinae\\koudi\\common\\product\\entity"),
+                        Collections.singletonMap(OutputFile.controller, "D:\\workspace\\tome\\koudi\\koudi-product\\src\\main\\java\\org\\kushinae\\koudi\\product\\controller"),
+                        Collections.singletonMap(OutputFile.service, "D:\\workspace\\tome\\koudi\\koudi-product\\src\\main\\java\\org\\kushinae\\koudi\\product\\service"),
+                        Collections.singletonMap(OutputFile.serviceImpl, "D:\\workspace\\tome\\koudi\\koudi-product\\src\\main\\java\\org\\kushinae\\koudi\\product\\service\\impl")
                 ).flatMap(e -> e.entrySet().stream()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (key, value) -> value))
         );
 
-        String outputPathWindows = "";
+        String outputPathWindows = "D:\\workspace\\tome\\koudi\\koudi-common\\src\\main\\java";
         String outputPathMacOS = "/Users/bnyte/workspaces/tome/koudi/koudi-product/src/main/java";
         String packageName = "org.kushinae.koudi.product";
-        List<String> tablePrefix = Stream.of("t_product", "c_").toList();
-        List<String> includeTables = Stream.of("t_category_brand_relation").toList();
+        List<String> tablePrefix = Stream.of("t_", "c_").toList();
+        List<String> includeTables = Stream.of("t_attr_attr_group_relation", "t_attr").toList();
 
-        generate(false, pathInfoWindows, pathInfoMacOS, "bnyte", outputPathWindows, outputPathMacOS, packageName, tablePrefix, includeTables);
+        generate(true, pathInfoWindows, pathInfoMacOS, "bnyte", outputPathWindows, outputPathMacOS, packageName, tablePrefix, includeTables);
 
     }
 
@@ -65,11 +70,12 @@ public class GenerateMain {
                     builder.parent(packageName) // 设置父包名
                             .pathInfo(windows ? pathInfoWindows : pathInfoMacOS); // 设置mapperXml生成路径
                 })
-                .strategyConfig(builder -> {
-                    builder
-                            .addInclude(includeTables) // 设置需要生成的表名
-                            .addTablePrefix(tablePrefix); // 设置过滤表前缀
-                })
+                .strategyConfig(builder -> builder
+                        .addInclude(includeTables) // 设置需要生成的表名
+                        .addTablePrefix(tablePrefix)// 设置过滤表前缀
+
+                        .controllerBuilder().enableRestStyle().enableHyphenStyle().formatFileName("%sController")
+                        .entityBuilder())
                 .templateEngine(new FreemarkerTemplateEngine())// 使用Freemarker引擎模板，默认的是Velocity引擎模板
 
 
