@@ -2,6 +2,7 @@ package org.kushinae.koudi.product.service;
 
 import org.kushinae.koudi.common.entity.product.Attr;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.kushinae.koudi.common.vo.product.attr.AttrVO;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IAttrService extends IService<Attr> {
 
+    Long editor(AttrVO payload);
 }

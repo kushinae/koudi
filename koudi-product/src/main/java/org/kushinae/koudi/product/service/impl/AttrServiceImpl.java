@@ -1,6 +1,7 @@
 package org.kushinae.koudi.product.service.impl;
 
 import org.kushinae.koudi.common.entity.product.Attr;
+import org.kushinae.koudi.common.vo.product.attr.AttrVO;
 import org.kushinae.koudi.product.mapper.AttrMapper;
 import org.kushinae.koudi.product.service.IAttrService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -17,4 +18,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class AttrServiceImpl extends ServiceImpl<AttrMapper, Attr> implements IAttrService {
 
+    @Override
+    public Long editor(AttrVO payload) {
+        return null;
+    }
 }
