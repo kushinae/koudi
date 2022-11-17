@@ -84,7 +84,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     }
 
     @Override
-    public List<Category> treeWithBrand(Long brandId) {
+    public List<Category> findBrandRelations(Long brandId) {
         List<Long> categoryIds = null;
 
         List<CategoryBrandRelation> categoryBrandRelations = categoryBrandRelationService.list(Wrappers.lambdaQuery(CategoryBrandRelation.class)
@@ -93,16 +93,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
             categoryIds = categoryBrandRelations.stream().map(CategoryBrandRelation::getCategoryId).toList();
         }
 
-        List<Category> categories = list(Wrappers.lambdaQuery(Category.class).orderByAsc(Category::getSort));
-        List<Long> finalCategoryIds = categoryIds;
-        return categories.stream()
-                .filter(e -> e.getParentId().equals(ProductConstant.ROOT_CATEGORY_ID))
-                .peek(e -> {
-                    e.setDisabled(false);
-                    e.setChildren(getChildNode(e, categories, false));
-                    e.setSelector(CollectionUtils.notEmpty(finalCategoryIds) && finalCategoryIds.contains(e.getId()));
-                })
-                .collect(Collectors.toList());
+
+
+        return CollectionUtils.isEmpty(categoryIds) ? null : list(Wrappers.lambdaQuery(Category.class).in(Category::getId, categoryIds).orderByAsc(Category::getSort));
     }
 
     private void getLevelHierarchy(Long nodeId, List<Category> hierarchy) {

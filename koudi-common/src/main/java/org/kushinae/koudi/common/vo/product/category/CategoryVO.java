@@ -85,7 +85,7 @@ public class CategoryVO implements Serializable {
 
     @ApiModelProperty("当前分类的子分类")
     @TableField(exist = false)
-    private List<Category> children;
+    private List<CategoryVO> children;
 
     @ApiModelProperty("当前分类是否选中")
     @TableField(exist = false)
@@ -219,11 +219,11 @@ public class CategoryVO implements Serializable {
         this.deleted = deleted;
     }
 
-    public List<Category> getChildren() {
+    public List<CategoryVO> getChildren() {
         return children;
     }
 
-    public void setChildren(List<Category> children) {
+    public void setChildren(List<CategoryVO> children) {
         this.children = children;
     }
 

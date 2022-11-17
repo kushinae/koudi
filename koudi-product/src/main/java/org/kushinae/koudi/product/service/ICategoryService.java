@@ -25,5 +25,5 @@ public interface ICategoryService extends IService<Category> {
 
     List<Category> getChildren(Long nodeId);
 
-    List<Category> treeWithBrand(Long brandId);
+    List<Category> findBrandRelations(Long brandId);
 }

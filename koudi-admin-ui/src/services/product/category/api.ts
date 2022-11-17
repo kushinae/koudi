@@ -35,7 +35,7 @@ export async function remove(id: number) {
 
 /** 获取树状分类列表 GET /category/tree_with_brand */
 export async function treeWithBrand(brandId: number) {
-  return request<APIResponse.R<APIResponse.Category[]>>(`${API}/api/product/category/tree_with_brand?brand_id=${brandId}`, {
+  return request<APIResponse.R<APIResponse.CategoryRelation>>(`${API}/api/product/category/tree_with_brand?brand_id=${brandId}`, {
     method: 'GET',
   });
 }

@@ -65,9 +65,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
 
     @Override
     public Brand detailById(Long id) {
-        Brand brand = getById(id);
-        brand.setCategory(categoryService.treeWithBrand(brand.getId()));
-        return brand;
+        return getById(id);
     }
 
     @Override
@@ -92,14 +90,25 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
             throw new ParameterCheckException(Status.DATA_DOES_NOT_EXIST);
         }
 
-        categoryBrandRelationService.saveOrUpdateBatch(categories.stream().map(e -> {
+        List<CategoryBrandRelation> relationList = categories.stream().map(e -> {
             CategoryBrandRelation relation = new CategoryBrandRelation();
             relation.setBrandId(payload.getId());
             relation.setCategoryId(e.getId());
             relation.setBrandName(brand.getName());
             relation.setCategoryName(e.getName());
             return relation;
-        }).toList());
+        }).toList();
+
+        // 删除旧数据
+        categoryBrandRelationService.remove(Wrappers.lambdaQuery(CategoryBrandRelation.class)
+                .notIn(CategoryBrandRelation::getCategoryId, relationList.stream().map(CategoryBrandRelation::getCategoryId).toList())
+                .and(e -> e.eq(CategoryBrandRelation::getBrandId, brand.getId())));
+        // 添加新数据
+        for (CategoryBrandRelation categoryBrandRelation : relationList) {
+            categoryBrandRelationService.saveOrUpdate(categoryBrandRelation, Wrappers.lambdaQuery(CategoryBrandRelation.class)
+                    .eq(CategoryBrandRelation::getBrandId, categoryBrandRelation.getBrandId())
+                    .eq(CategoryBrandRelation::getCategoryId, categoryBrandRelation.getCategoryId()));
+        }
 
         return true;
     }

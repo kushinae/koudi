@@ -1,5 +1,5 @@
 import { ModalForm, ProFormDigit, ProFormTreeSelect } from '@ant-design/pro-components';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import type { BrnadRelationCategoryProps } from '@/interface/props/Props';
 import { Form } from 'antd';
 import { detail } from '@/services/product/brand/api';
@@ -15,19 +15,6 @@ const Relation: React.FC<BrnadRelationCategoryProps> = ({
 }) => {
 
   const [relationForm] = Form.useForm();
-  const [selectCategory, setSelectCategory] = useState<APIResponse.Category[]>([]);
-
-  const findSelectCategoryNode = (category: APIResponse.Category[]): APIResponse.Category[] => {
-    const nodes: APIResponse.Category[] = [];
-    category.forEach(e => {
-      if (e.children) {
-        nodes.concat(findSelectCategoryNode(e.children));
-      } else {
-        nodes.push(e);
-      }
-    });
-    return nodes;
-  }
 
   /**
    * 钩子函数
@@ -66,17 +53,21 @@ const Relation: React.FC<BrnadRelationCategoryProps> = ({
           name='selectCategory'
           required
           label="品牌分类"
-          debounceTime={1000000000}
+          debounceTime={1000000}
           rules={[{ required: true, message: '请输入选择分类' }]}
           request={async () => {
             if (currentBrand?.id) {
               const { data } = await treeWithBrand(currentBrand?.id);
-              if (data) {
-                const selector = findSelectCategoryNode(data);
-                setSelectCategory(selector);
-                relationForm.setFieldValue('selectCategory', selector);
+
+              const { category, relations } = data;
+
+              if (relations) {
+                relationForm.setFieldValue('selectCategory', relations.map(e => {
+                  return e.id;
+                }));
               }
-              return data;
+
+              return category;
             }
             const { data } = await tree(false);
             return data;
@@ -87,9 +78,6 @@ const Relation: React.FC<BrnadRelationCategoryProps> = ({
             fieldNames: {
               value: "id", children: "children", label: 'name'
             },
-            defaultValue: selectCategory.map(element => {
-              return element.id;
-            }),
             treeExpandAction: 'doubleClick',
             multiple: true,
             placeholder: '请选择分类',

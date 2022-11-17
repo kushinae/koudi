@@ -114,5 +114,10 @@ declare namespace APIResponse {
     deleted: boolean | undefined;
   }
 
+  type CategoryRelation = {
+    category: APIResponse.Category[];
+    relations: APIResponse.Category[];
+  }
+
 
 }

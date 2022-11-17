@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiOperation;
 import org.kushinae.koudi.common.entity.product.Category;
 import org.kushinae.koudi.common.lang.web.R;
 import org.kushinae.koudi.common.mapstruct.product.CategoryTransfer;
+import org.kushinae.koudi.common.util.CollectionUtils;
+import org.kushinae.koudi.common.vo.product.category.CategoryBrandRelationResultVO;
 import org.kushinae.koudi.common.vo.product.category.CategoryVO;
 import org.kushinae.koudi.product.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,8 +65,15 @@ public class CategoryController {
     @APIHelper
     @GetMapping("/tree_with_brand")
     @ApiOperation("获取树装分类列表并且指定品牌id绑定信息")
-    public R<List<CategoryVO>> treeWithBrand(@RequestParam("brand_id") Long brandId) {
-        return R.OK(CategoryTransfer.INSTANCE.toVOList(service.treeWithBrand(brandId)));
+    public R<CategoryBrandRelationResultVO> treeWithBrand(@RequestParam("brand_id") Long brandId) {
+        CategoryBrandRelationResultVO vo = new CategoryBrandRelationResultVO();
+
+        List<Category> categories = service.tree(false);
+        vo.setCategory(CategoryTransfer.INSTANCE.toVOList(categories));
+
+        vo.setRelations(CategoryTransfer.INSTANCE.toVOList(service.findBrandRelations(brandId)));
+
+        return R.OK(vo);
     }
 
 
