@@ -39,7 +39,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupMapper, AttrGroup
 
     @Override
     public Page<AttrGroup> listWithPage(AttrGroupSearch search) {
-        Page<AttrGroup> page = new Page<>(search.getCurrent(), search.getQueryCount());
+        Page<AttrGroup> page = new Page<>(search.getCurrent(), search.getPageSize());
         page = page(page, Wrappers.lambdaQuery(AttrGroup.class)
                 .eq(ObjectUtils.nonNull(search.getCategoryId()), AttrGroup::getCategoryId, search.getCategoryId())
                 .and(StringUtils.hasText(search.getKey()), wrapper -> wrapper.like(AttrGroup::getName, search.getKey()))
@@ -57,7 +57,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupMapper, AttrGroup
 
     @Override
     public Long editor(AttrGroup payload) {
-        if (ObjectUtils.isNull(service.getById(payload.getCategoryId())))
+        if (ObjectUtils.isNull(categoryService.getById(payload.getCategoryId())))
             throw new ParameterCheckException(Status.DATA_DOES_NOT_EXIST);
 
         saveOrUpdate(payload);
@@ -76,4 +76,20 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupMapper, AttrGroup
     public Boolean deleteById(Long id) {
         return removeById(id);
     }
+
+    @Override
+    public List<AttrGroup> listWithSearch(AttrGroupSearch search) {
+        return list(Wrappers.lambdaQuery(AttrGroup.class)
+                .like(StringUtils.hasText(search.getKey()), AttrGroup::getName, search.getKey()));
+    }
+
+    @Override
+    public Category detailWithAttrGroup(Long id) {
+        AttrGroup attrGroup = getById(id);
+        if (ObjectUtils.isNull(attrGroup))
+            throw new ParameterCheckException(Status.DATA_DOES_NOT_EXIST);
+
+        return categoryService.getById(attrGroup.getCategoryId());
+    }
+
 }

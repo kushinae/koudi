@@ -32,6 +32,9 @@ public class AttrAttrGroupRelation implements Serializable {
     @ApiModelProperty("所属分类")
     private Long categoryId;
 
+    @ApiModelProperty("属性id")
+    private Long attrId;
+
     @ApiModelProperty("排序方式，数值越高优先级越高 默认为0")
     private Integer sort;
 
@@ -44,9 +47,11 @@ public class AttrAttrGroupRelation implements Serializable {
     private Date modifiedTime;
 
     @ApiModelProperty("数据创建用户")
+    @TableField(fill = FieldFill.INSERT)
     private String createAdminId;
 
     @ApiModelProperty("数据创建用户名称")
+    @TableField(fill = FieldFill.INSERT)
     private String createAdminName;
 
     @ApiModelProperty("数据更新用户名称")
@@ -148,20 +153,11 @@ public class AttrAttrGroupRelation implements Serializable {
         this.deleted = deleted;
     }
 
-    @Override
-    public String toString() {
-        return "AttrAttrGroupRelation{" +
-            "id = " + id +
-            ", attrGroupId = " + attrGroupId +
-            ", categoryId = " + categoryId +
-            ", sort = " + sort +
-            ", createTime = " + createTime +
-            ", modifiedTime = " + modifiedTime +
-            ", createAdminId = " + createAdminId +
-            ", createAdminName = " + createAdminName +
-            ", modifiedAdminName = " + modifiedAdminName +
-            ", modifiedAdminId = " + modifiedAdminId +
-            ", deleted = " + deleted +
-        "}";
+    public Long getAttrId() {
+        return attrId;
+    }
+
+    public void setAttrId(Long attrId) {
+        this.attrId = attrId;
     }
 }

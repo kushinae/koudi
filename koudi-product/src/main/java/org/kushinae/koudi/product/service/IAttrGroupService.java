@@ -3,7 +3,10 @@ package org.kushinae.koudi.product.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.kushinae.koudi.common.entity.product.AttrGroup;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.kushinae.koudi.common.entity.product.Category;
 import org.kushinae.koudi.common.param.search.product.attrgroup.AttrGroupSearch;
+
+import java.util.List;
 
 /**
  * <p>
@@ -22,4 +25,8 @@ public interface IAttrGroupService extends IService<AttrGroup> {
     AttrGroup detail(Long id);
 
     Boolean deleteById(Long id);
+
+    List<AttrGroup> listWithSearch(AttrGroupSearch search);
+
+    Category detailWithAttrGroup(Long id);
 }

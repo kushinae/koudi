@@ -70,6 +70,17 @@ public class ResponseAdviceHandler implements ResponseBodyAdvice<Object> {
         return R.ERROR(Status.PAYLOAD_ASSERT_ERROR, message.toString());
     }
 
+    /**
+     * 系统异常 HTTP响应code为 500
+     * @param e 请求异常对象 可通过其父类status属性获取其具体失败原因
+     * @return 统一响应结果集
+     */
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Exception.class)
+    R<Void> handleException(Exception e) {
+        return R.ERROR(Status.UNKNOWN_BUSINESS_EXCEPTION, e.getMessage());
+    }
+
 
     @Override
     public boolean supports(@NotNull MethodParameter returnType, @NotNull Class<? extends HttpMessageConverter<?>> converterType) {

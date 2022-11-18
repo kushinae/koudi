@@ -1,8 +1,10 @@
 package org.kushinae.koudi.product.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.kushinae.koudi.common.entity.product.Attr;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.kushinae.koudi.common.vo.product.attr.AttrVO;
+import org.kushinae.koudi.common.enums.product.EAttrSwitchTarget;
+import org.kushinae.koudi.common.param.search.product.attr.AttrSearch;
 
 /**
  * <p>
@@ -14,5 +16,13 @@ import org.kushinae.koudi.common.vo.product.attr.AttrVO;
  */
 public interface IAttrService extends IService<Attr> {
 
-    Long editor(AttrVO payload);
+    Long editor(Attr payload);
+
+    Page<Attr> searchWithPage(AttrSearch search);
+
+    Boolean switchTarget(EAttrSwitchTarget target, Long id);
+
+    Attr detailById(Long id);
+
+    Boolean delete(Long id);
 }

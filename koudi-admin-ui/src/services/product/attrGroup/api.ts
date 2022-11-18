@@ -34,3 +34,23 @@ export async function remove(id: number) {
     method: 'DELETE',
   });
 }
+
+/** 搜索树状分类列表(不分页) POST /attr/group/search */
+export async function listWithSearch(payload?: AttrGroupSearch) {
+  return request<APIResponse.R<APIResponse.AttrGroup[]>>(`${API}/api/product/attr/group/search`, {
+    method: 'POST',
+    data: {
+      ...payload
+    },
+  });
+}
+
+/** 通过属性分组id获取分类详情 GET /category/detail/attrgroup */
+export async function detailWithCategoryInfo(id: number) {
+  return request<APIResponse.R<APIResponse.Category>>(`${API}/api/product/attr/group/category/detail`, {
+    method: 'GET',
+    params: {
+      'id': id
+    }
+  });
+}

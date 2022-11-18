@@ -3,7 +3,10 @@ package org.kushinae.koudi.common.vo.product.attr;
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author bnyte
@@ -15,28 +18,33 @@ public class AttrVO {
     private Long id;
 
     @ApiModelProperty("属性名")
+    @NotBlank
     private String name;
 
     @ApiModelProperty("是否需要检索[0-false-不需要，1-true-需要]")
-    private Boolean enableSearch;
+    private Boolean enableSearch = false;
 
     @ApiModelProperty("值类型[0-false-为单个值，1-true-可以选择多个值]")
-    private Boolean multiple;
+    private Boolean multiple = false;
 
     @ApiModelProperty("属性图标")
     private String icon;
 
-    @ApiModelProperty("可选值列表[用逗号分隔]")
-    private String multipleValue;
+    @ApiModelProperty("可选值列表")
+    private List<String> multipleValue;
 
     @ApiModelProperty("属性类型[0-销售属性，1-基本属性，2-既是销售属性又是基本属性]")
     private Integer type;
 
     @ApiModelProperty("所属分类")
-    private Long categoryId;
+    private List<Long> categoryId;
+
+    @ApiModelProperty("所属分组id")
+    @NotNull
+    private Long attrGroupId;
 
     @ApiModelProperty("快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整")
-    private Boolean quickShow;
+    private Boolean quickShow = false;
 
     @ApiModelProperty("数据创建时间")
     @TableField(fill = FieldFill.INSERT)
@@ -61,6 +69,12 @@ public class AttrVO {
     @ApiModelProperty("数据更新用户")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private String modifiedAdminId;
+
+    @TableField(exist = false)
+    private String groupName;
+
+    @TableField(exist = false)
+    private String categoryName;
 
     @ApiModelProperty("是否逻辑删除 0否 1是 默认否")
     @TableLogic
@@ -106,11 +120,11 @@ public class AttrVO {
         this.icon = icon;
     }
 
-    public String getMultipleValue() {
+    public List<String> getMultipleValue() {
         return multipleValue;
     }
 
-    public void setMultipleValue(String multipleValue) {
+    public void setMultipleValue(List<String> multipleValue) {
         this.multipleValue = multipleValue;
     }
 
@@ -122,11 +136,11 @@ public class AttrVO {
         this.type = type;
     }
 
-    public Long getCategoryId() {
+    public List<Long> getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Long categoryId) {
+    public void setCategoryId(List<Long> categoryId) {
         this.categoryId = categoryId;
     }
 
@@ -194,26 +208,27 @@ public class AttrVO {
         this.deleted = deleted;
     }
 
-    @Override
-    public String toString() {
-        return "Attr{" +
-                "id = " + id +
-                ", name = " + name +
-                ", enableSearch = " + enableSearch +
-                ", multiple = " + multiple +
-                ", icon = " + icon +
-                ", multipleValue = " + multipleValue +
-                ", type = " + type +
-                ", categoryId = " + categoryId +
-                ", quickShow = " + quickShow +
-                ", createTime = " + createTime +
-                ", modifiedTime = " + modifiedTime +
-                ", createAdminId = " + createAdminId +
-                ", createAdminName = " + createAdminName +
-                ", modifiedAdminName = " + modifiedAdminName +
-                ", modifiedAdminId = " + modifiedAdminId +
-                ", deleted = " + deleted +
-                "}";
+    public Long getAttrGroupId() {
+        return attrGroupId;
     }
 
+    public void setAttrGroupId(Long attrGroupId) {
+        this.attrGroupId = attrGroupId;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
 }

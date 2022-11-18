@@ -19,9 +19,9 @@ public enum Status implements Serializable {
     PAYLOAD_ASSERT_ERROR(400000, "{message}"),
     PARAMETER_CHECK_EXCEPTION(400001, "{message}"),
     /*
-        500000 - 599999 系统业务异常
+        500000 - 599999 系统、业务异常
      */
-    UNKNOWN_BUSINESS_EXCEPTION(500000, "未知业务异常"),
+    UNKNOWN_BUSINESS_EXCEPTION(500000, "未知异常"),
     FOREST_CLIENT_NOT_FOUND(500001, "未找到对应相关HTTP客户端对象"),
     DATA_DOES_NOT_EXIST(500002, "数据不存在"),
     NOT_A_FILE(500003, "不是一个文件"),

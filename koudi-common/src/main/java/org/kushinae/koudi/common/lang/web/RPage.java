@@ -35,12 +35,12 @@ public class RPage<T> {
     private Long current;
 
     /**
-     * 当前页记录数
+     * 请求查询的数量
      */
     private Long count;
 
     /**
-     * 总记录数
+     * 当前查询结果的总记录数
      */
     private Long total;
 
@@ -57,6 +57,18 @@ public class RPage<T> {
         RPage.setCurrent(page.getCurrent());
         RPage.setRecords(page.getRecords());
         RPage.setTotal(page.getTotal());
+        RPage.setCode(Status.ok.getCode());
+        RPage.setMessage(Status.ok.getMessage());
+        RPage.setSuccess(true);
+        return RPage;
+    }
+
+    public static <T, R> RPage<R> OK(IPage<T> page, List<R> records) {
+        RPage<R> RPage = new RPage<>();
+        RPage.setCount(page.getSize());
+        RPage.setTotal(page.getTotal());
+        RPage.setCurrent(page.getCurrent());
+        RPage.setRecords(records);
         RPage.setCode(Status.ok.getCode());
         RPage.setMessage(Status.ok.getMessage());
         RPage.setSuccess(true);

@@ -6,13 +6,13 @@ import io.swagger.annotations.ApiModelProperty;
  * @author bnyte
  * @since 1.0.0
  */
-public class Search {
+public abstract class Search {
 
     @ApiModelProperty("当前页码")
     private Long current = 1L;
 
     @ApiModelProperty("查询记录数")
-    private Long queryCount = 20L;
+    private Long pageSize = 20L;
 
     @ApiModelProperty("全局通用搜索关键词")
     private String key;
@@ -25,12 +25,12 @@ public class Search {
         this.current = current;
     }
 
-    public Long getQueryCount() {
-        return queryCount;
+    public Long getPageSize() {
+        return pageSize;
     }
 
-    public void setQueryCount(Long queryCount) {
-        this.queryCount = queryCount;
+    public void setPageSize(Long pageSize) {
+        this.pageSize = pageSize;
     }
 
     public String getKey() {

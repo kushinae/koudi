@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -44,9 +45,6 @@ public class Attr implements Serializable {
     @ApiModelProperty("属性类型[0-销售属性，1-基本属性，2-既是销售属性又是基本属性]")
     private Integer type;
 
-    @ApiModelProperty("所属分类")
-    private Long categoryId;
-
     @ApiModelProperty("快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整")
     private Boolean quickShow;
 
@@ -77,6 +75,17 @@ public class Attr implements Serializable {
     @ApiModelProperty("是否逻辑删除 0否 1是 默认否")
     @TableLogic
     private Boolean deleted;
+
+    @TableField(exist = false)
+    private Long attrGroupId;
+
+    @TableField(exist = false)
+    private String groupName;
+
+    @TableField(exist = false)
+    private String categoryName;
+
+    private List<Long> categoryId;
 
     public Long getId() {
         return id;
@@ -132,14 +141,6 @@ public class Attr implements Serializable {
 
     public void setType(Integer type) {
         this.type = type;
-    }
-
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
     }
 
     public Boolean getQuickShow() {
@@ -206,25 +207,35 @@ public class Attr implements Serializable {
         this.deleted = deleted;
     }
 
-    @Override
-    public String toString() {
-        return "Attr{" +
-            "id = " + id +
-            ", name = " + name +
-            ", enableSearch = " + enableSearch +
-            ", multiple = " + multiple +
-            ", icon = " + icon +
-            ", multipleValue = " + multipleValue +
-            ", type = " + type +
-            ", categoryId = " + categoryId +
-            ", quickShow = " + quickShow +
-            ", createTime = " + createTime +
-            ", modifiedTime = " + modifiedTime +
-            ", createAdminId = " + createAdminId +
-            ", createAdminName = " + createAdminName +
-            ", modifiedAdminName = " + modifiedAdminName +
-            ", modifiedAdminId = " + modifiedAdminId +
-            ", deleted = " + deleted +
-        "}";
+    public Long getAttrGroupId() {
+        return attrGroupId;
+    }
+
+    public void setAttrGroupId(Long attrGroupId) {
+        this.attrGroupId = attrGroupId;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public List<Long> getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(List<Long> categoryId) {
+        this.categoryId = categoryId;
     }
 }

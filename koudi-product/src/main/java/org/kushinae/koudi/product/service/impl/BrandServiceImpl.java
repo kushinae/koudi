@@ -45,7 +45,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
 
     @Override
     public Page<Brand> listWithPage(BrandSearch search) {
-        Page<Brand> brandPage = new Page<>(search.getCurrent(), search.getQueryCount());
+        Page<Brand> brandPage = new Page<>(search.getCurrent(), search.getPageSize());
         return page(brandPage);
     }
 

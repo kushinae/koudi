@@ -35,6 +35,7 @@
         <forest.version>1.5.26</forest.version>
         <jnanoid.version>2.0.0</jnanoid.version>
         <mapstruct.version>1.5.2.Final</mapstruct.version>
+        <junit-jupiter-api.version>5.9.1</junit-jupiter-api.version>
     </properties>
 
     <dependencyManagement>
@@ -154,6 +155,20 @@
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring-boot-component.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit-jupiter-api.version}</version>
+                <scope>test</scope>
             </dependency>
 
         </dependencies>
