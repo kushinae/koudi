@@ -1,0 +1,35 @@
+server:
+  port: 5186
+  servlet:
+    context-path: /product
+spring:
+  servlet:
+    multipart:
+      max-file-size: 2MB
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  application:
+    name: KOUDI-PRODUCT
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 5c2891d9-45fb-4240-9f0e-50222099d9bd
+    url: jdbc:mysql://121.40.209.124:6033/koudi_product?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+upyun:
+  authorization:
+    header: Authorization
+  operator:
+    name: liugxion
+    password: BnUsduD3ZU3JS5TKcD8OWOXdVza9KhiO
+  http-path: https://blogimg.bytestroll.com
+  service-name: imagephoto
+  dir-path: koudi
