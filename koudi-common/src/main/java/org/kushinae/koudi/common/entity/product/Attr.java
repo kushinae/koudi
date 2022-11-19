@@ -85,6 +85,7 @@ public class Attr implements Serializable {
     @TableField(exist = false)
     private String categoryName;
 
+    @TableField(exist = false)
     private List<Long> categoryId;
 
     public Long getId() {

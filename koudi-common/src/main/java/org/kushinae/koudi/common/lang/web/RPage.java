@@ -37,7 +37,7 @@ public class RPage<T> {
     /**
      * 请求查询的数量
      */
-    private Long count;
+    private Long pageSize;
 
     /**
      * 当前查询结果的总记录数
@@ -53,7 +53,7 @@ public class RPage<T> {
 
     public static <T> RPage<T> OK(Page<T> page) {
         RPage<T> RPage = new RPage<>();
-        RPage.setCount(page.getSize());
+        RPage.setPageSize(page.getSize());
         RPage.setCurrent(page.getCurrent());
         RPage.setRecords(page.getRecords());
         RPage.setTotal(page.getTotal());
@@ -65,7 +65,7 @@ public class RPage<T> {
 
     public static <T, R> RPage<R> OK(IPage<T> page, List<R> records) {
         RPage<R> RPage = new RPage<>();
-        RPage.setCount(page.getSize());
+        RPage.setPageSize(page.getSize());
         RPage.setTotal(page.getTotal());
         RPage.setCurrent(page.getCurrent());
         RPage.setRecords(records);
@@ -77,7 +77,7 @@ public class RPage<T> {
 
     public static <T, R> RPage<R> OK(IPage<T> page, Class<R> targetType) {
         RPage<R> RPage = new RPage<>();
-        RPage.setCount(page.getSize());
+        RPage.setPageSize(page.getSize());
         RPage.setTotal(page.getTotal());
         RPage.setCurrent(page.getCurrent());
         List<T> pageRecords = page.getRecords();
@@ -132,12 +132,12 @@ public class RPage<T> {
         this.current = current;
     }
 
-    public Long getCount() {
-        return count;
+    public Long getPageSize() {
+        return pageSize;
     }
 
-    public void setCount(Long count) {
-        this.count = count;
+    public void setPageSize(Long pageSize) {
+        this.pageSize = pageSize;
     }
 
     public Boolean getSuccess() {

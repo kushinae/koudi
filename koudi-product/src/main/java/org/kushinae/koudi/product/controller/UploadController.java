@@ -20,12 +20,12 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequestMapping("/upload")
-@Api(tags = "上传 前端控制器")
+@Api(tags = {"UploadController", "上传 前端控制器"})
 public class UploadController {
 
     @APIHelper
     @UploadHandler(EUploadType.BRAND)
-    @ApiOperation("上传资源")
+    @ApiOperation(value = "上传资源", nickname = "resource")
     @PostMapping("/sso")
     R<UploadVO> resource(@RequestParam("file") MultipartFile file, @UploadData String filepath) {
         return R.OK(new UploadVO(filepath));

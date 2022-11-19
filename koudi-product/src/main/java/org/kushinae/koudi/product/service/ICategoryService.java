@@ -1,7 +1,9 @@
 package org.kushinae.koudi.product.service;
 
-import org.kushinae.koudi.common.entity.product.Category;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.kushinae.koudi.common.entity.product.Category;
+import org.kushinae.koudi.common.param.search.product.category.TreeSearch;
 
 import java.util.List;
 
@@ -15,7 +17,7 @@ import java.util.List;
  */
 public interface ICategoryService extends IService<Category> {
 
-    List<Category> tree(Boolean disable);
+    Page<Category> tree(TreeSearch search);
 
     Long editor(Category category);
 

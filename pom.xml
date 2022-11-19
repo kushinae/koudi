@@ -11,7 +11,7 @@
         <module>koudi-common</module>
         <module>koudi-generate</module>
         <module>koudi-product</module>
-        <module>koudi-admin-ui</module>
+        <module>koudi-admin-web</module>
     </modules>
 
     <packaging>pom</packaging>

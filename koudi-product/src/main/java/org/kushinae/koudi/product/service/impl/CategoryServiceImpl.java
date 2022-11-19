@@ -1,26 +1,23 @@
 package org.kushinae.koudi.product.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.kushinae.koudi.common.config.CurrentAdmin;
 import org.kushinae.koudi.common.constant.ProductConstant;
-import org.kushinae.koudi.common.entity.product.AttrGroup;
 import org.kushinae.koudi.common.entity.product.Category;
 import org.kushinae.koudi.common.entity.product.CategoryBrandRelation;
 import org.kushinae.koudi.common.exception.ParameterCheckException;
 import org.kushinae.koudi.common.lang.web.Status;
+import org.kushinae.koudi.common.param.search.product.category.TreeSearch;
 import org.kushinae.koudi.common.util.CollectionUtils;
 import org.kushinae.koudi.common.util.ObjectUtils;
-import org.kushinae.koudi.product.mapper.AttrGroupMapper;
 import org.kushinae.koudi.product.mapper.CategoryMapper;
-import org.kushinae.koudi.product.service.IAttrGroupService;
-import org.kushinae.koudi.product.service.ICategoryService;
 import org.kushinae.koudi.product.service.ICategoryBrandRelationService;
+import org.kushinae.koudi.product.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -44,15 +41,25 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     ICategoryBrandRelationService categoryBrandRelationService;
 
     @Override
-    public List<Category> tree(Boolean disable) {
-        List<Category> categories = list(Wrappers.lambdaQuery(Category.class).orderByAsc(Category::getSort));
-        return categories.stream()
-                .filter(e -> e.getParentId().equals(ProductConstant.ROOT_CATEGORY_ID))
+    public Page<Category> tree(TreeSearch search) {
+        Page<Category> page = page(
+                new Page<>(search.getCurrent(), search.getPageSize()),
+                Wrappers.lambdaQuery(Category.class)
+                        .eq(Category::getParentId, ProductConstant.ROOT_CATEGORY_ID)
+                        .orderByAsc(Category::getSort));
+
+        if (CollectionUtils.isEmpty(page.getRecords()))
+            return page;
+
+        List<Category> subcategories = list(Wrappers.lambdaQuery(Category.class).ne(Category::getParentId, ProductConstant.ROOT_CATEGORY_ID).orderByAsc(Category::getSort));
+        page.setRecords(page.getRecords().stream()
                 .peek(e -> {
-                    e.setDisabled(disable && e.getLevel() > 2);
-                    e.setChildren(getChildNode(e, categories, disable));
+                    e.setDisabled(search.getDisabled() && e.getLevel() > 2);
+                    e.setChildren(getChildNode(e, subcategories, search.getDisabled()));
                 })
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
+
+        return page;
     }
 
     @Override

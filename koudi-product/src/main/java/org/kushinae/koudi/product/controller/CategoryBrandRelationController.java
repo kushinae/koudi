@@ -1,5 +1,6 @@
 package org.kushinae.koudi.product.controller;
 
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/category/brand/relation")
+@Api(tags = {"CategoryBrandRelationController", "品牌分类关联"})
 public class CategoryBrandRelationController {
 
 }

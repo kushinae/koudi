@@ -1,11 +1,14 @@
 package org.kushinae.koudi.product.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bnyte.forge.annotation.APIHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.kushinae.koudi.common.entity.product.Category;
 import org.kushinae.koudi.common.lang.web.R;
+import org.kushinae.koudi.common.lang.web.RPage;
 import org.kushinae.koudi.common.mapstruct.product.CategoryTransfer;
+import org.kushinae.koudi.common.param.search.product.category.TreeSearch;
 import org.kushinae.koudi.common.vo.product.category.CategoryBrandRelationResultVO;
 import org.kushinae.koudi.common.vo.product.category.CategoryVO;
 import org.kushinae.koudi.product.service.ICategoryService;
@@ -25,36 +28,36 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/category")
-@Api(tags = "商品三级分类 前端控制器")
+@Api(tags = {"CategoryController", "商品三级分类 前端控制器"})
 public class CategoryController {
 
     @Autowired
     ICategoryService service;
 
     @APIHelper(enableResponse = false)
-    @GetMapping("/tree")
-    @ApiOperation("获取树装分类列表")
-    public R<List<CategoryVO>> tree(
-            @RequestParam(value = "disabled", defaultValue = "false", required = false) Boolean disable) {
-        return R.OK(CategoryTransfer.INSTANCE.toVOList(service.tree(disable)));
+    @PostMapping("/tree")
+    @ApiOperation(value = "获取树装分类列表", nickname = "tree")
+    public RPage<CategoryVO> tree(@RequestBody(required = false) TreeSearch search) {
+        Page<Category> tree = service.tree(search);
+        return RPage.OK(tree, CategoryTransfer.INSTANCE.toVOList(tree.getRecords()));
     }
 
     @APIHelper
     @PostMapping("/editor")
-    @ApiOperation("编辑三级分类")
+    @ApiOperation(value = "编辑三级分类", nickname = "editor")
     public R<Long> editor(@RequestBody @Validated Category category) {
         return R.OK(service.editor(category));
     }
 
     @APIHelper
-    @ApiOperation("获取当前分类等级层级")
+    @ApiOperation(value = "获取当前分类等级层级", nickname = "levelHierarchy")
     @GetMapping("/level/hierarchy")
     public R<List<CategoryVO>> levelHierarchy(@RequestParam("node_id") Long id) {
         return R.OK(CategoryTransfer.INSTANCE.toVOList(service.levelHierarchy(id)));
     }
 
     @APIHelper
-    @ApiOperation("删除分类")
+    @ApiOperation(value = "删除分类", nickname = "removeNode")
     @DeleteMapping("/remove")
     public R<Void> removeNode(@RequestParam("node_id") Long nodeId) {
         service.removeNode(nodeId);
@@ -63,12 +66,12 @@ public class CategoryController {
 
     @APIHelper(enableResponse = false)
     @GetMapping("/tree_with_brand")
-    @ApiOperation("获取树装分类列表并且指定品牌id绑定信息")
+    @ApiOperation(value = "获取树装分类列表并且指定品牌id绑定信息", nickname = "treeWithBrand")
     public R<CategoryBrandRelationResultVO> treeWithBrand(@RequestParam("brand_id") Long brandId) {
         CategoryBrandRelationResultVO vo = new CategoryBrandRelationResultVO();
 
-        List<Category> categories = service.tree(false);
-        vo.setCategory(CategoryTransfer.INSTANCE.toVOList(categories));
+//        List<Category> categories = service.tree();
+//        vo.setCategory(CategoryTransfer.INSTANCE.toVOList(categories));
 
         vo.setRelations(CategoryTransfer.INSTANCE.toVOList(service.findBrandRelations(brandId)));
 

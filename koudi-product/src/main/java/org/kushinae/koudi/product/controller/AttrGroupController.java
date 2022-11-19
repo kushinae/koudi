@@ -27,7 +27,7 @@ import java.util.List;
  * @since 2022-11-05
  */
 @RestController
-@Api(tags = "属性分组 前端控制器")
+@Api(tags = {"属性分组 前端控制器", "AttrGroupController"})
 @RequestMapping("/attr/group")
 public class AttrGroupController {
 
@@ -36,42 +36,42 @@ public class AttrGroupController {
 
     @APIHelper(enableResponse = false)
     @PostMapping("/list")
-    @ApiOperation("分页搜索获取属性列表")
+    @ApiOperation(value = "分页搜索获取属性列表", nickname = "listWithPage")
     RPage<AttrGroupVO> listWithPage(@RequestBody(required = false) AttrGroupSearch search) {
         return RPage.OK(service.listWithPage(search), AttrGroupVO.class);
     }
 
     @APIHelper
     @PostMapping("/editor")
-    @ApiOperation("编辑属性组")
+    @ApiOperation(value = "编辑属性组", nickname = "listWithPage")
     R<Long> editor(@RequestBody @Validated AttrGroup payload) {
         return R.OK(service.editor(payload));
     }
 
     @APIHelper
     @GetMapping("/detail")
-    @ApiOperation("属性组详情")
+    @ApiOperation(value = "属性组详情", nickname = "editor")
     R<AttrGroupVO> editor(@RequestParam("id") Long id) {
         return R.OK(AttrGroupTransfer.INSTANCE.toVO(service.detail(id)));
     }
 
     @APIHelper
     @DeleteMapping("/remove")
-    @ApiOperation("删除属性组")
+    @ApiOperation(value = "删除属性组", nickname = "removeById")
     R<Boolean> removeById(@RequestParam("id") Long id) {
         return R.OK(service.deleteById(id));
     }
 
     @APIHelper(enableResponse = false)
     @PostMapping("/search")
-    @ApiOperation("搜索获取属性列表")
+    @ApiOperation(value = "搜索获取属性列表", nickname = "listWithSearch")
     R<List<AttrGroupVO>> listWithSearch(@RequestBody(required = false) AttrGroupSearch search) {
         return R.OK(AttrGroupTransfer.INSTANCE.toVOS(service.listWithSearch(search)));
     }
 
     @APIHelper
     @GetMapping("/category/detail")
-    @ApiOperation("通过属性分组id获取详情")
+    @ApiOperation(value = "通过属性分组id获取详情", nickname = "detailWithAttrGroup")
     public R<CategoryVO> detailWithAttrGroup(@RequestParam("id") Long id) {
         return R.OK(CategoryTransfer.INSTANCE.toVO(service.detailWithAttrGroup(id)));
     }
