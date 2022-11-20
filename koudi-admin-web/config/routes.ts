@@ -11,13 +11,22 @@ export default [
   {
     name: '商品管理',
     path: '/product',
-    component: '@/pages/product/category',
     access: 'productManage',
     routes: [
       {
         name: '分类管理',
         path: '/product/category',
-        component: '@/pages/product/category',
+        component: '@/pages/product/category/List',
+      },
+      {
+        name: '品牌管理',
+        path: '/product/brand',
+        component: '@/pages/product/brand/List',
+      },
+      {
+        name: '属性组管理',
+        path: '/product/attrgroup',
+        component: '@/pages/product/attrgroup/List',
       },
     ],
   },

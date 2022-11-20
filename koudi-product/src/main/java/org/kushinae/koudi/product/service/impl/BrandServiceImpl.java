@@ -46,7 +46,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
     @Override
     public Page<Brand> listWithPage(BrandSearch search) {
         Page<Brand> brandPage = new Page<>(search.getCurrent(), search.getPageSize());
-        return page(brandPage);
+        return page(brandPage, Wrappers.lambdaQuery(Brand.class).orderByDesc(Brand::getSort));
     }
 
     @Override
@@ -55,6 +55,35 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
             throw new ParameterCheckException("品牌名称已经存在");
         }
         saveOrUpdate(payload);
+
+        // 绑定分类
+        List<Long> categories = payload.getCategories();
+        if (CollectionUtils.notEmpty(categories)) {
+
+            // 删除旧的
+            categoryBrandRelationService.remove(Wrappers.lambdaQuery(CategoryBrandRelation.class)
+                    .eq(CategoryBrandRelation::getBrandId, payload.getId())
+                    .notIn(CategoryBrandRelation::getCategoryId, categories)
+            );
+
+            List<CategoryBrandRelation> relations = categories.stream().map(category -> {
+                CategoryBrandRelation relation = new CategoryBrandRelation();
+                relation.setCategoryId(category);
+                relation.setBrandId(payload.getId());
+                relation.setBrandName(payload.getName());
+                Category categoryDB = categoryService.getById(category);
+                relation.setCategoryName(categoryDB.getName());
+                relation.setDeleted(false);
+                return relation;
+            }).toList();
+
+            for (CategoryBrandRelation relation : relations) {
+                categoryBrandRelationService.saveOrUpdate(relation, Wrappers.lambdaQuery(CategoryBrandRelation.class)
+                        .eq(CategoryBrandRelation::getBrandId, relation.getBrandId())
+                        .eq(CategoryBrandRelation::getCategoryId, relation.getCategoryId()));
+            }
+        }
+
         return payload.getId();
     }
 
@@ -65,7 +94,12 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
 
     @Override
     public Brand detailById(Long id) {
-        return getById(id);
+        Brand brand = getById(id);
+        List<CategoryBrandRelation> relations = categoryBrandRelationService.list(Wrappers.lambdaQuery(CategoryBrandRelation.class).eq(CategoryBrandRelation::getBrandId, brand.getId()));
+        if (CollectionUtils.isEmpty(relations))
+            return brand;
+        brand.setCategories(relations.stream().map(CategoryBrandRelation::getCategoryId).toList());
+        return brand;
     }
 
     @Override

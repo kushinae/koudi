@@ -15,7 +15,9 @@ export default defineConfig({
   routes,
   npmClient: 'yarn',
   define: {
+    // 主题色
     colorPrimary: '#a259ff',
+    // 请求前缀
     apiURIPrepath: '/api',
   },
 });

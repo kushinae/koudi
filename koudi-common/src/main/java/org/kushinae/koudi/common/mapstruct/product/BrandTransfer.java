@@ -14,7 +14,6 @@ public interface BrandTransfer {
 
     BrandTransfer INSTANCE = Mappers.getMapper(BrandTransfer.class);
 
-
     Brand toDomain(BrandVO vo);
 
     BrandVO toVO(Brand domain);

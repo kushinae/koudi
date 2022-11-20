@@ -7,6 +7,8 @@ import { SmileOutlined } from '@ant-design/icons';
 import { MenuDataItem } from '@ant-design/pro-components';
 import AlibabaIcon from '@/components/Icon';
 import { RequestConfig } from '@umijs/max';
+import { message } from 'antd';
+import { BaseResponse } from './interface/base';
 
 const iconMap: {
   [key: string]: JSX.Element;
@@ -28,7 +30,6 @@ const menus = [
   {
     name: '首页',
     path: '/home',
-    component: '@/pages/index',
     icon: 'home',
   },
   {
@@ -39,7 +40,14 @@ const menus = [
       {
         name: '分类管理',
         path: '/product/category',
-        component: '@/pages/product/category',
+      },
+      {
+        name: '品牌管理',
+        path: '/product/brand',
+      },
+      {
+        name: '属性组管理',
+        path: '/product/attrgroup',
       },
     ],
   },
@@ -94,14 +102,19 @@ export const layout: RunTimeLayoutConfig | RuntimeConfig = () => {
 export const request: RequestConfig = {
   timeout: 6000,
   errorConfig: {
-    errorThrower: (res) => {
-      return {
-        success: res.success,
-        errorMessage: res.message,
-        data: res.data,
-        errorCode: res.code,
-      };
-    },
+    errorHandler: (error: any) => {
+      let throwMsg = error.message;
+      const response = error?.response;
+      if (response) {
+        const data: BaseResponse = response.data;
+        if (data) {
+          const {message} = data;
+          throwMsg = message;
+        }
+      }
+      message.error(throwMsg);
+      throw new Error(throwMsg); 
+    }
   },
   requestInterceptors: [
     (url, options) => {

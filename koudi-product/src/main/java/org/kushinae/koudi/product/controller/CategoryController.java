@@ -35,10 +35,10 @@ public class CategoryController {
     ICategoryService service;
 
     @APIHelper(enableResponse = false)
-    @PostMapping("/tree")
-    @ApiOperation(value = "获取树装分类列表", nickname = "tree")
-    public RPage<CategoryVO> tree(@RequestBody(required = false) TreeSearch search) {
-        Page<Category> tree = service.tree(search);
+    @PostMapping("/tree_page")
+    @ApiOperation(value = "获取树装分类列表", nickname = "treeWithPage")
+    public RPage<CategoryVO> treeWithPage(@RequestBody(required = false) TreeSearch search) {
+        Page<Category> tree = service.treeWithPage(search);
         return RPage.OK(tree, CategoryTransfer.INSTANCE.toVOList(tree.getRecords()));
     }
 
@@ -76,6 +76,21 @@ public class CategoryController {
         vo.setRelations(CategoryTransfer.INSTANCE.toVOList(service.findBrandRelations(brandId)));
 
         return R.OK(vo);
+    }
+
+    @APIHelper()
+    @GetMapping("/detail")
+    @ApiOperation(value = "获取分类详情", nickname = "detail")
+    public R<CategoryVO> detail(@RequestParam("id") Long id) {
+        return R.OK(CategoryTransfer.INSTANCE.toVO(service.detail(id)));
+    }
+
+    @APIHelper(enableResponse = false)
+    @GetMapping("/tree")
+    @ApiOperation(value = "获取树装分类列表", nickname = "treeWithPage")
+    public R<List<CategoryVO>> tree(@RequestParam(value = "skip_lowest_level", defaultValue = "false", required = false) Boolean skipLowestLevel,
+                                    @RequestParam(value = "skip_root", defaultValue = "false", required = false) Boolean skipRoot) {
+        return R.OK(CategoryTransfer.INSTANCE.toVOList(service.tree(skipLowestLevel, skipRoot)));
     }
 
 

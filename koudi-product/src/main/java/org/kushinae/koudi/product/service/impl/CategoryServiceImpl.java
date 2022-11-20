@@ -41,12 +41,12 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     ICategoryBrandRelationService categoryBrandRelationService;
 
     @Override
-    public Page<Category> tree(TreeSearch search) {
+    public Page<Category> treeWithPage(TreeSearch search) {
         Page<Category> page = page(
                 new Page<>(search.getCurrent(), search.getPageSize()),
                 Wrappers.lambdaQuery(Category.class)
                         .eq(Category::getParentId, ProductConstant.ROOT_CATEGORY_ID)
-                        .orderByAsc(Category::getSort));
+                        .orderByDesc(Category::getSort));
 
         if (CollectionUtils.isEmpty(page.getRecords()))
             return page;
@@ -115,6 +115,28 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         List<Long> categoryPath = new ArrayList<>();
         scanCategoryPath(categoryId, categoryPath);
         return categoryPath;
+    }
+
+    @Override
+    public Category detail(Long id) {
+        return getById(id);
+    }
+
+    @Override
+    public List<Category> tree(boolean skipLowestLevel,  boolean skipRoot) {
+        List<Category> categories = list(Wrappers.lambdaQuery(Category.class).ne(skipLowestLevel, Category::getLevel, 3).orderByDesc(Category::getSort));
+        if (CollectionUtils.isEmpty(categories))
+            return categories;
+
+        List<Category> list = new ArrayList<>(categories.stream().filter(e -> e.getParentId().equals(ProductConstant.ROOT_CATEGORY_ID))
+                .peek(e -> e.setChildren(getChildNode(e, categories, false))).toList());
+        if (!skipRoot) {
+            Category element = new Category();
+            element.setId(ProductConstant.ROOT_CATEGORY_ID);
+            element.setName("根节点");
+            list.add(0, element);
+        }
+        return list;
     }
 
     private void scanCategoryPath(Long categoryId, List<Long> categoryPath) {

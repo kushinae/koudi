@@ -1,5 +1,5 @@
 import type { UserInfoProps } from '@/interface/props/HeaderProps';
-import { Avatar } from 'antd';
+import { Avatar, Button } from 'antd';
 import React, { useEffect } from 'react';
 
 /**
@@ -20,7 +20,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ currentUser }) => {
   return (
     <>
       <Avatar src={currentUser.avatar} />
-      <span style={{ color: colorPrimary }}>{currentUser.username}</span>
+      <Button type='link'>{currentUser.username}</Button>
     </>
   );
 };

@@ -82,7 +82,7 @@ public class Brand implements Serializable {
 
     @TableField(exist = false)
     @ApiModelProperty("品牌分类列表")
-    private List<Category> category;
+    private List<Long> categories;
 
     public Long getId() {
         return id;
@@ -196,11 +196,11 @@ public class Brand implements Serializable {
         this.deleted = deleted;
     }
 
-    public List<Category> getCategory() {
-        return category;
+    public List<Long> getCategories() {
+        return categories;
     }
 
-    public void setCategory(List<Category> category) {
-        this.category = category;
+    public void setCategories(List<Long> categories) {
+        this.categories = categories;
     }
 }

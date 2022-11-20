@@ -2,6 +2,8 @@
 import { DEFAULT_NAME } from '@/constants';
 import { useState } from 'react';
 
+import './global.less';
+
 const useUser = () => {
   const [name, setName] = useState<string>(DEFAULT_NAME);
   return {

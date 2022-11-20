@@ -1,5 +1,8 @@
 // @ts-ignore
 /* eslint-disable */
+import { Page, Response } from '@/interface/base';
+import { AttrGroup } from '@/interface/entity/attr';
+import { AttrGroupSearch } from '@/interface/param/Search';
 import { request } from 'umi';
 
 /** 通过属性分组id获取详情 GET /product/attr/group/category/detail */
@@ -18,62 +21,58 @@ export async function detailWithAttrGroup(
 }
 
 /** 属性组详情 GET /product/attr/group/detail */
-export async function editor1(
+export async function detail(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.editor1Params,
-  options?: { [key: string]: any },
+  params: {id?: string | number},
 ) {
-  return request<API.RAttrGroupduixiang>('/product/attr/group/detail', {
+  return request<Response<AttrGroup>>('/product/attr/group/detail', {
     method: 'GET',
     params: {
       ...params,
     },
-    ...(options || {}),
   });
 }
 
 /** 编辑属性组 POST /product/attr/group/editor */
-export async function listWithPage(
-  body: API.AttrGroupduixiang0,
-  options?: { [key: string]: any },
+export async function editor(
+  body?: AttrGroup,
 ) {
-  return request<API.Rlong>('/product/attr/group/editor', {
+  return request<Response<number>>('/product/attr/group/editor', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    data: body,
-    ...(options || {}),
+    data: {
+      ...body
+    },
   });
 }
 
 /** 分页搜索获取属性列表 POST /product/attr/group/list */
-export async function listWithPage1(
-  body: API.AttrGroupSearch,
-  options?: { [key: string]: any },
+export async function listWithPage(
+  body?: AttrGroupSearch,
 ) {
-  return request<API.RPageAttrGroupduixiang>('/product/attr/group/list', {
+  return request<Page<AttrGroup>>('/product/attr/group/list', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    data: body,
-    ...(options || {}),
+    data: {
+      body
+    },
   });
 }
 
 /** 删除属性组 DELETE /product/attr/group/remove */
 export async function removeById(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.removeByIdParams,
-  options?: { [key: string]: any },
+  params?: {id?: number | string},
 ) {
-  return request<API.Rboolean>('/product/attr/group/remove', {
+  return request<Response<boolean>>('/product/attr/group/remove', {
     method: 'DELETE',
     params: {
       ...params,
     },
-    ...(options || {}),
   });
 }
 

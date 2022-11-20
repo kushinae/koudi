@@ -4,9 +4,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
@@ -44,8 +42,6 @@ public class AttrGroup implements Serializable {
     private String icon;
 
     @ApiModelProperty("所属分类id")
-    @NotNull(message = "所属分类不能为空")
-    @Min(value = 1, message = "所属分类不存在")
     private Long categoryId;
 
     @ApiModelProperty("数据创建时间")

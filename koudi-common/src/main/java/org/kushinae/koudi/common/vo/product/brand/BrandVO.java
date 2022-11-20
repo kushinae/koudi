@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.kushinae.koudi.common.vo.product.category.CategoryVO;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -70,7 +69,7 @@ public class BrandVO {
     private String modifiedAdminId;
 
     @ApiModelProperty("品牌分类列表")
-    private List<CategoryVO> category;
+    private List<Long> categories;
 
     public Long getId() {
         return id;
@@ -176,11 +175,11 @@ public class BrandVO {
         this.modifiedAdminId = modifiedAdminId;
     }
 
-    public List<CategoryVO> getCategory() {
-        return category;
+    public List<Long> getCategories() {
+        return categories;
     }
 
-    public void setCategory(List<CategoryVO> category) {
-        this.category = category;
+    public void setCategories(List<Long> categories) {
+        this.categories = categories;
     }
 }

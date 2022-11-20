@@ -72,6 +72,7 @@ public class R<T> implements Serializable {
         R<Void> r = new R<>();
         r.code = status.getCode();
         r.message = msg;
+        r.success = false;
         return r;
     }
 

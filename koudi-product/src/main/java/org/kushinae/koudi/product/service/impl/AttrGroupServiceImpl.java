@@ -43,7 +43,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupMapper, AttrGroup
         page = page(page, Wrappers.lambdaQuery(AttrGroup.class)
                 .eq(ObjectUtils.nonNull(search.getCategoryId()), AttrGroup::getCategoryId, search.getCategoryId())
                 .and(StringUtils.hasText(search.getKey()), wrapper -> wrapper.like(AttrGroup::getName, search.getKey()))
-                .orderByAsc(AttrGroup::getSort));
+                .orderByDesc(AttrGroup::getSort));
         List<AttrGroup> records = page.getRecords();
         if (CollectionUtils.notEmpty(records)) {
             page.setRecords(records.stream().peek(e -> {
@@ -57,8 +57,12 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupMapper, AttrGroup
 
     @Override
     public Long editor(AttrGroup payload) {
-        if (ObjectUtils.isNull(categoryService.getById(payload.getCategoryId())))
+        Category category = categoryService.getById(payload.getCategoryId());
+        if (ObjectUtils.isNull(category))
             throw new ParameterCheckException(Status.DATA_DOES_NOT_EXIST);
+
+        if (category.getLevel() != 3)
+            throw new ParameterCheckException("属性组仅可绑定三级分类");
 
         saveOrUpdate(payload);
         return payload.getId();

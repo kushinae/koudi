@@ -3,20 +3,20 @@
 import { Category } from '@/interface/entity/category';
 import { CategorySearch } from '@/interface/param/Search';
 import { request } from 'umi';
-import { Page } from '../../interface/base';
+import { Page, Response } from '@/interface/base';
 
 /** 编辑三级分类 POST /product/category/editor */
-export async function editor3(
-  body: API.Categoryduixiang,
-  options?: { [key: string]: any },
+export async function editor(
+  body?: Category,
 ) {
-  return request<API.Rlong>('/product/category/editor', {
+  return request<Response<number>>('/product/category/editor', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    data: body,
-    ...(options || {}),
+    data: {
+      ...body
+    },
   });
 }
 
@@ -41,28 +41,39 @@ export async function levelHierarchy(
 /** 删除分类 DELETE /product/category/remove */
 export async function removeNode(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.removeNodeParams,
-  options?: { [key: string]: any },
+  options?: { node_id?: string | number },
 ) {
-  return request<API.RVoid>('/product/category/remove', {
+  return request<Response<void>>('/product/category/remove', {
     method: 'DELETE',
     params: {
-      ...params,
+      ...options,
+    }
+  });
+}
+
+/** 获取树装分类列表 GET /product/category/tree */
+export async function treeWithPage(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  options?: CategorySearch,
+) {
+  return request<Page<Category>>('/product/category/tree_page', {
+    method: 'POST',
+    data: {
+      ...options,
     },
-    ...(options || {}),
   });
 }
 
 /** 获取树装分类列表 GET /product/category/tree */
 export async function tree(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  options?: CategorySearch,
+  options?: {skip_lowest_level: boolean, skip_root: boolean},
 ) {
-  return request<Page<Category>>('/product/category/tree', {
-    method: 'POST',
-    data: {
-      ...options,
-    },
+  return request<Response<Category[]>>('/product/category/tree', {
+    method: 'GET',
+    params: {
+      ...options
+    }
   });
 }
 
@@ -82,4 +93,17 @@ export async function treeWithBrand(
       ...(options || {}),
     },
   );
+}
+
+/** 获取分类详情 GET /product/category/detail */
+export async function detail(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  options: {id: number | string},
+) {
+  return request<Response<Category>>('/product/category/detail', {
+    method: 'GET',
+    params: {
+      ...options,
+    },
+  });
 }

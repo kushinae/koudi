@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface ICategoryService extends IService<Category> {
 
-    Page<Category> tree(TreeSearch search);
+    Page<Category> treeWithPage(TreeSearch search);
 
     Long editor(Category category);
 
@@ -30,4 +30,8 @@ public interface ICategoryService extends IService<Category> {
     List<Category> findBrandRelations(Long brandId);
 
     List<Long> categoryPath(Long categoryId);
+
+    Category detail(Long id);
+
+    List<Category> tree(boolean skipLowestLevel, boolean skipRoot);
 }
