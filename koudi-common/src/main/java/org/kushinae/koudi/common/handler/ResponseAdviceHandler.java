@@ -5,6 +5,8 @@ import org.kushinae.koudi.common.exception.GlobalException;
 import org.kushinae.koudi.common.exception.ParameterCheckException;
 import org.kushinae.koudi.common.lang.web.R;
 import org.kushinae.koudi.common.lang.web.Status;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,7 +22,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
@@ -32,6 +33,8 @@ import java.util.StringJoiner;
 })
 public class ResponseAdviceHandler implements ResponseBodyAdvice<Object> {
 
+    private static final Logger log = LoggerFactory.getLogger(ResponseAdviceHandler.class);
+
     /**
      * 系统业务请求参数校验异常 HTTP响应code为 400
      * @param e 请求异常对象继承自  {@see org.kushinae.koudi.common.exception.GlobalException}
@@ -41,6 +44,7 @@ public class ResponseAdviceHandler implements ResponseBodyAdvice<Object> {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ParameterCheckException.class)
     R<Void> handleParameterCheckException(ParameterCheckException e) {
+        log.error("[Parameter Check Exception] because {}", e.getMessage(), e);
         return R.ERROR(e.getStatus(), e.getMessage());
     }
 
@@ -51,7 +55,8 @@ public class ResponseAdviceHandler implements ResponseBodyAdvice<Object> {
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(GlobalException.class)
-    R<Void> handleParameterCheckException(GlobalException e) {
+    R<Void> handleGlobalException(GlobalException e) {
+        log.error("[Global System Exception] because {}", e.getMessage(), e);
         return R.ERROR(e.getStatus(), e.getMessage());
     }
 
@@ -63,6 +68,7 @@ public class ResponseAdviceHandler implements ResponseBodyAdvice<Object> {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     R<Void> handleValidationException(BindException e) {
+        log.error("[Validation Check Exception] because {}", e.getMessage(), e);
         BindingResult bindingResult = e.getBindingResult();
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
         StringJoiner message = new StringJoiner(",");
@@ -78,6 +84,7 @@ public class ResponseAdviceHandler implements ResponseBodyAdvice<Object> {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     R<Void> handleException(Exception e) {
+        log.error("[Unknown System Exception] because {}", e.getMessage(), e);
         return R.ERROR(Status.UNKNOWN_BUSINESS_EXCEPTION, e.getMessage());
     }
 
@@ -88,7 +95,7 @@ public class ResponseAdviceHandler implements ResponseBodyAdvice<Object> {
     }
 
     @Override
-    public Object beforeBodyWrite(Object body, @NotNull MethodParameter returnType, @NotNull MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+    public Object beforeBodyWrite(Object body, @NotNull MethodParameter returnType, @NotNull MediaType selectedContentType, @NotNull Class<? extends HttpMessageConverter<?>> selectedConverterType, @NotNull ServerHttpRequest request, @NotNull ServerHttpResponse response) {
         return body;
     }
 }

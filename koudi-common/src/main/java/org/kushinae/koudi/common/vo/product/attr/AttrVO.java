@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -36,11 +35,13 @@ public class AttrVO {
     @ApiModelProperty("属性类型[0-销售属性，1-基本属性，2-既是销售属性又是基本属性]")
     private Integer type;
 
+    @ApiModelProperty(value = "分类id,业务字段前端不需要透传", hidden = true)
+    private Long categoryId;
+
     @ApiModelProperty("所属分类")
-    private List<Long> categoryId;
+    private List<Long> categories;
 
     @ApiModelProperty("所属分组id")
-    @NotNull
     private Long attrGroupId;
 
     @ApiModelProperty("快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整")
@@ -136,12 +137,12 @@ public class AttrVO {
         this.type = type;
     }
 
-    public List<Long> getCategoryId() {
-        return categoryId;
+    public List<Long> getCategories() {
+        return categories;
     }
 
-    public void setCategoryId(List<Long> categoryId) {
-        this.categoryId = categoryId;
+    public void setCategories(List<Long> categories) {
+        this.categories = categories;
     }
 
     public Boolean getQuickShow() {
@@ -230,5 +231,13 @@ public class AttrVO {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 }

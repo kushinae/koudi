@@ -1,6 +1,8 @@
 // @ts-ignore
 /* eslint-disable */
-import { Response } from '@/interface/base';
+import { Page, Response } from '@/interface/base';
+import { Attr } from '@/interface/entity/attr';
+import { AttrSearch } from '@/interface/param/Search';
 import { ESwitchTarget } from '@/interface/type/product/attr';
 import { request } from 'umi';
 
@@ -20,45 +22,43 @@ export async function deleteById(
 /** 获取属性详情 GET /product/attr/detail */
 export async function detail(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.detailParams,
-  options?: { [key: string]: any },
+  params: {id: number | string},
 ) {
-  return request<API.RAttrVO>('/product/attr/detail', {
+  return request<Response<Attr>>('/product/attr/detail', {
     method: 'GET',
     params: {
       ...params,
     },
-    ...(options || {}),
   });
 }
 
 /** 编辑属性 POST /product/attr/editor */
 export async function editor(
-  body: API.AttrVO,
-  options?: { [key: string]: any },
+  body: Attr,
 ) {
-  return request<API.Rlong>('/product/attr/editor', {
+  return request<Response<number>>('/product/attr/editor', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    data: body,
-    ...(options || {}),
+    data: {
+      ...body
+    },
   });
 }
 
 /** 分页搜索获取所有属性 POST /product/attr/page/search */
 export async function searchWithPage(
-  body: API.AttrSearch,
-  options?: { [key: string]: any },
+  body: AttrSearch,
 ) {
-  return request<API.RPageAttrVO>('/product/attr/page/search', {
+  return request<Page<Attr>>('/product/attr/page/search', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    data: body,
-    ...(options || {}),
+    data: {
+      ...body
+    },
   });
 }
 

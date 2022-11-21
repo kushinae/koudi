@@ -17,3 +17,8 @@ export interface BrandSearch extends Search {
 export interface AttrGroupSearch extends Search {
   categoryName?: string;
 }
+
+export interface AttrSearch extends Search {
+  attrGroupId?: number;
+  enableSearch?: boolean;
+}

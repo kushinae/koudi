@@ -1,4 +1,4 @@
-import type { EditorFormProps } from '@/interface/props/CategoryProps';
+import type { EditorFormProps } from '@/interface/props/GalobalProps';
 import { detail, editor, tree } from '@/services/product/ServerCategoryController';
 import { ModalForm, ProFormDigit, ProFormInstance, ProFormSwitch, ProFormText, ProFormTreeSelect } from '@ant-design/pro-components';
 import React, { useEffect, useRef } from 'react';

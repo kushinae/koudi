@@ -49,10 +49,14 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, Attr> implements IA
 
     @Override
     public Long editor(Attr payload) {
+
         EAttrType attrType = EAttrType.code(payload.getType());
+        if (attrType.equals(EAttrType.BASE) && ObjectUtils.isNull(payload.getAttrGroupId()))
+            throw new ParameterCheckException("属性组不能为空");
+
         saveOrUpdate(payload);
 
-        AttrGroup attrGroup = null;
+        AttrGroup attrGroup;
         if (ObjectUtils.nonNull(payload.getAttrGroupId())) {
             attrGroup = attrGroupService.getById(payload.getAttrGroupId());
         } else {
@@ -61,8 +65,8 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, Attr> implements IA
 
         AttrAttrGroupRelation attrAttrGroupRelation = attrAttrGroupRelationService.getOne(Wrappers.lambdaQuery(AttrAttrGroupRelation.class)
                 .eq(AttrAttrGroupRelation::getAttrId, payload.getId())
-                .eq(AttrAttrGroupRelation::getAttrGroupId, attrGroup.getId())
-                .eq(AttrAttrGroupRelation::getCategoryId, attrGroup.getCategoryId()));
+                .eq(attrType.equals(EAttrType.BASE), AttrAttrGroupRelation::getAttrGroupId, attrGroup.getId())
+                .eq(AttrAttrGroupRelation::getCategoryId, payload.getCategoryId()));
 
         if (ObjectUtils.isNull(attrAttrGroupRelation)) {
             attrAttrGroupRelation = new AttrAttrGroupRelation();
@@ -71,7 +75,14 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, Attr> implements IA
             attrAttrGroupRelation.setAttrGroupId(attrGroup.getId());
         }
 
-        attrAttrGroupRelationService.saveOrUpdate(attrAttrGroupRelation);
+        attrAttrGroupRelationService.saveOrUpdate(attrAttrGroupRelation, Wrappers.lambdaUpdate(AttrAttrGroupRelation.class)
+                .eq(AttrAttrGroupRelation::getAttrId, attrAttrGroupRelation.getAttrId())
+                .eq(AttrAttrGroupRelation::getCategoryId, attrAttrGroupRelation.getCategoryId()));
+
+        if (attrType.equals(EAttrType.ALL) && ObjectUtils.isNull(attrGroup.getId())) {
+            attrAttrGroupRelation.setAttrGroupId(null);
+            attrAttrGroupRelationService.updateById(attrAttrGroupRelation);
+        }
 
         return payload.getId();
     }
@@ -98,11 +109,13 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, Attr> implements IA
             if (EAttrType.SELL.getCode().equals(e.getType())) {
                 Category category = categoryService.getById(relation.getCategoryId());
                 e.setCategoryName(category.getName());
-                e.setCategoryId(categoryService.categoryPath(category.getId()));
+                e.setCategories(categoryService.categoryPath(category.getId()));
                 continue;
             }
-            AttrGroup attrGroup = attrGroupService.getById(relation.getAttrGroupId());
-            e.setGroupName(attrGroup.getName());
+            if (ObjectUtils.nonNull(relation.getAttrGroupId())) {
+                AttrGroup attrGroup = attrGroupService.getById(relation.getAttrGroupId());
+                e.setGroupName(attrGroup.getName());
+            }
         }
 
         return page;
@@ -141,13 +154,16 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, Attr> implements IA
 
         Category category = categoryService.getById(relation.getCategoryId());
         attr.setCategoryName(category.getName());
-        attr.setCategoryId(categoryService.categoryPath(category.getId()));
+        attr.setCategories(categoryService.categoryPath(category.getId()));
 
-        if (attr.getType().equals(EAttrType.BASE.getCode()))
+        if (attr.getType().equals(EAttrType.SELL.getCode()))
             return attr;
-        AttrGroup attrGroup = attrGroupService.getById(relation.getAttrGroupId());
-        attr.setGroupName(attrGroup.getName());
-        attr.setAttrGroupId(attrGroup.getId());
+
+        if (ObjectUtils.nonNull(relation.getAttrGroupId())) {
+            AttrGroup attrGroup = attrGroupService.getById(relation.getAttrGroupId());
+            attr.setGroupName(attrGroup.getName());
+            attr.setAttrGroupId(attrGroup.getId());
+        }
         return attr;
     }
 

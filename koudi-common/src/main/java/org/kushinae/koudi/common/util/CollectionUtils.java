@@ -2,6 +2,8 @@ package org.kushinae.koudi.common.util;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author bnyte
@@ -19,6 +21,11 @@ public class CollectionUtils {
 
     public static Collection<String> transferFromString(CharSequence delimiter, String sequence) {
         return Arrays.asList(sequence.split(delimiter.toString()));
+    }
+
+    public static <T> List<T> reverse(List<T> collection) {
+        Collections.reverse(collection);
+        return collection;
     }
 
 }

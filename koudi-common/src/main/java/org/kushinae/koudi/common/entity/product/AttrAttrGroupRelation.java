@@ -27,6 +27,7 @@ public class AttrAttrGroupRelation implements Serializable {
     private Long id;
 
     @ApiModelProperty("属性规格分组id")
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
     private Long attrGroupId;
 
     @ApiModelProperty("所属分类")

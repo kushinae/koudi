@@ -1,5 +1,5 @@
 export enum ESwitchTarget {
-  server,
-  multiple,
-  show,
+  SERVER='server',
+  MYLTIPLE='multiple',
+  SHOW='show',
 }

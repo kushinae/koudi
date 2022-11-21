@@ -24,7 +24,8 @@ public interface AttrTransfer {
     AttrVO toVO(Attr domain);
 
     @Mappings({
-        @Mapping(target = "multipleValue", expression = "java(org.kushinae.koudi.common.util.StringUtils.transferFromList(\",\", vo.getMultipleValue()))")
+        @Mapping(target = "multipleValue", expression = "java(org.kushinae.koudi.common.util.StringUtils.transferFromList(\",\", vo.getMultipleValue()))"),
+        @Mapping(target = "categoryId", expression = "java(vo.getCategories().get(vo.getCategories().size() - 1))")
     })
     Attr toDomain(AttrVO vo);
 

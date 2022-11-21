@@ -114,7 +114,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     public List<Long> categoryPath(Long categoryId) {
         List<Long> categoryPath = new ArrayList<>();
         scanCategoryPath(categoryId, categoryPath);
-        return categoryPath;
+        return CollectionUtils.reverse(categoryPath);
     }
 
     @Override

@@ -2,21 +2,20 @@
 /* eslint-disable */
 import { Page, Response } from '@/interface/base';
 import { AttrGroup } from '@/interface/entity/attr';
+import { Category } from '@/interface/entity/category';
 import { AttrGroupSearch } from '@/interface/param/Search';
 import { request } from 'umi';
 
 /** 通过属性分组id获取详情 GET /product/attr/group/category/detail */
-export async function detailWithAttrGroup(
+export async function detailWithCategory(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.detailWithAttrGroupParams,
-  options?: { [key: string]: any },
+  params:{id?: number | string},
 ) {
-  return request<API.RCategoryduixiang>('/product/attr/group/category/detail', {
+  return request<Response<Category>>('/product/attr/group/category/detail', {
     method: 'GET',
     params: {
       ...params,
     },
-    ...(options || {}),
   });
 }
 
@@ -78,15 +77,15 @@ export async function removeById(
 
 /** 搜索获取属性列表 POST /product/attr/group/search */
 export async function listWithSearch(
-  body: API.AttrGroupSearch,
-  options?: { [key: string]: any },
+  body?: AttrGroupSearch,
 ) {
-  return request<API.RListAttrGroupduixiang>('/product/attr/group/search', {
+  return request<Response<AttrGroup[]>>('/product/attr/group/search', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    data: body,
-    ...(options || {}),
+    data: {
+      ...body
+    },
   });
 }

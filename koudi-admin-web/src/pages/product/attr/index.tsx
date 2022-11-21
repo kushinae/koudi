@@ -1,10 +1,12 @@
 import { Attr } from '@/interface/entity/attr';
 import { ESwitchTarget } from '@/interface/type/product/attr';
-import { deleteById, switchTarget } from '@/services/product/ServerAttrController';
+import { deleteById, switchTarget, searchWithPage } from '@/services/product/ServerAttrController';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
-import { Popconfirm, Switch, Tag, Tooltip } from 'antd';
+import { Popconfirm, Switch, Tag, Tooltip, Button } from 'antd';
+import { uniqueId } from 'lodash';
 import React, { useEffect, useRef } from 'react';
+import Editor from './Editor';
 
 /**
  * 属性管理 包含平台属性和销售属性
@@ -35,7 +37,7 @@ const Index: React.FC = () => {
       render: (_, item) => (
         <Switch onClick={async () => {
           if (item?.id) {
-            const {success} = await switchTarget({target: ESwitchTarget.server, id: item.id});
+            const { success } = await switchTarget({ target: ESwitchTarget.SERVER, id: item.id });
             if (success) {
               tableAction.current?.reload();
             }
@@ -57,7 +59,7 @@ const Index: React.FC = () => {
       render: (_, item) => (
         <Switch onClick={async () => {
           if (item?.id) {
-            const {success} = await switchTarget({target: ESwitchTarget.multiple, id: item?.id});
+            const { success } = await switchTarget({ target: ESwitchTarget.MYLTIPLE, id: item?.id });
             if (success) {
               tableAction.current?.reload();
             }
@@ -85,7 +87,7 @@ const Index: React.FC = () => {
       render: (_, item) => (
         <>
           {item.multipleValue.map((e) => {
-            return (<Tag key={'1'}>{e}</Tag>)
+            return (<Tag key={uniqueId()}>{e}</Tag>)
           })}
         </>
       ),
@@ -122,7 +124,7 @@ const Index: React.FC = () => {
       render: (_, item) => (
         <Switch onClick={async () => {
           if (item?.id) {
-            const {success} = await switchTarget({target: ESwitchTarget.show, id: item.id});
+            const { success } = await switchTarget({ target: ESwitchTarget.SHOW, id: item.id });
             if (success) {
               tableAction.current?.reload();
             }
@@ -145,19 +147,16 @@ const Index: React.FC = () => {
       title: '操作',
       render: (_, item) => (
         <>
-          {/* <Editor hiddonAttrGroup={hiddonAttrGroup} setHiddonAttrGroup={setHiddonAttrGroup} id={item.id} triggerElement={ */}
-            <a key="editor">
-              编辑
-            </a>
-          {/* } onSuccess={() => {
-            if (tableAction.current) {
-              tableAction.current.reload();
-            }
-          }} key='editor' /> */}
+          <Editor id={item.id} trigger={<Button>编辑</Button>}
+            onSuccess={() => {
+              if (tableAction.current) {
+                tableAction.current.reload();
+              }
+            }} key='editor' title='编辑属性' />
           <Popconfirm
             onConfirm={async () => {
               if (item.id) {
-                const {success} = await deleteById({id: item.id});
+                const { success } = await deleteById({ id: item.id });
                 if (success) {
                   tableAction.current?.reload();
                 }
@@ -166,7 +165,7 @@ const Index: React.FC = () => {
             title="你确定删除该属性吗?"
             okText="确定"
             cancelText="取消">
-            <a href="#"> 删除</a>
+            <Button danger type='link'>删除</Button>
           </Popconfirm>
         </>
       ),
@@ -186,8 +185,36 @@ const Index: React.FC = () => {
   return (
     <>
       <PageContainer>
-        <ProTable 
-        columns={columns}/>
+        <ProTable<Attr>
+          rowKey='id'
+          toolBarRender={() => {
+            return [
+              <Editor trigger={<Button type='primary'>新增</Button>}
+                onSuccess={() => {
+                  if (tableAction.current) {
+                    tableAction.current.reload();
+                  }
+                }} key='created' title='新增属性' />
+            ]
+          }}
+          actionRef={tableAction}
+          request={async (params, sort, filter) => {
+            const { success, records, total, current, pageSize } = await searchWithPage({
+              ...params,
+              ...filter,
+              key: params.name,
+              pageSize: 5
+            });
+            return {
+              ...params,
+              data: records,
+              success,
+              total,
+              current,
+              pageSize,
+            }
+          }}
+          columns={columns} />
       </PageContainer>
     </>
   )

@@ -1,5 +1,5 @@
 import { AttrGroup } from '@/interface/entity/attr';
-import { EditorFormProps } from '@/interface/props/CategoryProps';
+import { EditorFormProps } from '@/interface/props/GalobalProps';
 import { detail, editor } from '@/services/product/ServerAttrGroupController';
 import { tree } from '@/services/product/ServerCategoryController';
 import { ModalForm, ProFormDigit, ProFormInstance, ProFormText, ProFormTextArea, ProFormTreeSelect } from '@ant-design/pro-components';

@@ -86,7 +86,11 @@ public class Attr implements Serializable {
     private String categoryName;
 
     @TableField(exist = false)
-    private List<Long> categoryId;
+    private List<Long> categories;
+
+    @ApiModelProperty("分类id")
+    @TableField(exist = false)
+    private Long categoryId;
 
     public Long getId() {
         return id;
@@ -232,11 +236,19 @@ public class Attr implements Serializable {
         this.categoryName = categoryName;
     }
 
-    public List<Long> getCategoryId() {
+    public List<Long> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Long> categories) {
+        this.categories = categories;
+    }
+
+    public Long getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(List<Long> categoryId) {
+    public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
 }

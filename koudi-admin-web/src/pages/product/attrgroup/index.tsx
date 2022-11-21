@@ -102,7 +102,7 @@ const List: React.FC = () => {
           rowKey="id"
           toolBarRender={() => {
             return [
-              <Editor title='编辑属性分组' trigger={<Button type='primary'>新增</Button>} onSuccess={() => {
+              <Editor title='创建' trigger={<Button type='primary'>新增</Button>} onSuccess={() => {
                 tableRef.current?.reload();
               }}/>
             ]
