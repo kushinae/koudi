@@ -1,6 +1,6 @@
 # 管理员后台管理系统UI
 
-`@umijs/max` & `Ant Design Pro` 模板项目，二次开发参考 [Ant Design Pro 文档](https://next.umijs.org/zh-CN/docs/max/introduce) [Umi Max 简介](https://pro.ant.design/zh-CN/docs/overview/)
+`@umijs/max` & `Ant Design Pro` 模板项目，二次开发参考 [Umi Max 文档](https://next.umijs.org/zh-CN/docs/max/introduce) [Ant Design Pro 简介](https://pro.ant.design/zh-CN/docs/overview/)
 
 # 快速开始
 
