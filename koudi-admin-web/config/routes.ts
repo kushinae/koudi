@@ -16,17 +16,22 @@ export default [
       {
         name: '分类管理',
         path: '/product/category',
-        component: '@/pages/product/category/List',
+        component: '@/pages/product/category',
       },
       {
         name: '品牌管理',
         path: '/product/brand',
-        component: '@/pages/product/brand/List',
+        component: '@/pages/product/brand',
       },
       {
         name: '属性组管理',
         path: '/product/attrgroup',
-        component: '@/pages/product/attrgroup/List',
+        component: '@/pages/product/attrgroup',
+      },
+      {
+        name: '属性管理',
+        path: '/product/attr',
+        component: '@/pages/product/attr',
       },
     ],
   },

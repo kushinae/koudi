@@ -49,6 +49,10 @@ const menus = [
         name: '属性组管理',
         path: '/product/attrgroup',
       },
+      {
+        name: '属性管理',
+        path: '/product/attr',
+      },
     ],
   },
   { component: './404', layout: false },

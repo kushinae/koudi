@@ -9,7 +9,7 @@
     "openapi": "cross-env ts-node openapi.config.ts",
     "prepare": "husky install",
     "setup": "max setup",
-    "start": "npm run dev"
+    "start": "max dev"
   },
   "dependencies": {
     "@ant-design/icons": "^4.8.0",
