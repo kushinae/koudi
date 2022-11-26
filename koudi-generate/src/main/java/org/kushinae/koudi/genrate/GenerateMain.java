@@ -33,7 +33,7 @@ public class GenerateMain {
                 Stream.of(
                         Collections.singletonMap(OutputFile.xml, "D:\\workspace\\tome\\koudi\\koudi-product\\src\\main\\resources\\mapper"),
                         Collections.singletonMap(OutputFile.mapper, "D:\\workspace\\tome\\koudi\\koudi-product\\src\\main\\java\\org\\kushinae\\koudi\\product\\mapper"),
-                        Collections.singletonMap(OutputFile.entity, "D:\\workspace\\tome\\koudi\\koudi-common\\src\\main\\java\\org\\kushinae\\koudi\\common\\product\\entity"),
+                        Collections.singletonMap(OutputFile.entity, "D:\\workspace\\tome\\koudi\\koudi-common\\src\\main\\java\\org\\kushinae\\koudi\\common\\entity\\product"),
                         Collections.singletonMap(OutputFile.controller, "D:\\workspace\\tome\\koudi\\koudi-product\\src\\main\\java\\org\\kushinae\\koudi\\product\\controller"),
                         Collections.singletonMap(OutputFile.service, "D:\\workspace\\tome\\koudi\\koudi-product\\src\\main\\java\\org\\kushinae\\koudi\\product\\service"),
                         Collections.singletonMap(OutputFile.serviceImpl, "D:\\workspace\\tome\\koudi\\koudi-product\\src\\main\\java\\org\\kushinae\\koudi\\product\\service\\impl")
@@ -44,7 +44,7 @@ public class GenerateMain {
         String outputPathMacOS = "/Users/bnyte/workspaces/tome/koudi/koudi-product/src/main/java";
         String packageName = "org.kushinae.koudi.product";
         List<String> tablePrefix = Stream.of("t_", "c_").toList();
-        List<String> includeTables = Stream.of("t_attr_attr_group_relation", "t_attr").toList();
+        List<String> includeTables = Stream.of("t_spu").toList();
 
         generate(true, pathInfoWindows, pathInfoMacOS, "bnyte", outputPathWindows, outputPathMacOS, packageName, tablePrefix, includeTables);
 
