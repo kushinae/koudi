@@ -53,6 +53,10 @@ const menus = [
         name: '属性管理',
         path: '/product/attr',
       },
+      {
+        name: '商品管理',
+        path: '/product/commodity',
+      },
     ],
   },
   { component: './404', layout: false },

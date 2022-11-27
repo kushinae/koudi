@@ -22,3 +22,9 @@ export interface AttrSearch extends Search {
   attrGroupId?: number;
   enableSearch?: boolean;
 }
+
+export interface SpuSearch extends Search {
+  title?: string;
+  name?: string;
+  sub_title?: string;
+}

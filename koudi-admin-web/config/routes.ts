@@ -1,3 +1,4 @@
+import { layout } from '../src/app';
 export default [
   {
     path: '/',
@@ -32,6 +33,11 @@ export default [
         name: '属性管理',
         path: '/product/attr',
         component: '@/pages/product/attr',
+      },
+      {
+        name: '商品管理',
+        path: '/product/commodity',
+        component: '@/pages/product/commodity',
       },
     ],
   },

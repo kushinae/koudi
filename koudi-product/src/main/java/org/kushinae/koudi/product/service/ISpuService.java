@@ -1,7 +1,9 @@
 package org.kushinae.koudi.product.service;
 
-import org.kushinae.koudi.product.entity.Spu;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.kushinae.koudi.common.entity.product.Spu;
+import org.kushinae.koudi.common.param.search.product.spu.SpuSearch;
 
 /**
  * <p>
@@ -13,4 +15,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISpuService extends IService<Spu> {
 
+    Long editor(Spu payload);
+
+    Page<Spu> searchWithPage(SpuSearch search);
+
+    Boolean deletedById(Long id);
+
+    Spu detailById(Long id);
 }

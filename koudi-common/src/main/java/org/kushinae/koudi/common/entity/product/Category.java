@@ -1,15 +1,18 @@
 package org.kushinae.koudi.common.entity.product;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.kushinae.koudi.common.entity.GlobalEntity;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,7 +25,7 @@ import java.util.List;
  */
 @TableName("t_category")
 @ApiModel(value="Category对象", description="商品三级分类")
-public class Category implements Serializable {
+public class Category extends GlobalEntity implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -58,34 +61,6 @@ public class Category implements Serializable {
 
     @ApiModelProperty(value = "商品数量")
     private Integer productCount;
-
-    @ApiModelProperty(value = "数据创建时间")
-    @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
-
-    @ApiModelProperty(value = "数据更新时间")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date modifiedTime;
-
-    @ApiModelProperty(value = "数据创建用户")
-    @TableField(fill = FieldFill.INSERT)
-    private String createAdminId;
-
-    @ApiModelProperty(value = "数据创建用户名称")
-    @TableField(fill = FieldFill.INSERT)
-    private String createAdminName;
-
-    @ApiModelProperty(value = "数据更新用户名称")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private String modifiedAdminName;
-
-    @ApiModelProperty(value = "数据更新用户")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private String modifiedAdminId;
-
-    @ApiModelProperty(value = "是否逻辑删除 0否 1是 默认否")
-    @TableLogic
-    private Boolean deleted;
 
     @ApiModelProperty("当前分类的子分类")
     @TableField(exist = false)
@@ -169,62 +144,6 @@ public class Category implements Serializable {
 
     public void setProductCount(Integer productCount) {
         this.productCount = productCount;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getModifiedTime() {
-        return modifiedTime;
-    }
-
-    public void setModifiedTime(Date modifiedTime) {
-        this.modifiedTime = modifiedTime;
-    }
-
-    public String getCreateAdminId() {
-        return createAdminId;
-    }
-
-    public void setCreateAdminId(String createAdminId) {
-        this.createAdminId = createAdminId;
-    }
-
-    public String getCreateAdminName() {
-        return createAdminName;
-    }
-
-    public void setCreateAdminName(String createAdminName) {
-        this.createAdminName = createAdminName;
-    }
-
-    public String getModifiedAdminName() {
-        return modifiedAdminName;
-    }
-
-    public void setModifiedAdminName(String modifiedAdminName) {
-        this.modifiedAdminName = modifiedAdminName;
-    }
-
-    public String getModifiedAdminId() {
-        return modifiedAdminId;
-    }
-
-    public void setModifiedAdminId(String modifiedAdminId) {
-        this.modifiedAdminId = modifiedAdminId;
-    }
-
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
     }
 
     public List<Category> getChildren() {

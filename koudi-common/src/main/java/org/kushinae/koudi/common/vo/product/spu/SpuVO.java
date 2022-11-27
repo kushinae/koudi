@@ -1,41 +1,31 @@
-package org.kushinae.koudi.common.entity.product;
+package org.kushinae.koudi.common.vo.product.spu;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.kushinae.koudi.common.entity.GlobalEntity;
 
-import java.io.Serial;
-import java.io.Serializable;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 /**
- * <p>
- * spu商品信息
- * </p>
- *
  * @author bnyte
- * @since 2022-11-26
+ * @since 1.0.0
  */
-@TableName("t_spu")
-@ApiModel(value = "Spu对象", description = "spu商品信息")
-public class Spu extends GlobalEntity implements Serializable {
-
-    @Serial
-    private static final long serialVersionUID = 1L;
+public class SpuVO {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     @ApiModelProperty("商品主标题（如果在sku没有设置的话则默认使用spu的标题）")
+    @NotBlank(message = "商品主标题不能为空")
     private String title;
 
     @ApiModelProperty("商品副标题（如果在sku没有设置的话则默认使用spu的副标题）")
+    @NotBlank(message = "商品副标题不能为空")
     private String subTitle;
 
     @ApiModelProperty("spu的商品名称 如(Apple iPhone 13)")
+    @NotBlank(message = "商品名称不能为空")
     private String name;
 
     @ApiModelProperty("分类表koudi_product.t_category的主键id")
@@ -48,16 +38,12 @@ public class Spu extends GlobalEntity implements Serializable {
     private Integer status;
 
     @ApiModelProperty("购买之后所得积分")
+    @Min(value = 0L, message = "购买所得积分不能小于0")
     private Long integral;
 
     @ApiModelProperty("购买之后所得成长值")
+    @Min(value = 0L, message = "购买所得成长值不能小于0")
     private Long growth;
-
-    @TableField(exist = false)
-    private String categoryName;
-
-    @TableField(exist = false)
-    private String brandName;
 
     public Long getId() {
         return id;
@@ -129,21 +115,5 @@ public class Spu extends GlobalEntity implements Serializable {
 
     public void setGrowth(Long growth) {
         this.growth = growth;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
-    public String getBrandName() {
-        return brandName;
-    }
-
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
     }
 }

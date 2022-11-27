@@ -1,7 +1,7 @@
 package org.kushinae.koudi.product.mapper;
 
-import org.kushinae.koudi.product.entity.Spu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.kushinae.koudi.common.entity.product.Spu;
 
 /**
  * <p>
