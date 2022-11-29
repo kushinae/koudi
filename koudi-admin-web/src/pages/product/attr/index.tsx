@@ -37,7 +37,7 @@ const Index: React.FC = () => {
       render: (_, item) => (
         <Switch onClick={async () => {
           if (item?.id) {
-            const { success } = await switchTarget({ target: ESwitchTarget.SERVER, id: item.id });
+            const { success } = await switchTarget({ target: ESwitchTarget.SEARCH, id: item.id });
             if (success) {
               tableAction.current?.reload();
             }
