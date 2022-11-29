@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.kushinae.koudi.common.entity.product.Spu;
+import org.kushinae.koudi.common.enums.product.ESpuStatus;
 import org.kushinae.koudi.common.lang.web.R;
 import org.kushinae.koudi.common.lang.web.RPage;
 import org.kushinae.koudi.common.mapstruct.product.SpuTransfer;
@@ -32,6 +33,7 @@ public class SpuController {
     @PostMapping("/editor")
     @ApiOperation("编辑SPU信息")
     R<Long> editor(@RequestBody SpuVO payload) {
+        payload.setStatus(ESpuStatus.defaultStatus().getCode());
         return R.OK(service.editor(SpuTransfer.INSTANCE.toDomain(payload)));
     }
 

@@ -12,14 +12,6 @@ import { BaseEntity } from '../base';
    */
   categoryId?: number;
   /**
-   * 购买之后所得成长值
-   */
-  growth?: number;
-  /**
-   * 购买之后所得积分
-   */
-  integral?: number;
-  /**
    * spu的商品名称 如(Apple iPhone 13)
    */
   name?: string;

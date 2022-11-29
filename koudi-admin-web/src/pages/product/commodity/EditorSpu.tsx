@@ -60,8 +60,6 @@ const EditorSpu: React.FC<EditorStepFormItemProps> = ({
             return data;
           } else {
             const data: Spu = {
-              integral: 0,
-              growth: 0,
             }
             return data;
           }
@@ -135,20 +133,6 @@ const EditorSpu: React.FC<EditorStepFormItemProps> = ({
             tooltip="商品所属分类, 该属性值通过选择品牌之后回显"
             name='categoryId'
             width='md'/>
-          
-        <ProFormDigit
-          width="md"
-          required
-          tooltip="购买之后所得积分"
-          label='积分'
-          name="integral" />
-
-        <ProFormDigit
-          width="md"
-          required
-          tooltip="购买之后所得成长值"
-          label='成长值'
-          name="growth" />
 
       </ProForm>
     </>

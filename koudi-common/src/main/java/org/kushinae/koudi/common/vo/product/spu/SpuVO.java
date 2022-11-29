@@ -40,14 +40,6 @@ public class SpuVO {
     @ApiModelProperty("当前商品状态: 0 - 库存中 1 - 提交审核 2 - 审核中 3 - 审核拒绝 4 - 审核通过 5 - 发布中")
     private Integer status;
 
-    @ApiModelProperty("购买之后所得积分")
-    @Min(value = 0L, message = "购买所得积分不能小于0")
-    private Long integral;
-
-    @ApiModelProperty("购买之后所得成长值")
-    @Min(value = 0L, message = "购买所得成长值不能小于0")
-    private Long growth;
-
     public Long getId() {
         return id;
     }
@@ -102,21 +94,5 @@ public class SpuVO {
 
     public void setStatus(Integer status) {
         this.status = status;
-    }
-
-    public Long getIntegral() {
-        return integral;
-    }
-
-    public void setIntegral(Long integral) {
-        this.integral = integral;
-    }
-
-    public Long getGrowth() {
-        return growth;
-    }
-
-    public void setGrowth(Long growth) {
-        this.growth = growth;
     }
 }

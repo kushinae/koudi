@@ -39,6 +39,14 @@ public enum ESpuStatus {
     PUBLISH(5),
     ;
 
+    /**
+     * 获取SPU默认状态
+     * @return 库存中 IN_STOCK
+     */
+    public static ESpuStatus defaultStatus() {
+        return IN_STOCK;
+    }
+
     private final Integer code;
 
     ESpuStatus(Integer code) {

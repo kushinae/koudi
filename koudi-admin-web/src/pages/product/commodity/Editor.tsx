@@ -1,4 +1,4 @@
-import { Card, Space, Steps } from 'antd';
+import { Card, Col, Row, Space, Steps } from 'antd';
 import React, { useEffect, useState } from 'react';
 import EditorSpu from './EditorSpu';
 
@@ -60,9 +60,15 @@ const Editor: React.FC = ({
           <Steps current={current} items={items} />
         </Card>
 
-        <Card>
-          {forms[current]}
-        </Card>
+
+        <Row>
+          <Col span={18}>
+            <Card>{forms[current]}</Card>
+          </Col>
+          <Col>
+            <Card>预览</Card>
+          </Col>
+        </Row>
       </Space>
     </>
   )
