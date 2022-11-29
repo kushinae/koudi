@@ -30,7 +30,10 @@ const Editor: React.FC = ({
       first={current === 0} 
       last={current === items.length - 1} 
       onPre={() => {setCurrent(current - 1)}}  
-      onNext={() => {setCurrent(current + 1)}} />,
+      onNext={(id: number | string) => {
+        console.log('当前id', id);
+        setCurrent(current + 1)
+      }} />,
     <EditorSpu 
       first={current === 0} 
       last={current === items.length - 1} 

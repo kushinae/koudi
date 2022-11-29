@@ -10,7 +10,7 @@ export interface EditorFormProps {
 export interface EditorStepFormItemProps {
   id?: number | string;
   onPre: () => void;
-  onNext: () => void;
+  onNext: (id: number | string) => void;
   last: boolean;
   first: boolean;
 }
