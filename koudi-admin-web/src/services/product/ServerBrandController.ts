@@ -2,6 +2,7 @@
 /* eslint-disable */
 import { Page, Response } from '@/interface/base';
 import { Brand } from '@/interface/entity/brand';
+import { Category } from '@/interface/entity/category';
 import { BrandSearch } from '@/interface/param/Search';
 import { request } from 'umi';
 
@@ -33,11 +34,11 @@ export async function editor(
   });
 }
 
-/** 分页搜索获取品牌列表 POST /product/brand/list */
+/** 分页搜索获取品牌列表 POST /product/brand/search */
 export async function listWithPage(
   body?: BrandSearch,
 ) {
-  return request<Page<Brand>>('/product/brand/list', {
+  return request<Page<Brand>>('/product/brand/search', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -73,5 +74,28 @@ export async function removeById(
     params: {
       ...params,
     },
+  });
+}
+
+/** 获取品牌列表 GET /product/brand/list */
+export async function list() {
+  return request<Response<Brand[]>>('/product/brand/list', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+}
+
+/** 获取品牌列表 GET /product/brand/categories */
+export async function categories(payload: {id: number | string}) {
+  return request<Response<Category[]>>('/product/brand/categories', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    params: {
+      ...payload
+    }
   });
 }

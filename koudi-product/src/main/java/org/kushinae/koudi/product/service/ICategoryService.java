@@ -34,4 +34,6 @@ public interface ICategoryService extends IService<Category> {
     Category detail(Long id);
 
     List<Category> tree(boolean skipLowestLevel, boolean skipRoot);
+
+    List<Category> categoriesByBrand(Long brandId);
 }

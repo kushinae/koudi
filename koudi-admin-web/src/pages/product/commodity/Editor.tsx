@@ -1,11 +1,48 @@
-import React, { useEffect } from 'react';
+import { Card, Space, Steps } from 'antd';
+import React, { useEffect, useState } from 'react';
+import EditorSpu from './EditorSpu';
 
 /**
  * 编辑商品
  * @author bnyte
  * @since 1.0.0
  */
-const Editor: React.FC = () => {
+const Editor: React.FC = ({
+}) => {
+
+  const [ current, setCurrent ] = useState<number>(0);
+
+  const items = [
+    {
+      title: '编辑商品基本信息',
+    },
+    {
+      title: '编辑商品销售单元',
+    },
+    {
+      title: '编辑商品详细信息',
+    },
+  ]
+
+  const forms = [
+
+    <EditorSpu 
+      first={current === 0} 
+      last={current === items.length - 1} 
+      onPre={() => {setCurrent(current - 1)}}  
+      onNext={() => {setCurrent(current + 1)}} />,
+    <EditorSpu 
+      first={current === 0} 
+      last={current === items.length - 1} 
+      onPre={() => {setCurrent(current - 1)}}  
+      onNext={() => {setCurrent(current + 1)}} />,
+    <EditorSpu 
+      first={current === 0} 
+      last={current === items.length - 1} 
+      onPre={() => {setCurrent(current - 1)}} 
+      onNext={() => {setCurrent(current + 1)}} />,
+  ]
+
   /**
    * 钩子函数
    */
@@ -17,7 +54,16 @@ const Editor: React.FC = () => {
   }, []);
   return (
     <>
-      Editor
+      <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+        
+        <Card>
+          <Steps current={current} items={items} />
+        </Card>
+
+        <Card>
+          {forms[current]}
+        </Card>
+      </Space>
     </>
   )
 }

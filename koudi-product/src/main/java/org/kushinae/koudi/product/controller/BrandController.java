@@ -6,13 +6,17 @@ import io.swagger.annotations.ApiOperation;
 import org.kushinae.koudi.common.lang.web.R;
 import org.kushinae.koudi.common.lang.web.RPage;
 import org.kushinae.koudi.common.mapstruct.product.BrandTransfer;
+import org.kushinae.koudi.common.mapstruct.product.CategoryTransfer;
 import org.kushinae.koudi.common.param.request.RelationCategoryParam;
 import org.kushinae.koudi.common.param.search.product.brand.BrandSearch;
 import org.kushinae.koudi.common.vo.product.brand.BrandVO;
+import org.kushinae.koudi.common.vo.product.category.CategoryVO;
 import org.kushinae.koudi.product.service.IBrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -31,7 +35,7 @@ public class BrandController {
     IBrandService service;
 
     @APIHelper
-    @PostMapping("/list")
+    @PostMapping("/search")
     @ApiOperation(value = "分页搜索获取品牌列表", nickname = "listWithPage")
     public RPage<BrandVO> listWithPage(@RequestBody BrandSearch search) {
         return RPage.OK(service.listWithPage(search), BrandVO.class);
@@ -63,6 +67,20 @@ public class BrandController {
     @ApiOperation(value = "关联分类", nickname = "relationCategory")
     public R<Boolean> relationCategory(@Validated @RequestBody RelationCategoryParam payload) {
         return R.OK(service.relationCategory(payload));
+    }
+
+    @APIHelper
+    @GetMapping("/list")
+    @ApiOperation(value = "平台品牌列表", nickname = "relationCategory")
+    public R<List<BrandVO>> brands() {
+        return R.OK(BrandTransfer.INSTANCE.toVOS(service.brands()));
+    }
+
+    @APIHelper
+    @GetMapping("/categories")
+    @ApiOperation(value = "通过品牌获取分类列表")
+    public R<List<CategoryVO>> categories(@RequestParam("id") Long id) {
+        return R.OK(CategoryTransfer.INSTANCE.toVOList(service.categories(id)));
     }
 
 }

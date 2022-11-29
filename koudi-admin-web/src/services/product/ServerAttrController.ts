@@ -3,7 +3,7 @@
 import { Page, Response } from '@/interface/base';
 import { Attr } from '@/interface/entity/attr';
 import { AttrSearch } from '@/interface/param/Search';
-import { ESwitchTarget } from '@/interface/type/product/attr';
+import { ESwitchTarget } from '@/interface/type/product/enums';
 import { request } from 'umi';
 
 /** 删除属性 DELETE /product/attr/delete */

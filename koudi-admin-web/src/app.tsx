@@ -56,6 +56,17 @@ const menus = [
       {
         name: '商品管理',
         path: '/product/commodity',
+        routes: [
+          {
+            name: '商品列表',
+            path: '/product/commodity/index',
+            component: '@/pages/product/commodity/index',
+          },
+          {
+            name: '发布商品',
+            path: '/product/commodity/publish',
+          },
+        ]
       },
     ],
   },

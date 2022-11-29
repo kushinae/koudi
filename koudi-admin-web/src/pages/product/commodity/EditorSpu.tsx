@@ -1,16 +1,18 @@
-import { EditorFormProps } from '@/interface/props/GalobalProps';
+import { EditorStepFormItemProps } from '@/interface/props/GalobalProps';
 import React, { useEffect, useRef } from 'react';
 import { Spu } from '@/interface/entity/commodity';
-import { ProFormDigit, ProFormInstance, ProFormSelect, ProFormSwitch, ProFormText, StepsForm } from '@ant-design/pro-components';
-import { detail, editor } from '@/services/product/SpuController';
+import { ProForm, ProFormDigit, ProFormInstance, ProFormSelect, ProFormText } from '@ant-design/pro-components';
+import { detail } from '@/services/product/SpuController';
+import { Button, message } from 'antd';
+import { categories as categoriesAPI, list } from '@/services/product/ServerBrandController';
 
 /**
  * 编辑spu
  * @author bnyte
  * @since 
  */
-const EditorSpu: React.FC<EditorFormProps> = ({
- title, id, onSuccess
+const EditorSpu: React.FC<EditorStepFormItemProps> = ({
+ id, onNext, onPre, last, first
 }) => {
 
   const formRef = useRef<ProFormInstance<Spu>>();
@@ -26,27 +28,46 @@ const EditorSpu: React.FC<EditorFormProps> = ({
   }, []);
   return (
     <>
-      <StepsForm.StepForm<Spu | undefined>
-        title={title}
+      <ProForm<Spu | undefined>
         formRef={formRef}
-        onFinish={async (payload) => {
-          if (payload) {
-            const { success, data } = await editor(payload);
-            if (success) {
-              onSuccess(data);
-              return success;
-            } else {
-              return false;
-            }
+        onValuesChange={async (changeValues) => {
+          if (changeValues?.brandId) {
+            const {data} = await categoriesAPI({id: changeValues?.brandId});
+            formRef.current?.setFieldValue('categoryId', data);
           }
-          return false;
+        }}
+        submitter={{
+          render: (props, doms) => {
+            return [
+              first ? null : <Button key='preStep' onClick={() => onPre()}>上一步</Button>,
+              <Button key='submit' onClick={async () => {
+                try {
+                  await props.form?.validateFields?.();
+                  props.form?.submit?.();
+                  onNext();
+                } catch (e: any) {
+                  const error = e?.errorFields[0].errors;
+                  for(let i = 0; i < error.length; i++) {
+                    message.warning(error[i]);
+                  }
+                }
+              }} type='primary'>{last ? '提交' : '下一步'}</Button>,
+              <Button key='reset' onClick={() => props.form?.resetFields()}>重置</Button>
+            ]
+          }
+        }}
+        onFinish={async (payload) => {
+          return true;
         }}
         request={async () => {
           if (id) {
             const { data } = await detail({ id: id });
             return data;
           } else {
-            const data: Spu = {}
+            const data: Spu = {
+              integral: 0,
+              growth: 0,
+            }
             return data;
           }
         }}>
@@ -54,77 +75,86 @@ const EditorSpu: React.FC<EditorFormProps> = ({
           width="md"
           hidden
           name="id" />
+
+        <ProFormText
+          width="md"
+          required
+          label="主标题"
+          tooltip="商品主标题（如果在sku没有设置的话则默认使用spu的标题）"
+          placeholder="请输入主标题"
+          rules={[{ required: true, message: '商品主标题不能为空' }]}
+          name="title" />
+
+        <ProFormText
+          width="md"
+          required
+          label="副标题"
+          tooltip="商品副标题（如果在sku没有设置的话则默认使用spu的副标题）"
+          placeholder="请输入副标题"
+          rules={[{ required: true, message: '商品副标题不能为空' }]}
+          name="subTitle" />
+
         <ProFormText
           width="md"
           required
           label="名称"
-          tooltip="最长为 12 位"
-          placeholder="请输入名称"
-          rules={[{ required: true, message: '这是必填项' }]}
+          tooltip="spu的商品名称 如(Apple iPhone 13)"
+          placeholder="商品名称不能为空"
+          rules={[{ required: true, message: '商品名称不能为空' }]}
           name="name" />
 
-        <ProFormSwitch
-          width="md"
-          label="检索"
-          tooltip='开启后可搜索到该属性'
-          name="enableSearch" />
-
-        <ProFormSwitch
-          width="md"
-          label="多个值"
-          tooltip='开启后该属性在商品详情展示时可使用多个值'
-          name="multiple" />
-
-        <ProFormText
-          width="md"
-          required
-          label="属性图标"
-          placeholder="属性图标"
-          rules={[{ required: true, message: '请输入属性图标' }]}
-          name="icon" />
-
         <ProFormSelect
-          width="md"
-          mode="tags"
-          options={[]}
           required
-          label="可选值"
-          tooltip='输入预选值之后按回车确认添加'
-          placeholder="输入可选值"
-          rules={[{ required: true, message: '请输入可选值' }]}
-          name="multipleValue" />
+          label='品牌'
+          tooltip="商品所属品牌"
+          name='brandId'
+          fieldProps={{
+            fieldNames: {
+              label: 'name',
+              value: 'id',
+            }
+          }}
+          request={async () => {
+            const {data} = await list();
+            return data ? data : [];
+          }}
+          width='md'/>
 
-        <ProFormSelect
-          allowClear
+          <ProFormSelect 
+            required
+            request={async () => {
+              if (formRef.current?.getFieldValue('brandId')) {
+                const {data} = await categoriesAPI({id: formRef.current?.getFieldValue('brandId')});
+                return data ? data : [];
+              }
+              return [];
+            }}
+            fieldProps={{
+              fieldNames: {
+                label: 'name',
+                value: 'id',
+              }
+            }}
+            label='分类'
+            tooltip="商品所属分类, 该属性值通过选择品牌之后回显"
+            name='categoryId'
+            width='md'/>
+          
+        <ProFormDigit
           width="md"
-          options={[
-            {
-              value: 0,
-              label: '销售属性'
-            },
-            {
-              value: 1,
-              label: '基础属性'
-            },
-            {
-              value: 2,
-              label: '全部应用'
-            },
-          ]}
           required
-          label="属性类型"
-          tooltip="0-销售属性,1-基本属性,2-既是销售属性又是基本属性"
-          placeholder="请选择属性类型"
-          rules={[{ required: true, message: '请输入可选值' }]}
-          name="type" />
+          tooltip="购买之后所得积分"
+          label='积分'
+          name="integral" />
 
-        <ProFormSwitch
+        <ProFormDigit
           width="md"
-          tooltip='开启后会在商品简介中快速展示'
-          label="快速展示"
-          name="quickShow" />
+          required
+          tooltip="购买之后所得成长值"
+          label='成长值'
+          name="growth" />
 
-      </StepsForm.StepForm>
+      </ProForm>
     </>
   )
 }

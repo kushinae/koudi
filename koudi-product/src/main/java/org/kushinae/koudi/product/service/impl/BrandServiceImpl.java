@@ -146,4 +146,14 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
 
         return true;
     }
+
+    @Override
+    public List<Brand> brands() {
+        return list(Wrappers.lambdaQuery(Brand.class).orderByDesc(Brand::getSort));
+    }
+
+    @Override
+    public List<Category> categories(Long id) {
+        return categoryService.categoriesByBrand(id);
+    }
 }

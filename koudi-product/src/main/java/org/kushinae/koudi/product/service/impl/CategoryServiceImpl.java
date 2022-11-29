@@ -139,6 +139,16 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         return list;
     }
 
+    @Override
+    public List<Category> categoriesByBrand(Long brandId) {
+        List<CategoryBrandRelation> list = categoryBrandRelationService.list(Wrappers.lambdaQuery(CategoryBrandRelation.class)
+                .eq(CategoryBrandRelation::getBrandId, brandId));
+
+        if (CollectionUtils.isEmpty(list))
+            return null;
+        return listByIds(list.stream().map(CategoryBrandRelation::getCategoryId).toList());
+    }
+
     private void scanCategoryPath(Long categoryId, List<Long> categoryPath) {
         Category category = getById(categoryId);
         if (ObjectUtils.nonNull(category)) {

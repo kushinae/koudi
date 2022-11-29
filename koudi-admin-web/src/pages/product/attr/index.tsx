@@ -1,5 +1,5 @@
 import { Attr } from '@/interface/entity/attr';
-import { ESwitchTarget } from '@/interface/type/product/attr';
+import { ESwitchTarget } from '@/interface/type/product/enums';
 import { deleteById, switchTarget, searchWithPage } from '@/services/product/ServerAttrController';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
