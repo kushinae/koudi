@@ -30,14 +30,8 @@ const EditorSpu: React.FC<EditorStepFormItemProps> = ({
     <>
       <ProForm<Spu | undefined>
         formRef={formRef}
-        onValuesChange={async (changeValues) => {
-          if (changeValues?.brandId) {
-            const {data} = await categoriesAPI({id: changeValues?.brandId});
-            formRef.current?.setFieldValue('categoryId', data);
-          }
-        }}
         submitter={{
-          render: (props, doms) => {
+          render: (props) => {
             return [
               first ? null : <Button key='preStep' onClick={() => onPre()}>上一步</Button>,
               <Button key='submit' onClick={async () => {
@@ -57,6 +51,7 @@ const EditorSpu: React.FC<EditorStepFormItemProps> = ({
           }
         }}
         onFinish={async (payload) => {
+          console.log('on finish payload', payload);
           return true;
         }}
         request={async () => {
@@ -122,9 +117,10 @@ const EditorSpu: React.FC<EditorStepFormItemProps> = ({
 
           <ProFormSelect 
             required
-            request={async () => {
-              if (formRef.current?.getFieldValue('brandId')) {
-                const {data} = await categoriesAPI({id: formRef.current?.getFieldValue('brandId')});
+            dependencies={['brandId']}
+            request={async (params) => {
+              if (params?.brandId) {
+                const {data} = await categoriesAPI({id: params?.brandId});
                 return data ? data : [];
               }
               return [];
