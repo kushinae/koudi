@@ -41,7 +41,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, Spu> implements ISpuS
     public Long editor(Spu payload) {
 
         Spu spu = getOne(Wrappers.lambdaQuery(Spu.class).eq(Spu::getName, payload.getName()));
-        if (ObjectUtils.nonNull(spu)) {
+        if (ObjectUtils.nonNull(spu) && ObjectUtils.notEquals(spu.getId(), payload.getId())) {
             throw new ParameterCheckException("商品名称已经存在");
         }
 

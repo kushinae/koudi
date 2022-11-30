@@ -1,9 +1,12 @@
 import { Spu } from '@/interface/entity/commodity';
 import { searchWithPage } from '@/services/product/SpuController';
 import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
-import { Button } from 'antd';
+import { Button, theme } from 'antd';
 import React, { useEffect, useRef } from 'react';
-import { SpuSearch } from '../../../interface/param/Search';
+import { SpuSearch } from '@/interface/param/Search';
+import { history } from '@umijs/max';
+
+const { useToken } = theme;
 
 /**
  * 商品管理首页
@@ -11,6 +14,8 @@ import { SpuSearch } from '../../../interface/param/Search';
  * @since 1.0.0
  */
 const Index: React.FC = () => {
+
+  const { token } = useToken();
 
   const tableRef = useRef<ActionType>();
 
@@ -31,19 +36,17 @@ const Index: React.FC = () => {
       key: 'subTitle',
     },
     {
-      title: '成长值',
-      dataIndex: 'growth',
-      key: 'growth',
-    },
-    {
-      title: '积分',
-      dataIndex: 'integral',
-      key: 'integral',
-    },
-    {
       title: '状态',
       dataIndex: 'status',
       key: 'status',
+      valueEnum: {
+        0: {text: '库存中', status: 'Default'},
+        1: {text: '提交审核', status: 'Processing'},
+        2: {text: '审核中', status: 'Processing'},
+        3: {text: '审核拒绝', status: 'Error'},
+        4: {text: '审核通过', status: 'Success'},
+        5: {text: '发布中', status: 'Success'},
+      }
     },
     {
       title: '分类',
@@ -54,6 +57,20 @@ const Index: React.FC = () => {
       title: '品牌',
       dataIndex: 'brandName',
       key: 'brandName',
+    },
+    {
+      title: '操作',
+      render: (_, item) => {
+        return [
+          <Button key='editor' onClick={() => {
+            history.push(`/product/commodity/publish/${item?.id}`);
+          }} type='link'>编辑</Button>,
+          <Button key='publish' style={{color: token.colorPrimary}} type='link'>发布</Button>,
+          <Button key='delete' danger type='link'>删除</Button>,
+        ];
+      },
+      key: 'operate',
+
     },
   ]
 
@@ -81,9 +98,12 @@ const Index: React.FC = () => {
               pageSize: pageSize,
             };
           }}
+          rowKey='id'
           toolBarRender={() => {
             return [
-              <Button type='primary'>新增商品</Button>
+              <Button type='primary' onClick={() => {
+                history.push(`/product/commodity/publish`);
+              }}>新增商品</Button>
             ]
           }}
           pagination={{

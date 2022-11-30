@@ -1,6 +1,8 @@
 import type { UserInfoProps } from '@/interface/props/HeaderProps';
-import { Avatar, Button } from 'antd';
+import { Avatar, Button, theme } from 'antd';
 import React, { useEffect } from 'react';
+
+const { useToken } = theme;
 
 /**
  * 用户信息
@@ -8,6 +10,9 @@ import React, { useEffect } from 'react';
  * @since 1.0.0
  */
 const UserInfo: React.FC<UserInfoProps> = ({ currentUser }) => {
+
+  const { token } = useToken();
+
   /**
    * 钩子函数
    */
@@ -20,7 +25,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ currentUser }) => {
   return (
     <>
       <Avatar src={currentUser.avatar} />
-      <Button type='link'>{currentUser.username}</Button>
+      <Button style={{color: token.colorPrimary}} type='link'>{currentUser.username}</Button>
     </>
   );
 };

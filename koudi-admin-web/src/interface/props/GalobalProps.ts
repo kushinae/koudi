@@ -14,3 +14,10 @@ export interface EditorStepFormItemProps {
   last: boolean;
   first: boolean;
 }
+
+/** 编辑步骤表单的表单项的props */
+export interface EditorStepFormProps {
+  id?: number | string;
+  open?: false | boolean;
+  onClose?: () => void;
+}

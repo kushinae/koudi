@@ -50,9 +50,12 @@ const EditorSpu: React.FC<EditorStepFormItemProps> = ({
                   }
                 } catch (e: any) {
                   console.log(e);
-                  const error = e?.errorFields[0].errors;
-                  for(let i = 0; i < error.length; i++) {
-                    message.warning(error[i]);
+                  const errorFields = e?.errorFields;
+                  if (errorFields) {
+                    const error = errorFields[0].errors;
+                    for(let i = 0; i < error.length; i++) {
+                      message.warning(error[i]);
+                    }
                   }
                 }
               }} type='primary'>{last ? '提交' : '下一步'}</Button>,
@@ -66,13 +69,15 @@ const EditorSpu: React.FC<EditorStepFormItemProps> = ({
         }}
         request={async () => {
           if (id) {
-            const { data } = await detail({ id: id });
-            return data;
-          } else {
-            const data: Spu = {
+            const {success, data} = await detail({id});
+            if (success && data) {
+              return data;
+            } else if (success && !data) {
+              message.error('商品不存在');
+              return data;
             }
-            return data;
           }
+          return {};
         }}>
         <ProFormDigit
           width="xs"

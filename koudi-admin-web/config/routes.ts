@@ -1,4 +1,3 @@
-import { layout } from '../src/app';
 export default [
   {
     path: '/',
@@ -45,8 +44,15 @@ export default [
           },
           {
             name: '发布商品',
+            path: '/product/commodity/publish/:id',
+            component: '@/pages/product/commodity/Editor',
+            layout: false,
+          },
+          {
+            name: '发布商品',
             path: '/product/commodity/publish',
             component: '@/pages/product/commodity/Editor',
+            layout: false,
           },
         ]
       },

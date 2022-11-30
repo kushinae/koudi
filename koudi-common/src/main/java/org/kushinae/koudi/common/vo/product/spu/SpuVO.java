@@ -40,6 +40,12 @@ public class SpuVO {
     @ApiModelProperty("当前商品状态: 0 - 库存中 1 - 提交审核 2 - 审核中 3 - 审核拒绝 4 - 审核通过 5 - 发布中")
     private Integer status;
 
+    @ApiModelProperty("分类名称")
+    private String categoryName;
+
+    @ApiModelProperty("品牌名称")
+    private String brandName;
+
     public Long getId() {
         return id;
     }
@@ -94,5 +100,21 @@ public class SpuVO {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
     }
 }

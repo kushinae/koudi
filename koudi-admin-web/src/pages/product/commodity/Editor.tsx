@@ -1,3 +1,5 @@
+import { PageContainer } from '@ant-design/pro-components';
+import { useParams } from '@umijs/max';
 import { Card, Col, Row, Space, Steps } from 'antd';
 import React, { useEffect, useState } from 'react';
 import EditorSpu from './EditorSpu';
@@ -11,6 +13,8 @@ const Editor: React.FC = ({
 }) => {
 
   const [ current, setCurrent ] = useState<number>(0);
+  const params = useParams();
+  const spuId: number | string | undefined = params?.id;
 
   const items = [
     {
@@ -27,6 +31,7 @@ const Editor: React.FC = ({
   const forms = [
 
     <EditorSpu 
+      id={spuId}
       first={current === 0} 
       last={current === items.length - 1} 
       onPre={() => {setCurrent(current - 1)}}  
@@ -57,22 +62,25 @@ const Editor: React.FC = ({
   }, []);
   return (
     <>
-      <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-        
-        <Card>
-          <Steps current={current} items={items} />
-        </Card>
+      <PageContainer title='发布商品'>
+        <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+          
+          <Card>
+            <Steps current={current} items={items} />
+          </Card>
 
+          <Row>
+            <Col span={18}>
+              <Card>{forms[current]}</Card>
+            </Col>
 
-        <Row>
-          <Col span={18}>
-            <Card>{forms[current]}</Card>
-          </Col>
-          <Col>
-            <Card>预览</Card>
-          </Col>
-        </Row>
-      </Space>
+            <Col>
+              <Card>预览</Card>
+            </Col>
+          </Row>
+
+        </Space>
+      </PageContainer>
     </>
   )
 }

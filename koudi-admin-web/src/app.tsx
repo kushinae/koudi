@@ -62,10 +62,6 @@ const menus = [
             path: '/product/commodity/index',
             component: '@/pages/product/commodity/index',
           },
-          {
-            name: '发布商品',
-            path: '/product/commodity/publish',
-          },
         ]
       },
     ],
@@ -74,7 +70,7 @@ const menus = [
 ];
 
 const loopMenuItem = (menus: any[]): MenuDataItem[] => {
-  return menus.map(({ icon, routes, ...item }) => {
+  return menus.map(({ icon, routes, ...item }) => {    
     const iconValue = iconMap[icon as string];
     return {
       ...item,

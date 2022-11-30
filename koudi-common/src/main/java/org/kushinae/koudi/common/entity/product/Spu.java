@@ -44,6 +44,9 @@ public class Spu extends GlobalEntity implements Serializable {
     @ApiModelProperty("品牌表koudi_product.t_brand的主键id")
     private Long brandId;
 
+    /**
+     * @see org.kushinae.koudi.common.enums.product.ESpuStatus
+     */
     @ApiModelProperty("当前商品状态: 0 - 库存中 1 - 提交审核 2 - 审核中 3 - 审核拒绝 4 - 审核通过 5 - 发布中")
     private Integer status;
 
