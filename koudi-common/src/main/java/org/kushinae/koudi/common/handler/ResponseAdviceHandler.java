@@ -44,7 +44,9 @@ public class ResponseAdviceHandler implements ResponseBodyAdvice<Object> {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ParameterCheckException.class)
     R<Void> handleParameterCheckException(ParameterCheckException e) {
-        log.error("[Parameter Check Exception] because {}", e.getMessage(), e);
+        if (log.isErrorEnabled()) {
+            log.error("[Parameter Check Exception] because {}", e.getMessage(), e);
+        }
         return R.ERROR(e.getStatus(), e.getMessage());
     }
 
@@ -56,7 +58,9 @@ public class ResponseAdviceHandler implements ResponseBodyAdvice<Object> {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(GlobalException.class)
     R<Void> handleGlobalException(GlobalException e) {
-        log.error("[Global System Exception] because {}", e.getMessage(), e);
+        if (log.isErrorEnabled()) {
+            log.error("[Global System Exception] because {}", e.getMessage(), e);
+        }
         return R.ERROR(e.getStatus(), e.getMessage());
     }
 
@@ -68,7 +72,9 @@ public class ResponseAdviceHandler implements ResponseBodyAdvice<Object> {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     R<Void> handleValidationException(BindException e) {
-        log.error("[Validation Check Exception] because {}", e.getMessage(), e);
+        if (log.isErrorEnabled()) {
+            log.error("[Validation Check Exception] because {}", e.getMessage(), e);
+        }
         BindingResult bindingResult = e.getBindingResult();
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
         StringJoiner message = new StringJoiner(",");
@@ -84,7 +90,9 @@ public class ResponseAdviceHandler implements ResponseBodyAdvice<Object> {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     R<Void> handleException(Exception e) {
-        log.error("[Unknown System Exception] because {}", e.getMessage(), e);
+        if (log.isErrorEnabled()) {
+            log.error("[Unknown System Exception] because {}", e.getMessage(), e);
+        }
         return R.ERROR(Status.UNKNOWN_BUSINESS_EXCEPTION, e.getMessage());
     }
 
