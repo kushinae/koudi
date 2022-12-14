@@ -2,9 +2,10 @@ import { EditorStepFormItemProps } from '@/interface/props/GalobalProps';
 import React, { useEffect, useRef } from 'react';
 import { Spu } from '@/interface/entity/commodity';
 import { ProForm, ProFormDigit, ProFormInstance, ProFormSelect, ProFormText } from '@ant-design/pro-components';
-import { detail, editor } from '@/services/product/SpuController';
-import { Button, message } from 'antd';
+import { detail } from '@/services/product/SpuController';
+import { message } from 'antd';
 import { categories as categoriesAPI, list } from '@/services/product/ServerBrandController';
+import {spuSubmitterFormat} from "@/utils/spu";
 
 /**
  * 编辑spu
@@ -38,29 +39,7 @@ const EditorSpu: React.FC<EditorStepFormItemProps> = ({
         }}
         submitter={{
           render: (props) => {
-            return [
-              first ? null : <Button key='preStep' onClick={() => onPre()}>上一步</Button>,
-              <Button key='submit' onClick={async () => {
-                try {
-                  await props.form?.validateFields?.();
-                  props.form?.submit?.();
-                  const {data, success} = await editor(props.form?.getFieldsValue());
-                  if (success && data) {
-                    onNext(data);
-                  }
-                } catch (e: any) {
-                  console.log(e);
-                  const errorFields = e?.errorFields;
-                  if (errorFields) {
-                    const error = errorFields[0].errors;
-                    for(let i = 0; i < error.length; i++) {
-                      message.warning(error[i]);
-                    }
-                  }
-                }
-              }} type='primary'>{last ? '提交' : '下一步'}</Button>,
-              <Button key='reset' onClick={() => props.form?.resetFields()}>重置</Button>
-            ]
+            return spuSubmitterFormat(first, props, last, onNext, onPre);
           }
         }}
         onFinish={async (payload) => {

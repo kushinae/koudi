@@ -1,3 +1,5 @@
+import {Spu} from "@/interface/entity/commodity";
+
 /** 编辑表单props */
 export interface EditorFormProps {
   trigger: JSX.Element;
@@ -10,9 +12,11 @@ export interface EditorFormProps {
 export interface EditorStepFormItemProps {
   id?: number | string;
   onPre: () => void;
-  onNext: (id: number | string) => void;
+  onNext: (spuInfo: Spu) => void;
   last: boolean;
   first: boolean;
+  spuInfo?: Spu;
+  spuId?: number | string;
 }
 
 /** 编辑步骤表单的表单项的props */
