@@ -1,7 +1,16 @@
-import React, { useEffect } from 'react';
-import { ProForm } from '@ant-design/pro-components';
+import React, { useEffect, useState } from 'react';
+import { ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
 import { spuSubmitterFormat } from '@/utils/spu';
 import { EditorStepFormItemProps } from '@/interface/props/GalobalProps';
+import { Button, Card, Select, SelectProps, Space } from 'antd';
+
+const options: SelectProps['options'] = [];
+for (let i = 10; i < 36; i++) {
+  options.push({
+    value: i.toString(36) + i,
+    label: i.toString(36) + i,
+  });
+}
 
 /**
  * 规格参数编辑
@@ -12,6 +21,12 @@ const EditorSpecifications: React.FC<EditorStepFormItemProps> = ({
   id, onNext, onPre, last, first
 }) => {
 
+  const [attrGroups, setAttrGroups] = useState<string[]>([]);
+
+  const handleChange = (value: string | string[]) => {
+    console.log(`Selected: ${value}`);
+    setAttrGroups(attrGroups.concat(value));
+  };
 
   /**
    * 钩子函数
@@ -24,11 +39,52 @@ const EditorSpecifications: React.FC<EditorStepFormItemProps> = ({
   }, []);
   return (
     <>
-      <ProForm submitter={{
-        render: (props) => {
-          return spuSubmitterFormat(first, props, last, onNext, onPre);
-        }
-      }} />
+      {/* <Space direction="vertical" size="large"> */}
+      <Card>
+        <Select
+          mode="tags"
+          size='middle'
+          placeholder="Please select"
+          onChange={handleChange}
+          style={{ width: '100%' }}
+          options={options}
+        />
+      </Card>
+      <Card>
+        <ProForm
+          submitter={{
+            render: (props) => {
+              return spuSubmitterFormat(first, props, last, onNext, onPre);
+            }
+          }}
+        >
+          {attrGroups?.map(e => {
+            return (
+              <ProCard
+                extra={
+                  <Button onClick={(event) => {
+                    // 阻止事件冒泡
+                    event.stopPropagation();
+                  }}>添加一列</Button>
+                }
+                bordered
+                headerBordered
+                collapsible
+                title={e}
+                style={{
+                  marginBlockEnd: 16,
+                  maxWidth: '100%',
+                }}
+              >
+                <ProFormText label={e} />
+              </ProCard>
+            )
+          })}
+
+        </ProForm>
+      </Card>
+      {/* </Space> */}
+
     </>
   )
 }
