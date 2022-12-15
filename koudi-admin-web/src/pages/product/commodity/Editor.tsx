@@ -4,7 +4,8 @@ import { Card, Col, Row, Space, Steps } from 'antd';
 import React, { useEffect, useState } from 'react';
 import EditorSpu from './EditorSpu';
 import EditorSaleInfo from "@/pages/product/commodity/EditorSaleInfo";
-import {Spu} from "@/interface/entity/commodity";
+import { Spu } from "@/interface/entity/commodity";
+import EditorSpecifications from './EditorSpecifications';
 
 /**
  * 编辑商品
@@ -15,7 +16,7 @@ const Editor: React.FC = ({
 }) => {
 
   const params = useParams();
-  const [ current, setCurrent ] = useState<number>(0);
+  const [current, setCurrent] = useState<number>(0);
   const [spuInfo, setSpuInfo] = useState<Spu>({
     id: params?.id
   });
@@ -25,48 +26,86 @@ const Editor: React.FC = ({
       title: '编辑商品基本信息',
     },
     {
+      title: '编辑规格参数',
+    },
+    {
       title: '编辑商品销售单元',
     },
     {
-      title: '编辑商品详细信息',
+      title: '编辑商品对象资源',
+    },
+    {
+      title: '编辑商品介绍',
     },
   ]
 
   const forms = [
 
-    <EditorSpu 
+    // 商品基本信息
+    <EditorSpu
       id={spuInfo.id}
       spuId={spuInfo.id}
-      first={current === 0} 
+      first={current === 0}
       last={current === items.length - 1}
       spuInfo={spuInfo}
-      onPre={() => {setCurrent(current - 1)}}  
+      onPre={() => { setCurrent(current - 1) }}
       onNext={(payload) => {
         setSpuInfo(payload);
         setCurrent(current + 1)
-      }} />,
+      }}
+    />,
 
+    // 编辑规格参数
+    <EditorSpecifications
+      spuId={spuInfo.id}
+      first={current === 0}
+      spuInfo={spuInfo}
+      last={current === items.length - 1}
+      onPre={() => { setCurrent(current - 1) }}
+      onNext={(payload) => {
+        console.log('当前id', payload.id);
+        setCurrent(current + 1)
+      }}
+    />,
+
+    // 销售属性
     <EditorSaleInfo
       spuId={spuInfo.id}
       first={current === 0}
       spuInfo={spuInfo}
       last={current === items.length - 1}
-      onPre={() => {setCurrent(current - 1)}}
+      onPre={() => { setCurrent(current - 1) }}
       onNext={(payload) => {
         console.log('当前id', payload.id);
         setCurrent(current + 1)
-      }} />,
+      }}
+    />,
 
+    // 图片、资源维护
     <EditorSpu
       id={spuInfo.id}
       spuInfo={spuInfo}
       first={current === 0}
       last={current === items.length - 1}
-      onPre={() => {setCurrent(current - 1)}}
+      onPre={() => { setCurrent(current - 1) }}
       onNext={(payload) => {
         console.log('当前id', payload.id);
         setCurrent(current + 1)
-      }} />,
+      }}
+    />,
+
+    // 商品介绍
+    <EditorSpu
+      id={spuInfo.id}
+      spuInfo={spuInfo}
+      first={current === 0}
+      last={current === items.length - 1}
+      onPre={() => { setCurrent(current - 1) }}
+      onNext={(payload) => {
+        console.log('当前id', payload.id);
+        setCurrent(current + 1)
+      }}
+    />,
 
   ]
 
@@ -83,7 +122,7 @@ const Editor: React.FC = ({
     <>
       <PageContainer title='发布商品'>
         <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-          
+
           <Card>
             <Steps current={current} items={items} />
           </Card>
