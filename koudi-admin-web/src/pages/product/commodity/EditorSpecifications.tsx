@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
 import { spuSubmitterFormat } from '@/utils/spu';
 import { EditorStepFormItemProps } from '@/interface/props/GalobalProps';
-import { Button, Card, Select, SelectProps, Space } from 'antd';
+import { Button, Card, Select, SelectProps } from 'antd';
 
 const options: SelectProps['options'] = [];
 for (let i = 10; i < 36; i++) {
